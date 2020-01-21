@@ -24,7 +24,7 @@ helm install --name <your release name> rasa-x-helm/rasa-x
 
 ## Upgrading the deployment
 ```
-helm uprade --name <your release name> rasa-x-helm/rasa-x
+helm upgrade --name <your release name> rasa-x-helm/rasa-x
 ```
 
 ## Uninstalling
