@@ -3,7 +3,7 @@ apiVersion: v1
 
 # usually there should be no need to change this manually. the release script in
 # scripts/release.py will update this value automatically
-version: "1.0.0"
+version: "0.24.3"
 appVersion: "0.24.1"
 
 name: rasa-x
