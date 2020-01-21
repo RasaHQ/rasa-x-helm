@@ -7,6 +7,8 @@
 conversations to improve your [Rasa](https://rasa.com/docs/rasa) assistant.
 This Helm chart provides a quick, production-ready deployment of Rasa X in your cluster.
 
+> **_NOTE:_** Please see the [Rasa X documentation](https://rasa.com/docs/rasa-x/installation-and-setup/openshift-kubernetes/) for a detailed guide on usage and configuration of this chart.
+
 ## Installation
 
 ```bash
@@ -29,10 +31,6 @@ helm delete my-release
 * Kubernetes 1.12+
 * [Helm](https://helm.sh/) 2.11+ or 3
 * PV provisioner support in the underlying infrastructure
-
-## Documentation
-
-Usage and configuration of the Helm chart are documented in the [Rasa X documentation](https://rasa.com/docs/rasa-x/installation-and-setup/openshift-kubernetes/).
 
 ## Configuration
 
