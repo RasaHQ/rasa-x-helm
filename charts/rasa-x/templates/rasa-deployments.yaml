@@ -7,6 +7,9 @@ metadata:
     {{- include "rasa-x.labels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ .serviceName }}
 spec:
+
+
+dasdasds
   replicas: {{ default 1 .replicaCount }}
   selector:
     matchLabels:
