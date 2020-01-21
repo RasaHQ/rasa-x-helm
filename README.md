@@ -22,7 +22,7 @@ helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
 helm install --name <your release name> rasa-x-helm/rasa-x
 ```
 
-## Upgrading
+## Upgrading the deployment
 ```
 helm uprade --name <your release name> rasa-x-helm/rasa-x
 ```
@@ -68,6 +68,14 @@ To contribute via pull request, follow these steps:
 
 1. Create an issue describing the feature you want to work on.
 2. Create a pull request describing your changes
+
+
+## Releasing a new version of this chart
+
+This repository uses GitHub actions to automatically release a new version for the Helm chart when new changes are merged. The only required steps are:
+
+1. Make the changes to the chart
+2. Increase the chart `version` in `charts/rasa-x/Chart.yaml`
 
 ## License
 Licensed under the Apache License, Version 2.0.
