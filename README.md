@@ -11,7 +11,7 @@ This Helm chart provides a quick, production-ready deployment of Rasa X in your 
 
 ## Prerequisites
 
-* Kubernetes 1.12+
+* [Kubernetes](https://kubernetes.io/docs/setup/) 1.12+
 * [Helm](https://helm.sh/) 2.11+ or 3
 * Persistent Volume provisioner support in the underlying infrastructure
 
