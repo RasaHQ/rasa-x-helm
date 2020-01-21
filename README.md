@@ -42,7 +42,7 @@ recommend to set at least these values:
 |--------------------------------------|--------------------------------------------------------------------------------------------|--------------------|
 | rasax.passwordSalt                   | Password salt which Rasa X uses for the user passwords.                                    | `passwordSalt`     |
 | rasax.token                          | Token which the Rasa X pod uses to authenticate requests from other pods.                  | `rasaXToken`       |
-| rasax.jwtSecret                      | Secret which is used to sign the JWT tokens.                                               | `jwtSecret`        |
+| rasax.jwtSecret                      | Secret which is used to sign the JWT tokens of the Rasa X users.                           | `jwtSecret`        |
 | rasa.token                           | Token which the Rasa pods use to authenticate requests from other pods.                    | `rasaToken`        |
 | rabbitmq.rabbitmq.password           | Password for RabbitMq.                                                                     | `test`             |
 | global.postgresql.postgresqlPassword | Password for the Postgresql database.                                                      | `password`         |
