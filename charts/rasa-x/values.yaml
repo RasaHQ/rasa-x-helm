@@ -202,7 +202,7 @@ rabbitmq:
     # username which is used for the authentication
     username: "user"
     # password which is used for the authentiation
-    password: "test"
+    password: "password"
     # existingPasswordSecret which should be used for the password instead of putting it in the values file
     existingPasswordSecret: ""
   # service specifies settings for exposing rabbit to other services
