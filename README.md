@@ -35,7 +35,7 @@ helm delete my-release
 ## Configuration
 
 All configurable values are documented in `values.yaml`. For a quick installation we
-recommend to set at least this values:
+recommend to set at least these values:
 
 | Parameter                            | Description                                                                                | Default            |
 |--------------------------------------|--------------------------------------------------------------------------------------------|--------------------|
