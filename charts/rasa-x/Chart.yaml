@@ -8,6 +8,7 @@ appVersion: "0.24.1"
 
 name: rasa-x
 description: Rasa X Helm chart for Kubernetes / Openshift
+home: https://github.com/RasaHQ/rasa-x-helm
 
 icon: "https://rasa.com/static/rasa-logo-square-ef3444fc36faec97ae8bd7bfb568996d.svg"
 
