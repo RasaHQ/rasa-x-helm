@@ -1,0 +1,40 @@
+{{- if .Values.duckling.enabled }}
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: {{ .Release.Name }}-duckling
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: duckling
+spec:
+  replicas: {{ default 1 .Values.duckling.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rasa-x.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: duckling
+  template:
+    metadata:
+      labels:
+        {{- include "rasa-x.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: duckling
+    spec:
+      {{ include "rasa-x.spec" . }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.duckling.name }}:{{ .Values.duckling.tag }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        ports:
+        - name: "http"
+          containerPort: {{ default 8000 .Values.duckling.port }}
+          protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+        resources:
+          {{- toYaml .Values.duckling.resources | nindent 10 }}
+{{- end }}

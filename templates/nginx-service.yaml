@@ -1,0 +1,21 @@
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: {{ include "rasa-x.fullname" . }}-nginx
+  labels:
+    {{ include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: nginx
+{{- with .Values.nginx.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
+spec:
+  ports:
+  - port: {{ .Values.nginx.service.port }}
+    targetPort: 8080
+    protocol: "TCP"
+    name: "http"
+  type: {{ .Values.nginx.service.type }}
+  selector:
+    {{- include "rasa-x.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: nginx

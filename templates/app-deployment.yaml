@@ -1,0 +1,38 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: app
+spec:
+  replicas: {{ default 1 .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rasa-x.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: app
+  template:
+    metadata:
+      labels:
+        {{- include "rasa-x.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: app
+    spec:
+      {{ include "rasa-x.spec" . }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.app.name }}:{{ .Values.app.tag }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        ports:
+        - name: "http"
+          containerPort: {{ template "rasa-x.custom-actions.port" . }}
+          protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        readinessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        resources:
+          {{- toYaml .Values.app.resources | nindent 10 }}

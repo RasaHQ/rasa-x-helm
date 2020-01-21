@@ -1,0 +1,15 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ template "rasa-x.rasa-x.configuration-files" . }}
+  labels:
+    {{ include "rasa-x.labels" . | nindent 4 }}
+data:
+  environments: |
+    rasa:
+      production:
+        url: "http://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}:{{ .Values.rasa.port }}"
+        token: ${RASA_TOKEN}
+      worker:
+        url: "http://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}:{{ .Values.rasa.port }}"
+        token: ${RASA_TOKEN}

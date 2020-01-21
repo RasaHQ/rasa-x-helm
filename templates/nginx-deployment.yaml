@@ -1,0 +1,70 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: {{ .Release.Name }}-nginx
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: nginx
+spec:
+  replicas: {{ default 1 .Values.nginx.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rasa-x.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: nginx
+  template:
+    metadata:
+      labels:
+        {{- include "rasa-x.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: nginx
+    spec:
+      {{ include "rasa-x.spec" . }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        ports:
+        - name: "http"
+          containerPort: 8080
+          protocol: "TCP"
+        livenessProbe:
+          exec:
+            command:
+            - curl
+            - localhost:8080/nginx_status
+          initialDelaySeconds: {{ .Values.nginx.initialProbeDelay }}
+          failureThreshold: 10
+        readinessProbe:
+          exec:
+            command:
+            - curl
+            - localhost:8080/nginx_status
+          initialDelaySeconds: {{ .Values.nginx.initialProbeDelay }}
+        env:
+        - name: "RASA_X_HOST"
+          value: "{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}"
+        - name: "RASA_PRODUCTION_HOST"
+          value: "{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}:{{ .Values.rasa.port }}"
+        - name: "CUSTOM_ACTION_HOST"
+          value: "{{ include "rasa-x.fullname" . }}-app:{{ template "rasa-x.custom-actions.port" . }}"
+        volumeMounts:
+        - mountPath: "/opt/bitnami/nginx/conf/bitnami/terms"
+          name: "agreement"
+        {{ if .Values.nginx.certificateSecret }}
+        - name: "certificates"
+          readOnly: true
+          mountPath: "/opt/bitnami/certs"
+        {{ end }}
+        resources:
+          {{- toYaml .Values.nginx.resources | nindent 10 }}
+      volumes:
+      - configMap:
+          items:
+          - key: "agree"
+            path: "agree.txt"
+          name: {{ template "rasa-x.nginx.agreement" . }}
+        name: "agreement"
+      {{ if .Values.nginx.certificateSecret }}
+      - name: "certificates"
+        secret:
+          secretName: {{ .Values.nginx.certificateSecret }}
+      {{ end }}

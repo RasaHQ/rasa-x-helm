@@ -1,0 +1,8 @@
+apiVersion: "v1"
+data:
+  agree: "openshift"
+kind: "ConfigMap"
+metadata:
+  name: {{ template "rasa-x.nginx.agreement" . }}
+  labels:
+    {{ include "rasa-x.labels" . | nindent 4 }}

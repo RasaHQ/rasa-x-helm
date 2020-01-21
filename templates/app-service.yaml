@@ -1,0 +1,21 @@
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: {{ include "rasa-x.fullname" . }}-app
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: app
+spec:
+  ports:
+  - port: {{ template "rasa-x.custom-actions.port" . }}
+    targetPort: {{ template "rasa-x.custom-actions.port" . }}
+    protocol: "TCP"
+    name: "http"
+    # workaround for nginx which curls on port 80 to check availability
+  - port: 80
+    targetPort: 80
+    protocol: "TCP"
+    name: "workaround"
+  selector:
+    {{- include "rasa-x.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: app

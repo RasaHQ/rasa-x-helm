@@ -1,0 +1,100 @@
+{{- range .Values.rasa.versions }}
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "{{ $.Release.Name }}-{{ .serviceName }}"
+  labels:
+    {{- include "rasa-x.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ .serviceName }}
+spec:
+  replicas: {{ default 1 .replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rasa-x.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/component: {{ .serviceName }}
+  template:
+    metadata:
+      labels:
+        {{- include "rasa-x.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/component: {{ .serviceName }}
+    spec:
+      {{ include "rasa-x.spec" $ }}
+      containers:
+      - name: {{ $.Chart.Name }}
+        image: "{{ $.Values.rasa.name }}:{{ $.Values.rasa.tag }}"
+        imagePullPolicy: {{ $.Values.images.pullPolicy }}
+        ports:
+        - name: "http"
+          containerPort: {{ default 5005 $.Values.rasa.port }}
+          protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+          initialDelaySeconds: {{ $.Values.rasa.initialProbeDelay }}
+          failureThreshold: 10
+        args:
+        - x
+        - --no-prompt
+        - --production
+        - --config-endpoint
+        - "http://{{ include "rasa-x.fullname" $ }}-rasa-x:{{ default 5002 $.Values.rasax.port }}/api/config?token=$(RASA_X_TOKEN)"
+        - --port
+        - "{{ $.Values.rasa.port }}"
+        - --jwt-method
+        - HS256
+        - --jwt-secret
+        - "$(JWT_SECRET)"
+        - --auth-token
+        - "$(RASA_TOKEN)"
+        - --cors
+        - '*'
+        {{ if and $.Values.debugMode (eq $.Values.debugMode "true") }}- --debug{{ end }}
+        resources:
+          {{- toYaml .resources | nindent 10 }}
+        env:
+        - name: "DB_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.psql.password.secret" $ }}
+              key: {{ template "rasa-x.psql.password.key" $ }}
+        - name: "DB_DATABASE"
+          value: {{ .trackerDatabase }}
+        - name: "RASA_X_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: "rasaXToken"
+        - name: "RASA_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: "rasaToken"
+        - name: "RABBITMQ_QUEUE"
+          value: "{{ $.Values.rasa.rabbitQueue }}"
+        - name: "JWT_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: "jwtSecret"
+        - name: "REDIS_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.redis.password.secret" $ }}
+              key: {{ template "rasa-x.redis.password.key" $ }}
+        - name: "RABBITMQ_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.rabbitmq.password.secret" $ }}
+              key: {{ template "rasa-x.rabbitmq.password.key" $ }}
+        - name: "RABBITMQ_QUEUE"
+          value: "{{ $.Values.rasa.rabbitQueue }}"
+        - name: "RASA_ENVIRONMENT"
+          value: "{{ .rasaEnvironment }}"
+        - name: "RASA_MODEL_SERVER"
+          value: "http://{{ include "rasa-x.host" $ }}:{{ $.Values.rasax.port }}/api/projects/default/models/tags/{{ .modelTag }}"
+
+# this is needed to make it clear that these are two resources
+---
+
+{{- end }}

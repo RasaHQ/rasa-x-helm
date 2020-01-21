@@ -1,0 +1,17 @@
+{{- if .Values.duckling.enabled }}
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: {{ include "rasa-x.fullname" . }}-duckling
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: duckling
+spec:
+  ports:
+  - port: {{ .Values.duckling.port }}
+    targetPort: {{ .Values.duckling.port }}
+    protocol: "TCP"
+  selector:
+    {{- include "rasa-x.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: duckling
+{{- end }}

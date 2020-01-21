@@ -1,0 +1,26 @@
+{{- if (not .Values.rasax.persistence.existingClaim)}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "rasa-x.rasa-x.claim" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+  {{- with .Values.rasax.persistence.annotations  }}
+  annotations:
+{{ toYaml . | indent 4 }}
+  {{- end }}
+  {{- with .Values.rasax.persistence.finalizers  }}
+  finalizers:
+{{ toYaml . | indent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    {{- range .Values.rasax.persistence.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.rasax.persistence.size | quote }}
+  storageClassName: {{ .Values.rasax.persistence.storageClassName }}
+{{- end -}}

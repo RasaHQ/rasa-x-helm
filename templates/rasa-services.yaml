@@ -1,0 +1,22 @@
+{{- range .Values.rasa.versions }}
+
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: {{ include "rasa-x.fullname" $ }}-{{ .serviceName }}
+  labels:
+    {{ include "rasa-x.labels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ .serviceName }}
+spec:
+  ports:
+  - port: {{ $.Values.rasa.port }}
+    targetPort: {{ $.Values.rasa.port }}
+    protocol: TCP
+  selector:
+    {{- include "rasa-x.selectorLabels" $ | nindent 4 }}
+    app.kubernetes.io/component: {{ .serviceName }}
+
+# this is needed to make it clear that these are two resources
+---
+
+{{- end }}

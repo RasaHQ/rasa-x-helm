@@ -1,0 +1,135 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: {{ .Release.Name }}-rasa-x
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: rasa-x
+spec:
+  replicas: {{ default 1 .Values.rasax.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "rasa-x.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: rasa-x
+  template:
+    metadata:
+      labels:
+        {{- include "rasa-x.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: rasa-x
+    spec:
+      {{ include "rasa-x.spec" . }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.rasax.name }}:{{ .Values.rasax.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        ports:
+          - name: "http"
+            containerPort: {{ default 5002 .Values.rasax.port }}
+            protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+          initialDelaySeconds: {{ .Values.rasax.initialProbeDelay }}
+          failureThreshold: 10
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: "http"
+          initialDelaySeconds: {{ .Values.rasax.initialProbeDelay }}
+          failureThreshold: 10
+        env:
+        {{- if .Values.debugMode }}
+        - name: "DEBUG_MODE"
+          value: "true"
+        {{- end }}
+        {{- if .Values.rasax.disableTelemetry }}
+        - name: "METRICS_CONSENT"
+          value: "false"
+        {{- end }}
+        - name: "LOCAL_MODE"
+          value: "false"
+        - name: "RASA_X_HOST"
+          value: "http://{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}"
+        - name: "RASA_MODEL_DIR"
+          value: "/app/models"
+        - name: "RUN_EVENT_CONSUMER_AS_SEPARATE_SERVICE"
+          value: {{ default "true" .Values.separateEventService | quote }}
+        - name: "RABBITMQ_QUEUE"
+          value: {{ template "rasa-x.rabbitmq.queue" . }}
+        - name: "RABBITMQ_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.rabbitmq.password.secret" . }}
+              key: {{ template "rasa-x.rabbitmq.password.key" . }}
+        - name: "PASSWORD_SALT"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" . }}
+              key: "passwordSalt"
+        - name: "RASA_X_USER_ANALYTICS"
+          value: "0"
+        - name: "SANIC_RESPONSE_TIMEOUT"
+          value: "3600"
+        - name: "LOCAL_MODE"
+          value: "false"
+        - name: "JWT_SECRET"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" . }}
+              key: "jwtSecret"
+        - name: "RASA_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" . }}
+              key: "rasaToken"
+        - name: "RASA_X_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" . }}
+              key: "rasaXToken"
+        {{- include "rasa-x.psql.envs" . | nindent 8 }}
+        volumeMounts:
+        - mountPath: "/app/environments.yml"
+          subPath: "environments.yml"
+          name: "environments"
+        - mountPath: "/app/endpoints.yml"
+          subPath: "endpoints.yml"
+          name: "rasa-configuration"
+        - mountPath: "/app/credentials.yml"
+          subPath: "credentials.yml"
+          name: "rasa-configuration"
+        - mountPath: "/app/models"
+          name: "rasa-x-claim"
+          subPath: "models"
+        - mountPath: "/app/logs"
+          name: "rasa-x-claim"
+          subPath: "logs"
+        - mountPath: "/app/auth"
+          name: "rasa-x-claim"
+          subPath: "auth"
+        - mountPath: "/app/git"
+          name: "rasa-x-claim"
+          subPath: "git"
+        resources:
+          {{- toYaml .Values.rasax.resources | nindent 10 }}
+      volumes:
+      - name: "environments"
+        configMap:
+          name: {{ template "rasa-x.rasa-x.configuration-files" . }}
+          items:
+          - key: "environments"
+            path: "environments.yml"
+      - name: "rasa-configuration"
+        configMap:
+          name: {{ template "rasa-x.rasa.configuration-files" . }}
+          items:
+          - key: "rasa-endpoints"
+            path: "endpoints.yml"
+          - key: "rasa-credentials"
+            path: "credentials.yml"
+      - name: "rasa-x-claim"
+        persistentVolumeClaim:
+          claimName: {{ template "rasa-x.rasa-x.claim" . }}

@@ -1,0 +1,70 @@
+{{if and .Values.separateEventService (eq .Values.separateEventService "true") }}
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: {{ .Release.Name }}-event-service
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: event-service
+spec:
+  replicas: {{ default 1 .Values.eventService.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rasa-x.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: event-service
+  template:
+    metadata:
+      labels:
+        {{- include "rasa-x.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: event-service
+    spec:
+      {{ include "rasa-x.spec" . }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.eventService.name }}:{{ .Values.eventService.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        ports:
+          - name: "http"
+            containerPort: {{ default 5673 .Values.eventService.port }}
+            protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        readinessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        args:
+          - python
+          - -m
+          - rasax.community.services.event_service
+        env:
+        - name: "SELF_PORT"
+          value: {{ default 5673 .Values.eventService.port | quote }}
+        - name: "RABBITMQ_QUEUE"
+          value: {{ template "rasa-x.rabbitmq.queue" . }}
+        - name: "RABBITMQ_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.rabbitmq.password.secret" . }}
+              key: {{ template "rasa-x.rabbitmq.password.key" . }}
+        - name: "RASA_X_USER_ANALYTICS"
+          value: "0"
+        - name: "LOCAL_MODE"
+          value: "false"
+        {{- include "rasa-x.psql.envs" . | nindent 8 }}
+        resources:
+          {{- toYaml .Values.eventService.resources | nindent 10 }}
+        volumeMounts:
+        - mountPath: "/app/endpoints.yml"
+          subPath: "endpoints.yml"
+          name: "rasa-configuration"
+      volumes:
+      - name: "rasa-configuration"
+        configMap:
+          name: {{ template "rasa-x.rasa.configuration-files" . }}
+          items:
+            - key: "rasa-endpoints"
+              path: "endpoints.yml"
+{{end}}

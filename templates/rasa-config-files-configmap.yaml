@@ -1,0 +1,41 @@
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ template "rasa-x.rasa.configuration-files" . }}
+  labels:
+    {{ include "rasa-x.labels" . | nindent 4 }}
+data:
+  rasa-credentials: |
+    rasa:
+      url: http://{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}/api
+    {{- default "" .Values.rasa.additionalChannelCredentials | nindent 4 }}
+  rasa-endpoints: |
+    models:
+      url: ${RASA_MODEL_SERVER}
+      token: ${RASA_X_TOKEN}
+      wait_time_between_pulls: 10
+    tracker_store:
+      type: sql
+      dialect: "postgresql"
+      url: {{ template "rasa-x.psql.host" . }}
+      port: {{ template "rasa-x.psql.port" . }}
+      username: {{ template "rasa-x.psql.username" . }}
+      password: ${DB_PASSWORD}
+      db: ${DB_DATABASE}
+      login_db: {{ template "rasa-x.psql.database" . }}
+    event_broker:
+      type: "pika"
+      url: "{{ template "rasa-x.rabbitmq.host" . }}"
+      username: "{{ .Values.rabbitmq.rabbitmq.username }}"
+      password: ${RABBITMQ_PASSWORD}
+      port: {{ default 5672 .Values.rabbitmq.service.port }}
+      queue: ${RABBITMQ_QUEUE}
+    action_endpoint:
+      url: "http://{{ include "rasa-x.fullname" . }}-app:{{ template "rasa-x.custom-actions.port" . }}/webhook"
+      token:  ""
+    lock_store:
+      type: "redis"
+      url: {{ template "rasa-x.redis.host" . }}
+      port: {{ default 6379 .Values.redis.redisPort }}
+      password: ${REDIS_PASSWORD}
+      db: {{ default "1" .Values.rasa.lockStoreDatabase }}
