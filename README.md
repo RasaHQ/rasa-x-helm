@@ -70,9 +70,11 @@ To contribute via pull request, follow these steps:
 2. Create a pull request describing your changes
 
 
-## Releasing a new version of this chart
+## Development Internals
+### Releasing a new version of this chart
 
-This repository uses GitHub actions to automatically release a new version of the Helm chart once new changes are merged. The only required steps are:
+This repository automatically release a new version of the Helm chart once new changes
+are merged. The only required steps are:
 
 1. Make the changes to the chart
 2. Increase the chart `version` in `charts/rasa-x/Chart.yaml`
