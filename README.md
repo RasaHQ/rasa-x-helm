@@ -13,6 +13,23 @@ This Helm chart provides a quick, production-ready deployment of Rasa X in your 
 helm install --name my-release https://github.com/rasahq/rasa-x-helm
 ```
 
+## Upgrading
+```
+helm uprade --name my-release https://github.com/rasahq/rasa-x-helm
+```
+
+## Uninstalling
+
+```
+helm delete my-release
+```
+
+## Prerequisites
+
+* Kubernetes 1.12+
+* [Helm](https://helm.sh/) 2.11+ or 3
+* PV provisioner support in the underlying infrastructure
+
 ## Documentation
 
 Usage and configuration of the Helm chart are documented in the [Rasa X documentation](https://rasa.com/docs/rasa-x/installation-and-setup/openshift-kubernetes/).
