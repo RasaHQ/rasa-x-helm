@@ -12,18 +12,19 @@ This Helm chart provides a quick, production-ready deployment of Rasa X in your 
 ## Installation
 
 ```bash
-helm install --name my-release https://github.com/rasahq/rasa-x-helm
+helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
+helm install --name <your release name> rasa-x-helm/rasa-x
 ```
 
 ## Upgrading
 ```
-helm uprade --name my-release https://github.com/rasahq/rasa-x-helm
+helm uprade --name <your release name> rasa-x-helm/rasa-x
 ```
 
 ## Uninstalling
 
 ```
-helm delete my-release
+helm delete <your release name>
 ```
 
 ## Prerequisites
