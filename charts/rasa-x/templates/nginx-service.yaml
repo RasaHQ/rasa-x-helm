@@ -15,6 +15,9 @@ spec:
     targetPort: 8080
     protocol: "TCP"
     name: "http"
+    {{- if .Values.nginx.service.nodePort }}
+    nodePort: {{ .Values.nginx.service.nodePort }}
+    {{- end }}
   type: {{ .Values.nginx.service.type }}
   selector:
     {{- include "rasa-x.selectorLabels" . | nindent 4 }}
