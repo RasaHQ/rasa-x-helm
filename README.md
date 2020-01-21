@@ -1,6 +1,6 @@
 # Rasa X Helm Chart
 
-[![Join the chat on Rasa Community Forum](https://img.shields.io/badge/forum-join%20discussions-brightgreen.svg)](https://forum.rasa.com/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat on our Rasa Community Forum](https://img.shields.io/badge/forum-join%20discussions-brightgreen.svg)](https://forum.rasa.com/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/orgs/RasaHQ/projects/23)
 
 [Rasa X](https://rasa.com/docs/rasa-x/) is a toolset that helps you leverage 
@@ -13,7 +13,7 @@ This Helm chart provides a quick, production-ready deployment of Rasa X in your 
 
 * Kubernetes 1.12+
 * [Helm](https://helm.sh/) 2.11+ or 3
-* PV provisioner support in the underlying infrastructure
+* Persistent Volume provisioner support in the underlying infrastructure
 
 ## Installation
 
@@ -42,7 +42,7 @@ recommend to set at least these values:
 |--------------------------------------|--------------------------------------------------------------------------------------------|--------------------|
 | rasax.passwordSalt                   | Password salt which Rasa X uses for the user passwords.                                    | `passwordSalt`     |
 | rasax.token                          | Token which the Rasa X pod uses to authenticate requests from other pods.                  | `rasaXToken`       |
-| rasax.jwtSecret                      | Secret which is used to sign the JWT tokens of the Rasa X users.                           | `jwtSecret`        |
+| rasax.jwtSecret                      | Secret which is used to sign JWT tokens of Rasa X users.                           | `jwtSecret`        |
 | rasa.token                           | Token which the Rasa pods use to authenticate requests from other pods.                    | `rasaToken`        |
 | rabbitmq.rabbitmq.password           | Password for RabbitMq.                                                                     | `test`             |
 | global.postgresql.postgresqlPassword | Password for the Postgresql database.                                                      | `password`         |
@@ -55,8 +55,8 @@ recommend to set at least these values:
 
 ## Where to get help
 
-- If you are having bugs or suggestions for this Helm chart, please create an issue in this repository.
-- If you have general questions about the usage, please create a thread in the [Rasa Forum](https://forum.rasa.com/).
+- If you encounter bugs or have suggestions for this Helm chart, please create an issue in this repository.
+- If you have general questions about usage, please create a thread in the [Rasa Forum](https://forum.rasa.com/).
 
 ## How to contribute
 
@@ -66,13 +66,13 @@ different ways!) [here](http://rasa.com/community/contribute).
 
 To contribute via pull request, follow these steps:
 
-1. Create an issue describing the feature you want to work on.
+1. Create an issue describing the feature you want to work on
 2. Create a pull request describing your changes
 
 
 ## Releasing a new version of this chart
 
-This repository uses GitHub actions to automatically release a new version for the Helm chart when new changes are merged. The only required steps are:
+This repository uses GitHub actions to automatically release a new version of the Helm chart once new changes are merged. The only required steps are:
 
 1. Make the changes to the chart
 2. Increase the chart `version` in `charts/rasa-x/Chart.yaml`
