@@ -18,6 +18,9 @@ spec:
     {{- if .Values.nginx.service.nodePort }}
     nodePort: {{ .Values.nginx.service.nodePort }}
     {{- end }}
+    {{- if .Values.nginx.service.externalIPs }}
+    externalIPs: {{ .Values.nginx.service.externalIPs | toYaml | nindent 4 }}
+    {{- end }}
   type: {{ .Values.nginx.service.type }}
   selector:
     {{- include "rasa-x.selectorLabels" . | nindent 4 }}
