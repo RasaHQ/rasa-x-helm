@@ -7,8 +7,6 @@
 conversations to improve your [Rasa](https://rasa.com/docs/rasa) assistant.
 This Helm chart provides a quick, production-ready deployment of Rasa X in your cluster.
 
-# TODO: STH ABOUT the helm Chart
-
 ## Installation
 
 ```bash
