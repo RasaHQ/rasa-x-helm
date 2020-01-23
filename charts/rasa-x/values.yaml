@@ -136,6 +136,10 @@ nginx:
     type: LoadBalancer
     # port is the port which the nginx service exposes for HTTP connections
     port: 8000
+    # nodePort can be used with a service of type `NodePort` to expose the service on a certain port of the node (https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)
+    nodePort:
+    # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
+    externalIPs: []
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
   # resources which nginx is required / allowed to use
