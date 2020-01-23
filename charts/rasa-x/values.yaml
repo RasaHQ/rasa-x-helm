@@ -20,6 +20,11 @@ rasax:
   databaseName: "rasa"
   # disableTelemetry permanently disables telemetry
   disableTelemetry: false
+  initialUser:
+    # username specifies a name of the user that will be created immediately after the first launch
+    username: "admin"
+    # password for this user (leave it empty to skip the user creation)
+    password: ""
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##

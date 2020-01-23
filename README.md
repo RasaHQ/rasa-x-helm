@@ -43,6 +43,8 @@ recommend to set at least these values:
 | rasax.passwordSalt                   | Password salt which Rasa X uses for the user passwords.                                    | `passwordSalt`     |
 | rasax.token                          | Token which the Rasa X pod uses to authenticate requests from other pods.                  | `rasaXToken`       |
 | rasax.jwtSecret                      | Secret which is used to sign JWT tokens of Rasa X users.                           | `jwtSecret`        |
+| rasax.initialUser.username           | A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified) | `admin`            |
+| rasax.initialUser.password           | Password for the initial user (leave it empty if you don't want user to be created).       | `""`               |
 | rasa.token                           | Token which the Rasa pods use to authenticate requests from other pods.                    | `rasaToken`        |
 | rabbitmq.rabbitmq.password           | Password for RabbitMq.                                                                     | `test`             |
 | global.postgresql.postgresqlPassword | Password for the Postgresql database.                                                      | `password`         |

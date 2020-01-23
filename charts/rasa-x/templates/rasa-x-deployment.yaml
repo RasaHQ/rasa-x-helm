@@ -90,6 +90,16 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.secret" . }}
               key: "rasaXToken"
+        - name: "RASA_X_USERNAME"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: "initialUserName"
+        - name: "RASA_X_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: "initialPassword"
         {{- include "rasa-x.psql.envs" . | nindent 8 }}
         volumeMounts:
         - mountPath: "/app/environments.yml"

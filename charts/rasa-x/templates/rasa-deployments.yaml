@@ -70,6 +70,16 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.secret" $ }}
               key: "rasaToken"
+        - name: "RASA_X_USERNAME"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: "initialUserName"
+        - name: "RASA_X_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: "initialPassword"
         - name: "RABBITMQ_QUEUE"
           value: "{{ $.Values.rasa.rabbitQueue }}"
         - name: "JWT_SECRET"
