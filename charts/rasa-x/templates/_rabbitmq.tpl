@@ -9,7 +9,7 @@
 Return the rabbitmq host.
 */}}
 {{- define "rasa-x.rabbitmq.host" -}}
-  {{- if .Values.rabbitmq.install  -}}
+  {{- if .Values.rabbitmq.install -}}
     {{- template "rabbitmq.fullname" . -}}
   {{- else -}}
     {{- .Values.rabbitmq.existingHost -}}

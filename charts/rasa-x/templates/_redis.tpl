@@ -9,7 +9,7 @@
 Return the redis host.
 */}}
 {{- define "rasa-x.redis.host" -}}
-  {{- if .Values.redis.install  -}}
+  {{- if .Values.redis.install -}}
     {{- printf "%s-master" (include "redis.fullname" .) -}}
   {{- else -}}
     {{- .Values.redis.existingHost -}}
