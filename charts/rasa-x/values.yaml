@@ -20,8 +20,9 @@ rasax:
   databaseName: "rasa"
   # disableTelemetry permanently disables telemetry
   disableTelemetry: false
+  # initialUser is the user which is created upon the initial start of Rasa X
   initialUser:
-    # username specifies a name of the user that will be created immediately after the first launch
+    # username specifies a name of this user
     username: "admin"
     # password for this user (leave it empty to skip the user creation)
     password: ""
