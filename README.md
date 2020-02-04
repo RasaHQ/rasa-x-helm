@@ -50,10 +50,10 @@ recommend to set at least these values:
 | global.postgresql.postgresqlPassword | Password for the Postgresql database.                                                      | `password`         |
 | global.redis.password                | Password for redis.                                                                        | `password`         |
 | securityContext.fsGroup              | fsGroup for the volume mounts. Should be `0` in case the  chart is deployed on Kubernetes. | `""`               |
-| Chart.appVersion                     | Version of Rasa X which you want to use.                                                   | `0.24.1`           |
-| rasa.tag                             | Version of Rasa OSS which you want to use.                                                 | `1.6.1`            |
+| Chart.appVersion                     | Version of Rasa X which you want to use.                                                   | `0.25.0`           |
+| rasa.tag                             | Version of Rasa OSS which you want to use.                                                 | `1.7.0`            |
 | app.name                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
-| app.tag                              | Tag of your action server image.                                                           | `0.24.0`           |
+| app.tag                              | Tag of your action server image.                                                           | `0.25.0`           |
 
 ## Where to get help
 

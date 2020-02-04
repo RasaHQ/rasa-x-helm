@@ -91,7 +91,7 @@ spec:
               name: {{ template "rasa-x.secret" . }}
               key: "rasaXToken"
         - name: "RASA_X_USERNAME"
-          value: "{{ $.Values.rasax.initialUser.username }}"
+          value: "{{ .Values.rasax.initialUser.username }}"
         - name: "RASA_X_PASSWORD"
           valueFrom:
             secretKeyRef:
