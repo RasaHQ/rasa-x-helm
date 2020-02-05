@@ -43,15 +43,17 @@ recommend to set at least these values:
 | rasax.passwordSalt                   | Password salt which Rasa X uses for the user passwords.                                    | `passwordSalt`     |
 | rasax.token                          | Token which the Rasa X pod uses to authenticate requests from other pods.                  | `rasaXToken`       |
 | rasax.jwtSecret                      | Secret which is used to sign JWT tokens of Rasa X users.                           | `jwtSecret`        |
+| rasax.initialUser.username           | **Only for Rasa Enterprise**. A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified) | `admin`            |
+| rasax.initialUser.password           | Password for the initial user. If you use Rasa Enterprise and leave it empty, no users will be created. If you use Rasa CE and leave it empty, the password will be generated automatically. | `""`               |
 | rasa.token                           | Token which the Rasa pods use to authenticate requests from other pods.                    | `rasaToken`        |
 | rabbitmq.rabbitmq.password           | Password for RabbitMq.                                                                     | `test`             |
 | global.postgresql.postgresqlPassword | Password for the Postgresql database.                                                      | `password`         |
 | global.redis.password                | Password for redis.                                                                        | `password`         |
 | securityContext.fsGroup              | fsGroup for the volume mounts. Should be `0` in case the  chart is deployed on Kubernetes. | `""`               |
-| Chart.appVersion                     | Version of Rasa X which you want to use.                                                   | `0.24.1`           |
-| rasa.tag                             | Version of Rasa OSS which you want to use.                                                 | `1.6.1`            |
+| Chart.appVersion                     | Version of Rasa X which you want to use.                                                   | `0.25.0`           |
+| rasa.tag                             | Version of Rasa OSS which you want to use.                                                 | `1.7.0`            |
 | app.name                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
-| app.tag                              | Tag of your action server image.                                                           | `0.24.0`           |
+| app.tag                              | Tag of your action server image.                                                           | `0.25.0`           |
 
 ## Where to get help
 
