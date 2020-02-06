@@ -279,8 +279,9 @@ images:
 
 # securityContext to use
 securityContext:
-#  # fsGroup to use (e.g. when deploying on Kubernetes)
-#  fsGroup: 0
+  runAsUser: 1000
+  fsGroup: 1000
+  runAsNonRoot: true
 
 # nameOverride replaces the Chart's name
 nameOverride: ""
