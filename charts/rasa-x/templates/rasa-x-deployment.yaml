@@ -73,6 +73,8 @@ spec:
           value: "0"
         - name: "SANIC_RESPONSE_TIMEOUT"
           value: "3600"
+        - name: "SANIC_MAX_REQUEST_SIZE"
+          value: "800000000"
         - name: "LOCAL_MODE"
           value: "false"
         - name: "JWT_SECRET"
