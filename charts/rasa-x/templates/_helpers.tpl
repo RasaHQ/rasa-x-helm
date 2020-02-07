@@ -131,3 +131,12 @@ Return the port of the action container.
 {{- define "rasa-x.custom-actions.port" -}}
 {{- default 5055 .Values.app.port -}}
 {{- end -}}
+
+{{/*
+Include extra env vars
+*/}}
+{{- define "rasa.extra.envs" -}}
+  {{- if .Values.rasa.extraEnvs -}}
+{{ .Values.rasa.extraEnvs }}
+  {{- end -}}
+{{- end -}}

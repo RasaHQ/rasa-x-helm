@@ -98,7 +98,7 @@ spec:
               name: {{ template "rasa-x.secret" . }}
               key: "initialPassword"
         {{- include "rasa-x.psql.envs" . | nindent 8 }}
-        {{- toYaml .Values.rasa.extraEnvs | nindent 8 }}
+        {{- include "rasa.extra.envs" . | nindent 8 }}
         volumeMounts:
         - mountPath: "/app/environments.yml"
           subPath: "environments.yml"

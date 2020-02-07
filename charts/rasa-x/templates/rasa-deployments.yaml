@@ -100,7 +100,7 @@ spec:
           value: "{{ .rasaEnvironment }}"
         - name: "RASA_MODEL_SERVER"
           value: "http://{{ include "rasa-x.host" $ }}:{{ $.Values.rasax.port }}/api/projects/default/models/tags/{{ .modelTag }}"
-        {{- toYaml $.Values.rasa.extraEnvs | nindent 8 }}
+        {{- include "rasa.extra.envs" $ | nindent 8 }}
 # this is needed to make it clear that these are two resources
 ---
 
