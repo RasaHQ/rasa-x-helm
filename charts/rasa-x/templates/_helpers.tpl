@@ -137,6 +137,6 @@ Include extra env vars
 */}}
 {{- define "rasa.extra.envs" -}}
   {{- if .Values.rasa.extraEnvs -}}
-{{ .Values.rasa.extraEnvs }}
+{{ toYaml .Values.rasa.extraEnvs }}
   {{- end -}}
 {{- end -}}
