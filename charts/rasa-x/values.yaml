@@ -67,6 +67,8 @@ rasa:
   initialProbeDelay: 10
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
+  # extra env variables
+  extraEnvs:
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
