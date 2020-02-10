@@ -131,3 +131,16 @@ Return the port of the action container.
 {{- define "rasa-x.custom-actions.port" -}}
 {{- default 5055 .Values.app.port -}}
 {{- end -}}
+
+{{/*
+Return the storage class name which should be used.
+*/}}
+{{- define "rasa-x.persistence.storageClass" -}}
+{{- if .Values.rasax.persistence.storageClassName }}
+  {{- if (eq "-" .Values.rasax.persistence.storageClassName) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.rasax.persistence.storageClassName }}"
+  {{- end -}}
+{{- end -}}
+{{- end }}
