@@ -281,7 +281,6 @@ images:
 securityContext:
   runAsUser: 1000
   fsGroup: 1000
-  runAsNonRoot: true
 
 # nameOverride replaces the Chart's name
 nameOverride: ""
