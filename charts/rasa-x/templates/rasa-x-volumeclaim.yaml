@@ -22,5 +22,5 @@ spec:
   resources:
     requests:
       storage: {{ .Values.rasax.persistence.size | quote }}
-  storageClassName: {{ .Values.rasax.persistence.storageClassName }}
+  {{- include "rasa-x.persistence.storageClass" . }}
 {{- end -}}
