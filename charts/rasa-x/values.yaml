@@ -279,7 +279,7 @@ images:
 
 # securityContext to use
 securityContext:
-  runAsUser: 1000
+  # runAsUser: 1000
   fsGroup: 1000
 
 # nameOverride replaces the Chart's name
