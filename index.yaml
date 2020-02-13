@@ -3,6 +3,26 @@ entries:
   rasa-x:
   - apiVersion: v1
     appVersion: 0.25.1
+    created: "2020-02-13T12:34:13.069574207Z"
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 63a32629feb54700a9a37ca0ee53093f9d41207eb5514facc9e27b66cf281155
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://rasa.com/static/rasa-logo-square-ef3444fc36faec97ae8bd7bfb568996d.svg
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-1.0.7/rasa-x-1.0.7.tgz
+    version: 1.0.7
+  - apiVersion: v1
+    appVersion: 0.25.1
     created: "2020-02-10T13:33:55.342356126Z"
     description: Rasa X Helm chart for Kubernetes / Openshift
     digest: c3c5e40de50f75812c1c117c3e996a7c364d94aef497bea61677ef7ea6dc2a39
