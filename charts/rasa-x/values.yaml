@@ -30,8 +30,6 @@ rasax:
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
   persistence:
-    # storageClassName the volume claim should use
-    # storageClassName: "-"
     # access Modes of the pvc
     accessModes:
     - ReadWriteOnce
@@ -290,6 +288,8 @@ fullnameOverride: ""
 
 # global settings of the used subcharts
 global:
+  # storageClass the volume claims should use
+  # storageClass: "-"
   # postgresql: global settings of the postgresql subchart
   postgresql:
     # postgresqlUsername which should be used by Rasa to connect to Postgres

@@ -136,11 +136,11 @@ Return the port of the action container.
 Return the storage class name which should be used.
 */}}
 {{- define "rasa-x.persistence.storageClass" -}}
-{{- if .Values.rasax.persistence.storageClassName }}
-  {{- if (eq "-" .Values.rasax.persistence.storageClassName) }}
+{{- if .Values.global.storageClass }}
+  {{- if (eq "-" .Values.global.storageClass) }}
   storageClassName: ""
   {{- else }}
-  storageClassName: "{{ .Values.rasax.persistence.storageClassName }}"
+  storageClassName: "{{ .Values.global.storageClass }}"
   {{- end -}}
 {{- end -}}
 {{- end }}
