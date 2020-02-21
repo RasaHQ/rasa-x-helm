@@ -68,6 +68,8 @@ Return the common database env variables.
   value: {{ template "rasa-x.psql.username" . }}
 - name: "DB_HOST"
   value: {{ template "rasa-x.psql.host" . }}
+- name: "DB_PORT"
+  value: {{ template "rasa-x.psql.port" . }}
 - name: "DB_DATABASE"
   value: "{{ template "rasa-x.psql.database" . }}"
 - name: "DB_PASSWORD"
