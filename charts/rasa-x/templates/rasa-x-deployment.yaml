@@ -41,8 +41,10 @@ spec:
           initialDelaySeconds: {{ .Values.rasax.initialProbeDelay }}
           failureThreshold: 10
         env:
+        {{ if .Values.debugMode }}
         - name: "DEBUG_MODE"
-          value: "{{ $.Values.debugMode }}"
+          value: "true"
+        {{ end }}
         {{- if .Values.rasax.disableTelemetry }}
         - name: "METRICS_CONSENT"
           value: "false"
