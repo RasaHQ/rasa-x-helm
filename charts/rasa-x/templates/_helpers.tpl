@@ -133,10 +133,19 @@ Return the port of the action container.
 {{- end -}}
 
 {{/*
-Include extra env vars
+Include rasa extra env vars
 */}}
 {{- define "rasa.extra.envs" -}}
   {{- if .Values.rasa.extraEnvs -}}
 {{ toYaml .Values.rasa.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
+Include rasax extra env vars
+*/}}
+{{- define "rasax.extra.envs" -}}
+  {{- if .Values.rasax.extraEnvs -}}
+{{ toYaml .Values.rasax.extraEnvs }}
   {{- end -}}
 {{- end -}}
