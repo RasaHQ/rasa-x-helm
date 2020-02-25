@@ -58,8 +58,6 @@ rasax:
       value: "0"
     - name: "SANIC_RESPONSE_TIMEOUT"
       value: "3600"
-    - name: "LOCAL_MODE"
-      value: "false"
 # rasa: Settings common for all Rasa containers
 rasa:
   # name of the Rasa image to use
