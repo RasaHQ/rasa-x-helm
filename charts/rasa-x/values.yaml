@@ -46,6 +46,10 @@ rasax:
   initialProbeDelay: 10
   # resources which Rasa X is required / allowed to use
   resources:
+  # extraEnvs are environment variables which can be added to the Rasa X deployment
+  extraEnvs:
+  # - name: SOME_CUSTOM_ENV_VAR
+  #   value: "custom value"
 # rasa: Settings common for all Rasa containers
 rasa:
   # name of the Rasa image to use
@@ -65,6 +69,19 @@ rasa:
   initialProbeDelay: 10
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
+  # extraEnvs are environment variables which can be added to the Rasa deployment
+  extraEnvs:
+    # example which sets env variables in each Rasa Open Source service from a separate k8s secret
+    # - name: "TWILIO_ACCOUNT_SID"
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: twilio-auth
+    #       key: twilio_account_sid
+    # - name: TWILIO_AUTH_TOKEN
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: twilio-auth
+    #       key: twilio_auth_token
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
