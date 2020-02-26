@@ -149,3 +149,16 @@ Include rasax extra env vars
 {{ toYaml .Values.rasax.extraEnvs }}
   {{- end -}}
 {{- end -}}
+
+{{/*
+Return the storage class name which should be used.
+*/}}
+{{- define "rasa-x.persistence.storageClass" -}}
+{{- if .Values.global.storageClass }}
+  {{- if (eq "-" .Values.global.storageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.global.storageClass }}"
+  {{- end -}}
+{{- end -}}
+{{- end }}
