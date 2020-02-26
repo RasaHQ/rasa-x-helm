@@ -131,3 +131,34 @@ Return the port of the action container.
 {{- define "rasa-x.custom-actions.port" -}}
 {{- default 5055 .Values.app.port -}}
 {{- end -}}
+
+{{/*
+Include rasa extra env vars.
+*/}}
+{{- define "rasa.extra.envs" -}}
+  {{- if .Values.rasa.extraEnvs -}}
+{{ toYaml .Values.rasa.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
+Include rasax extra env vars.
+*/}}
+{{- define "rasax.extra.envs" -}}
+  {{- if .Values.rasax.extraEnvs -}}
+{{ toYaml .Values.rasax.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
+Return the storage class name which should be used.
+*/}}
+{{- define "rasa-x.persistence.storageClass" -}}
+{{- if .Values.global.storageClass }}
+  {{- if (eq "-" .Values.global.storageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.global.storageClass }}"
+  {{- end -}}
+{{- end -}}
+{{- end }}
