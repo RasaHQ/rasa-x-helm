@@ -73,8 +73,6 @@ spec:
           value: "0"
         - name: "SANIC_RESPONSE_TIMEOUT"
           value: "3600"
-        - name: "LOCAL_MODE"
-          value: "false"
         - name: "JWT_SECRET"
           valueFrom:
             secretKeyRef:
@@ -98,6 +96,7 @@ spec:
               name: {{ template "rasa-x.secret" . }}
               key: "initialPassword"
         {{- include "rasa-x.psql.envs" . | nindent 8 }}
+        {{- include "rasax.extra.envs" . | nindent 8 }}
         volumeMounts:
         - mountPath: "/app/environments.yml"
           subPath: "environments.yml"
