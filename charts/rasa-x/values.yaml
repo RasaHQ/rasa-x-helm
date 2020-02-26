@@ -145,7 +145,7 @@ app:
   #  - name: DATABASE_URL
   #    valueFrom:
   #      secretKeyRef:
-  #        name: ald-app-secret
+  #        name: app-secret
   #        key: database_url
   # paths specifies the webhook and health check url paths of the action server app
   paths:
