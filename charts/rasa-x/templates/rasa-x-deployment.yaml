@@ -49,8 +49,12 @@ spec:
         - name: "METRICS_CONSENT"
           value: "false"
         {{- end }}
+        - name: "LOCAL_MODE"
+          value: "false"
         - name: "RASA_X_HOST"
           value: "http://{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}"
+        - name: "RASA_MODEL_DIR"
+          value: "/app/models"
         - name: "RUN_EVENT_CONSUMER_AS_SEPARATE_SERVICE"
           value: {{ default "true" .Values.separateEventService | quote }}
         - name: "RABBITMQ_QUEUE"
@@ -65,6 +69,10 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.secret" . }}
               key: "passwordSalt"
+        - name: "RASA_X_USER_ANALYTICS"
+          value: "0"
+        - name: "SANIC_RESPONSE_TIMEOUT"
+          value: "3600"
         - name: "JWT_SECRET"
           valueFrom:
             secretKeyRef:

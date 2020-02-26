@@ -50,14 +50,8 @@ rasax:
   resources:
   # extraEnvs are environment variables which can be added to the Rasa X deployment
   extraEnvs:
-    - name: "LOCAL_MODE"
-      value: "false"
-    - name: "RASA_MODEL_DIR"
-      value: "/app/models"
-    - name: "RASA_X_USER_ANALYTICS"
-      value: "0"
-    - name: "SANIC_RESPONSE_TIMEOUT"
-      value: "3600"
+  # - name: SOME_CUSTOM_ENV_VAR
+  #   value: "custom value"
 # rasa: Settings common for all Rasa containers
 rasa:
   # name of the Rasa image to use
