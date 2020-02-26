@@ -71,7 +71,7 @@ rasa:
   lockStoreDatabase: "1"
   # extraEnvs are environment variables which can be added to the Rasa deployment
   extraEnvs:
-    # example which sets env variables in rasa service from a separate k8s secret
+    # example which sets env variables in each Rasa Open Source service from a separate k8s secret
     # - name: "TWILIO_ACCOUNT_SID"
     #   valueFrom:
     #     secretKeyRef:

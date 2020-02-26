@@ -133,7 +133,7 @@ Return the port of the action container.
 {{- end -}}
 
 {{/*
-Include rasa extra env vars
+Include rasa extra env vars.
 */}}
 {{- define "rasa.extra.envs" -}}
   {{- if .Values.rasa.extraEnvs -}}
@@ -142,7 +142,7 @@ Include rasa extra env vars
 {{- end -}}
 
 {{/*
-Include rasax extra env vars
+Include rasax extra env vars.
 */}}
 {{- define "rasax.extra.envs" -}}
   {{- if .Values.rasax.extraEnvs -}}
