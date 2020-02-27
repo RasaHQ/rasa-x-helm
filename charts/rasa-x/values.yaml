@@ -188,7 +188,7 @@ duckling:
 rasaSecret: ""
 
 # debugMode enables / disables the debug mode for Rasa and Rasa X
-debugMode: "false"
+debugMode: false
 
 # separateEventService value determines whether the eventService will be run as a separate service.
 # If set to 'false', Rasa X will run an event service as a subprocess (not recommended
