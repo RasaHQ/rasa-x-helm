@@ -47,7 +47,7 @@ rasax:
   # resources which Rasa X is required / allowed to use
   resources:
   # extraEnvs are environment variables which can be added to the Rasa X deployment
-  extraEnvs:
+  extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 # rasa: Settings common for all Rasa containers
@@ -70,7 +70,7 @@ rasa:
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
   # extraEnvs are environment variables which can be added to the Rasa deployment
-  extraEnvs:
+  extraEnvs: []
     # example which sets env variables in each Rasa Open Source service from a separate k8s secret
     # - name: "TWILIO_ACCOUNT_SID"
     #   valueFrom:
