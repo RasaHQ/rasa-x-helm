@@ -64,7 +64,7 @@ rasa:
   rabbitQueue: "rasa_production_events"
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
-  additionalChannelCredentials:
+  additionalChannelCredentials: {}
     # rest:
     # facebook:
     #   verify: "rasa-bot"
