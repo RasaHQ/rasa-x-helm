@@ -141,16 +141,16 @@ app:
   # resources which app is required / allowed to use
   resources:
   # envs is a dict containing app specific env variables
-  envs:
+  extraEnvs:
   #  - name: DATABASE_URL
   #    valueFrom:
   #      secretKeyRef:
   #        name: app-secret
   #        key: database_url
   # paths specifies the webhook and health check url paths of the action server app
-  paths:
-    webhook: /webhook
-    health: /health
+  endpoints:
+    actionEndpointUrl: /webhook
+    healthCheckUrl: /health
 
 # nginx specific settings
 nginx:

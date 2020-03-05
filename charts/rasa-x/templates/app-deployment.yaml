@@ -28,13 +28,13 @@ spec:
           protocol: "TCP"
         livenessProbe:
           httpGet:
-            path: "{{ .Values.app.paths.health}}"
+            path: "{{ .Values.app.endpoints.healthCheckUrl}}"
             port: "http"
         readinessProbe:
           httpGet:
-            path: "{{ .Values.app.paths.health}}"
+            path: "{{ .Values.app.endpoints.healthCheckUrl}}"
             port: "http"
         resources:
           {{- toYaml .Values.app.resources | nindent 10 }}
         env:
-          {{- toYaml .Values.app.envs | nindent 10 }}
+          {{- toYaml .Values.app.extraEnvs | nindent 10 }}
