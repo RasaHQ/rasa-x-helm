@@ -8,7 +8,9 @@ data:
   rasa-credentials: |
     rasa:
       url: http://{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}/api
-    {{- default "" .Values.rasa.additionalChannelCredentials | nindent 4 }}
+    {{- with .Values.rasa.additionalChannelCredentials }}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
   rasa-endpoints: |
     models:
       url: ${RASA_MODEL_SERVER}

@@ -64,7 +64,12 @@ rasa:
   rabbitQueue: "rasa_production_events"
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
-  additionalChannelCredentials: ""
+  additionalChannelCredentials: {}
+    # rest:
+    # facebook:
+    #   verify: "rasa-bot"
+    #   secret: "3e34709d01ea89032asdebfe5a74518"
+    #   page-access-token: "EAAbHPa7H9rEBAAuFk4Q3gPKbDedQnx4djJJ1JmQ7CAqO4iJKrQcNT0wtD"
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
