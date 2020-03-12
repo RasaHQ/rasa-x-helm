@@ -17,7 +17,8 @@ rasax:
   # jwtSecret which is used to sign the jwtTokens of the users
   jwtSecret: "jwtSecret"
   # databaseName Rasa X uses to store data
-  databaseName: "rasa"
+  # (uses the value of global.postgresql.postgresqlDatabase by default)
+  databaseName: ""
   # disableTelemetry permanently disables telemetry
   disableTelemetry: false
   # initialUser is the user which is created upon the initial start of Rasa X
