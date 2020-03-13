@@ -17,7 +17,8 @@ rasax:
   # jwtSecret which is used to sign the jwtTokens of the users
   jwtSecret: "jwtSecret"
   # databaseName Rasa X uses to store data
-  databaseName: "rasa"
+  # (uses the value of global.postgresql.postgresqlDatabase by default)
+  databaseName: ""
   # disableTelemetry permanently disables telemetry
   disableTelemetry: false
   # initialUser is the user which is created upon the initial start of Rasa X
@@ -55,7 +56,7 @@ rasa:
   # name of the Rasa image to use
   name: "rasa/rasa"
   # tag refers to the Rasa image tag
-  tag: "1.7.0"  # Please check the README to see all locations which have to be updated for a rasa release)
+  tag: "1.8.1"  # Please check the README to see all locations which have to be updated for a rasa release)
   # port on which Rasa runs
   port: 5005
   # token Rasa accepts as authentication token from other Rasa services

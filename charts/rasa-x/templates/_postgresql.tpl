@@ -22,7 +22,7 @@ Override the fullname template of the subchart.
 Return the db database name.
 */}}
 {{- define "rasa-x.psql.database" -}}
-{{- coalesce .Values.global.postgresql.postgresqlDatabase "rasa" -}}
+{{- coalesce .Values.rasax.databaseName .Values.global.postgresql.postgresqlDatabase "rasa" -}}
 {{- end -}}
 
 {{/*
