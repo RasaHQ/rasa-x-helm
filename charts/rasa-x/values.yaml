@@ -36,13 +36,13 @@ rasax:
     - ReadWriteOnce
     # size of the Rasa X volume claim
     size: 10Gi
-    # # annotations for the Rasa X pvc
-    # annotations: {}
+    # annotations for the Rasa X pvc
+    annotations: {}
     # finalizers for the pvc
     finalizers:
     - kubernetes.io/pvc-protection
-    # # existingClaim which should be used instead of a new one
-    # existingClaim:
+    # existingClaim which should be used instead of a new one
+    existingClaim: ""
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
   # resources which Rasa X is required / allowed to use
@@ -325,7 +325,7 @@ fullnameOverride: ""
 # global settings of the used subcharts
 global:
   # storageClass the volume claims should use
-  # storageClass: "-"
+  storageClass: ""
   # postgresql: global settings of the postgresql subchart
   postgresql:
     # postgresqlUsername which should be used by Rasa to connect to Postgres

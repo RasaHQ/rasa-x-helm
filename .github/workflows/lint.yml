@@ -6,6 +6,9 @@ on:
     types:
       - synchronize
 
+env:
+  CHART: charts/rasa-x
+
 jobs:
   lint-test:
     name: Lint the chart
@@ -14,19 +17,27 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Run chart-testing (lint)
-      id: lint
-      uses: helm/chart-testing-action@v1.0.0-alpha.3
-      with:
-        command: lint
-        image: quay.io/helmpack/chart-testing:v3.0.0-beta.2
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    - name: Lint chart
+      run: |
+        helm lint --strict ${CHART}
+
+    # TODO: Consider switching back to this once it's Helm 3 compatible
+    # - name: Run chart-testing (lint)
+    #   id: lint
+    #   uses: helm/chart-testing-action@v1.0.0-alpha.3
+    #   with:
+    #     command: lint
+    #     image: quay.io/helmpack/chart-testing:v3.0.0-beta.2
 
   deploy_chart:
     name: Test the deployment of the chart
     runs-on: ubuntu-latest
     env:
       RELEASE_NAME: test-release
-      CHART: charts/rasa-x
     steps:
     - name: Checkout
       uses: actions/checkout@v1
