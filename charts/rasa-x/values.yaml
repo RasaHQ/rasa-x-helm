@@ -214,6 +214,13 @@ debugMode: false
 # high-load setups).
 separateEventService: "true"
 
+# Settings for pod assignment
+tolerations: []
+  # - key: "nvidia.com/gpu"
+  #   operator: "Exists"
+nodeSelector: {}
+  # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
 # postgresql specific settings (https://github.com/helm/charts/tree/b3ebd2f9883f6810b84fd434d48559f66858eb0b/stable/postgresql)
 postgresql:
   # Install should be `true` if the postgres subchart should be used
