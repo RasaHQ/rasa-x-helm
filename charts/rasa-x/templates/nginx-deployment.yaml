@@ -6,7 +6,7 @@ metadata:
     {{- include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: nginx
 spec:
-  replicas: 1
+  replicas: {{ default 1 .Values.nginx.replicaCount }}
   selector:
     matchLabels:
       {{- include "rasa-x.selectorLabels" . | nindent 6 }}
