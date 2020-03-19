@@ -88,6 +88,18 @@ rasa:
     #     secretKeyRef:
     #       name: twilio-auth
     #       key: twilio_auth_token
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
@@ -216,10 +228,14 @@ debugMode: false
 # high-load setups).
 separateEventService: "true"
 
-# Settings for pod assignment
+# tolerations can be used to control the pod to node assignment
+# https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 tolerations: []
   # - key: "nvidia.com/gpu"
   #   operator: "Exists"
+
+# nodeSelector to specify which node the pods should run on
+# https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 nodeSelector: {}
   # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
