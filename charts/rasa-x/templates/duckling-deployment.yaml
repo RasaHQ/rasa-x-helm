@@ -19,6 +19,14 @@ spec:
         app.kubernetes.io/component: duckling
     spec:
       {{ include "rasa-x.spec" . }}
+      {{- if .Values.duckling.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.duckling.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.duckling.tolerations }}
+      tolerations:
+{{ toYaml .Values.duckling.tolerations | indent 6 }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.duckling.name }}:{{ .Values.duckling.tag }}"

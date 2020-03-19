@@ -18,6 +18,14 @@ spec:
         app.kubernetes.io/component: app
     spec:
       {{ include "rasa-x.spec" . }}
+      {{- if .Values.app.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.app.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.app.tolerations }}
+      tolerations:
+{{ toYaml .Values.app.tolerations | indent 6 }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.app.name }}:{{ .Values.app.tag }}"

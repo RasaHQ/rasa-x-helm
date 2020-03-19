@@ -20,6 +20,14 @@ spec:
         app.kubernetes.io/component: rasa-x
     spec:
       {{ include "rasa-x.spec" . }}
+      {{- if .Values.rasax.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.rasax.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.rasax.tolerations }}
+      tolerations:
+{{ toYaml .Values.rasax.tolerations | indent 6 }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.rasax.name }}:{{ .Values.rasax.tag | default .Chart.AppVersion }}"
