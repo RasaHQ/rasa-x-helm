@@ -51,6 +51,18 @@ rasax:
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
 # rasa: Settings common for all Rasa containers
 rasa:
   # name of the Rasa image to use
@@ -143,6 +155,18 @@ eventService:
   replicaCount: 1
   # databaseName the event service uses to store data
   databaseName: "rasa"
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
   # resources which the event service is required / allowed to use
   resources:
 
@@ -165,6 +189,18 @@ app:
   #      secretKeyRef:
   #        name: app-secret
   #        key: database_url
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
   # endpoints specifies the webhook and health check url paths of the action server app
   endpoints:
     # actionEndpointUrl is the URL which Rasa Open Source calls to execute custom actions
@@ -196,6 +232,18 @@ nginx:
     externalIPs: []
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
   # resources which nginx is required / allowed to use
   resources:
 
@@ -211,6 +259,18 @@ duckling:
   replicaCount: 1
   # port on which duckling should run
   port: 8000
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
   # resources which duckling is required / allowed to use
   resources:
 
@@ -227,17 +287,6 @@ debugMode: false
 # If set to 'false', Rasa X will run an event service as a subprocess (not recommended
 # high-load setups).
 separateEventService: "true"
-
-# tolerations can be used to control the pod to node assignment
-# https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-tolerations: []
-  # - key: "nvidia.com/gpu"
-  #   operator: "Exists"
-
-# nodeSelector to specify which node the pods should run on
-# https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-nodeSelector: {}
-  # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
 # postgresql specific settings (https://github.com/bitnami/charts/tree/a4df45b81a9d0a7862f043765bc13bc875bdad96/bitnami/postgresql)
 postgresql:

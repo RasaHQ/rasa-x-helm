@@ -19,13 +19,13 @@ spec:
         app.kubernetes.io/component: event-service
     spec:
       {{ include "rasa-x.spec" . }}
-      {{- if .Values.nodeSelector }}
+      {{- if .Values.eventService.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+{{ toYaml .Values.eventService.nodeSelector | indent 8 }}
       {{- end }}
-      {{- if .Values.tolerations }}
+      {{- if .Values.eventService.tolerations }}
       tolerations:
-{{ toYaml .Values.tolerations | indent 6 }}
+{{ toYaml .Values.eventService.tolerations | indent 6 }}
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}

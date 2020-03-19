@@ -18,13 +18,13 @@ spec:
         app.kubernetes.io/component: nginx
     spec:
       {{ include "rasa-x.spec" . }}
-      {{- if .Values.nodeSelector }}
+      {{- if .Values.nginx.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+{{ toYaml .Values.nginx.nodeSelector | indent 8 }}
       {{- end }}
-      {{- if .Values.tolerations }}
+      {{- if .Values.nginx.tolerations }}
       tolerations:
-{{ toYaml .Values.tolerations | indent 6 }}
+{{ toYaml .Values.nginx.tolerations | indent 6 }}
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
