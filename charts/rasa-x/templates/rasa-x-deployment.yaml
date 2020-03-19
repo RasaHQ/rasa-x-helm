@@ -6,7 +6,7 @@ metadata:
     {{- include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: rasa-x
 spec:
-  replicas: {{ default 1 .Values.rasax.replicaCount }}
+  replicas: 1
   strategy:
     type: Recreate
   selector:
