@@ -2,6 +2,12 @@ name: Lint and Test Charts
 
 on:
   push:
+    branches:
+    - 'master'
+    - '[0-9]+.[0-9]+.x'
+  pull_request:
+    types:
+      - synchronize
 
 env:
   CHART: charts/rasa-x
