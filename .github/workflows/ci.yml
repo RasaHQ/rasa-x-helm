@@ -1,0 +1,77 @@
+name: Lint and Test Charts
+
+on:
+  push:
+
+env:
+  CHART: charts/rasa-x
+
+jobs:
+  lint-test:
+    name: Lint the chart
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    - name: Lint chart
+      run: |
+        helm lint --strict ${CHART}
+
+    # TODO: Consider switching back to this once it's Helm 3 compatible
+    # - name: Run chart-testing (lint)
+    #   id: lint
+    #   uses: helm/chart-testing-action@v1.0.0-alpha.3
+    #   with:
+    #     command: lint
+    #     image: quay.io/helmpack/chart-testing:v3.0.0-beta.2
+
+  deploy_chart:
+    name: Test the deployment of the chart
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_NAME: test-release
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Setup k3s
+      run: |
+        curl -sfL https://get.k3s.io | sh -
+        sudo chmod 744 /etc/rancher/k3s/k3s.yaml
+        echo "::set-env name=KUBECONFIG::/etc/rancher/k3s/k3s.yaml"
+
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    - name: Generate credentials
+      run: |
+        USER_PASSWORD=$(openssl rand -base64 32)
+        echo "::set-env name=INITIAL_USER_PASSWORD::${USER_PASSWORD}"
+
+    - name: Deploy chart
+      run: |
+        helm dependency update ${CHART}
+        helm install \
+          --set rasax.disableTelemetry=true \
+          --set duckling.enabled=false \
+          --set rasax.initialUser.password=${INITIAL_USER_PASSWORD} \
+          --set nginx.service.type=ClusterIP \
+          --set ingress.hosts[0].host=,ingress.hosts[0].paths={/} \
+          ${RELEASE_NAME} ${CHART}
+
+    - name: Wait for deployment to be ready
+      run: |
+        kubectl wait \
+          --for=condition=available \
+          --timeout=420s \
+          -l "app.kubernetes.io/component=rasa-x" deployment
+
+    - name: Validate that logging in works
+      run: |
+        curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://localhost/api/auth"

@@ -1,7 +1,7 @@
 ---
-apiVersion: v1
+apiVersion: v2
 
-version: "1.1.6"
+version: "1.2.0"
 appVersion: "0.26.0"
 
 name: rasa-x
@@ -20,3 +20,19 @@ maintainers:
 - name: "tmbo"
   email: "tom@rasa.com"
   url: "https://rasa.com"
+
+dependencies:
+- name: postgresql
+  version: ~8.6.4
+  repository: https://charts.bitnami.com/bitnami
+  condition: postgresql.install
+
+- name: redis
+  version: ~10.5.12
+  repository: https://charts.bitnami.com/bitnami
+  condition: redis.install
+
+- name: rabbitmq
+  version: ~6.18.9
+  repository: https://charts.bitnami.com/bitnami
+  condition: rabbitmq.install
