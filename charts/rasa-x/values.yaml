@@ -48,9 +48,9 @@ rasax:
   # resources which Rasa X is required / allowed to use
   resources:
   # extraEnvs are environment variables which can be added to the Rasa X deployment
-  extraEnvs: []
-  # - name: SOME_CUSTOM_ENV_VAR
-  #   value: "custom value"
+  extraEnvs:
+   - name: "RASA_DUCKLING_HTTP_URL"
+     value: "http://rasa-rasa-x-duckling:8000"
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
