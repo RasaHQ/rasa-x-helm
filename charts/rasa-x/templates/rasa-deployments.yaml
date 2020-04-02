@@ -17,6 +17,8 @@ spec:
       labels:
         {{- include "rasa-x.selectorLabels" $ | nindent 8 }}
         app.kubernetes.io/component: {{ .serviceName }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/rasa-config-files-configmap.yaml") . | sha256sum }}
     spec:
       {{ include "rasa-x.spec" $ }}
       {{- if $.Values.rasa.nodeSelector }}
