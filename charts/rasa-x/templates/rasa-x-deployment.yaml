@@ -19,7 +19,7 @@ spec:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: rasa-x
       annotations:
-        checksum/values: {{ toYaml .Values | sha256sum }}
+        checksum/values: {{ toYaml $.Values | sha256sum }}
     spec:
       {{ include "rasa-x.spec" . }}
       {{- if .Values.rasax.nodeSelector }}
