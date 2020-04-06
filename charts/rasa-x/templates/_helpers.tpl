@@ -105,6 +105,13 @@ Return the rasa-x host.
 {{- end -}}
 
 {{/*
+Return the duckling host.
+*/}}
+{{- define "duckling.host" -}}
+  {{- include "rasa-x.fullname" . -}}-duckling
+{{- end -}}
+
+{{/*
 Return the name of the config map which stores the rasa x configuration files.
 */}}
 {{- define "rasa-x.rasa-x.configuration-files" -}}
