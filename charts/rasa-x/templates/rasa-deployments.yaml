@@ -18,7 +18,8 @@ spec:
         {{- include "rasa-x.selectorLabels" $ | nindent 8 }}
         app.kubernetes.io/component: {{ .serviceName }}
       annotations:
-        checksum/values: {{ include "rasa.checksum" . }}
+        checksum/values:
+          {{- include "rasa.checksum" $ | nindent 10 }}
     spec:
       {{ include "rasa-x.spec" $ }}
       {{- if $.Values.rasa.nodeSelector }}
