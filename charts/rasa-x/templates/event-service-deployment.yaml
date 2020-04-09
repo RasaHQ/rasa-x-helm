@@ -62,6 +62,7 @@ spec:
         - name: "LOCAL_MODE"
           value: "false"
         {{- include "rasa-x.psql.envs" . | nindent 8 }}
+        {{- include "rasax.event-service.extra.envs" . | nindent 8 }}
         resources:
           {{- toYaml .Values.eventService.resources | nindent 10 }}
         volumeMounts:

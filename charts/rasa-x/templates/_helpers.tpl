@@ -158,6 +158,15 @@ Include rasax extra env vars.
 {{- end -}}
 
 {{/*
+Include extra env vars for the EventService.
+*/}}
+{{- define "rasax.event-service.extra.envs" -}}
+  {{- if .Values.eventService.extraEnvs -}}
+{{ toYaml .Values.eventService.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Return the storage class name which should be used.
 */}}
 {{- define "rasa-x.persistence.storageClass" -}}
