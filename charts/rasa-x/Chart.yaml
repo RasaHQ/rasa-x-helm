@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "1.2.3"
+version: "1.2.4"
 appVersion: "0.26.0"
 
 name: rasa-x
