@@ -61,6 +61,16 @@ jobs:
         USER_PASSWORD=$(openssl rand -base64 32)
         echo "::set-env name=INITIAL_USER_PASSWORD::${USER_PASSWORD}"
 
+    - name: Free disk space
+      # tries to make sure we do not run out of disk space, see
+      # https://github.community/t5/GitHub-Actions/BUG-Strange-quot-No-space-left-on-device-quot-IOExceptions-on/td-p/46101
+      run: |
+        sudo swapoff -a
+        sudo rm -f /swapfile
+        sudo apt clean
+        docker rmi $(docker image ls -aq)
+        df -h
+
     - name: Deploy chart
       run: |
         helm dependency update ${CHART}
@@ -76,8 +86,14 @@ jobs:
       run: |
         kubectl wait \
           --for=condition=available \
-          --timeout=420s \
+          --timeout=10m \
           -l "app.kubernetes.io/component=rasa-x" deployment
+
+    - name: Log pod status for debugging
+      if: failure()
+      run: |
+        kubectl get pods
+        df -h
 
     - name: Validate that logging in works
       run: |

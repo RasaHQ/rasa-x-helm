@@ -68,7 +68,7 @@ rasa:
   # name of the Rasa image to use
   name: "rasa/rasa"
   # tag refers to the Rasa image tag
-  tag: "1.8.1"  # Please check the README to see all locations which have to be updated for a rasa release)
+  tag: "1.9.5"  # Please check the README to see all locations which have to be updated for a rasa release)
   # port on which Rasa runs
   port: 5005
   # token Rasa accepts as authentication token from other Rasa services
@@ -85,6 +85,10 @@ rasa:
     #   page-access-token: "EAAbHPa7H9rEBAAuFk4Q3gPKbDedQnx4djJJ1JmQ7CAqO4iJKrQcNT0wtD"
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+  # useLoginDatabase will use the Rasa X database to log in and create the database
+  # for the tracker store. If `false` the tracker store database must have been created
+  # previously.
+  useLoginDatabase: true
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
   # extraEnvs are environment variables which can be added to the Rasa deployment
@@ -169,6 +173,10 @@ eventService:
 
   # resources which the event service is required / allowed to use
   resources:
+  # extraEnvs are environment variables which can be added to the eventService deployment
+  extraEnvs: []
+  # - name: SOME_CUSTOM_ENV_VAR
+  #   value: "custom value"
 
 # app (custom action server) specific settings
 app:
@@ -182,7 +190,7 @@ app:
   port: 5055
   # resources which app is required / allowed to use
   resources:
-  # extraEnvs is a dict containing app specific env variables
+  # extraEnvs are environment variables which can be added to the app deployment
   extraEnvs:
   #  - name: DATABASE_URL
   #    valueFrom:
