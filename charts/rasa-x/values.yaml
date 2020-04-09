@@ -186,7 +186,7 @@ app:
   port: 5055
   # resources which app is required / allowed to use
   resources:
-  # extraEnvs is a dict containing app specific env variables
+  # extraEnvs are environment variables which can be added to the app deployment
   extraEnvs:
   #  - name: DATABASE_URL
   #    valueFrom:
