@@ -76,8 +76,9 @@ jobs:
       run: |
         kubectl wait \
           --for=condition=available \
-          --timeout=420s \
+          --timeout=10m \
           -l "app.kubernetes.io/component=rasa-x" deployment
+        kubectl get pods
 
     - name: Validate that logging in works
       run: |
