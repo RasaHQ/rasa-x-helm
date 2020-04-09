@@ -173,6 +173,10 @@ eventService:
 
   # resources which the event service is required / allowed to use
   resources:
+  # extraEnvs are environment variables which can be added to the eventService deployment
+  extraEnvs: []
+  # - name: SOME_CUSTOM_ENV_VAR
+  #   value: "custom value"
 
 # app (custom action server) specific settings
 app:
