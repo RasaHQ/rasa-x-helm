@@ -24,7 +24,9 @@ data:
       username: {{ template "rasa-x.psql.username" . }}
       password: ${DB_PASSWORD}
       db: ${DB_DATABASE}
+      {{- if .Values.rasa.useLoginDatabase }}
       login_db: {{ template "rasa-x.psql.database" . }}
+      {{- end }}
     event_broker:
       type: "pika"
       url: "{{ template "rasa-x.rabbitmq.host" . }}"

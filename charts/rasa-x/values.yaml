@@ -85,6 +85,10 @@ rasa:
     #   page-access-token: "EAAbHPa7H9rEBAAuFk4Q3gPKbDedQnx4djJJ1JmQ7CAqO4iJKrQcNT0wtD"
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+  # useLoginDatabase will use the Rasa X database to log in and create the database
+  # for the tracker store. If `false` the tracker store database must have been created
+  # previously.
+  useLoginDatabase: false
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
   # extraEnvs are environment variables which can be added to the Rasa deployment
