@@ -19,7 +19,9 @@ spec:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: rasa-x
       annotations:
-        checksum/values:
+        checksum/rasa:
+          {{- include "rasa.checksum" . | nindent 10 }}
+        checksum/rasax:
           {{- include "rasa-x.checksum" . | nindent 10 }}
     spec:
       {{ include "rasa-x.spec" . }}
