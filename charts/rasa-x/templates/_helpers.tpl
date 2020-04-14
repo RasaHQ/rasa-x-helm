@@ -178,3 +178,17 @@ Return the storage class name which should be used.
   {{- end -}}
 {{- end -}}
 {{- end }}
+
+{{/*
+Return the checksum of Rasa values.
+*/}}
+{{- define "rasa.checksum" -}}
+{{ toYaml .Values.rasa | sha256sum }}
+{{- end -}}
+
+{{/*
+Return the checksum of Rasa X values.
+*/}}
+{{- define "rasa-x.checksum" -}}
+{{ toYaml .Values.rasax | sha256sum }}
+{{- end -}}
