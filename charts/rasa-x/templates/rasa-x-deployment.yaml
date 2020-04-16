@@ -62,8 +62,6 @@ spec:
         - name: "METRICS_CONSENT"
           value: "false"
         {{- end }}
-        - name: "LOCAL_MODE"
-          value: "false"
         - name: "RASA_X_HOST"
           value: "http://{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}"
         - name: "RASA_MODEL_DIR"

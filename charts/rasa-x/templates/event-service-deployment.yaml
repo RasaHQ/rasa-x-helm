@@ -59,8 +59,6 @@ spec:
               key: {{ template "rasa-x.rabbitmq.password.key" . }}
         - name: "RASA_X_USER_ANALYTICS"
           value: "0"
-        - name: "LOCAL_MODE"
-          value: "false"
         {{- include "rasa-x.psql.envs" . | nindent 8 }}
         {{- include "rasax.event-service.extra.envs" . | nindent 8 }}
         resources:
