@@ -62,7 +62,7 @@ spec:
         - name: "METRICS_CONSENT"
           value: "false"
         {{- end }}
-        - name: "LOCAL_MODE"
+        - name: "LOCAL_MODE" # This variable doesn't do anything anymore in Rasa X 0.28 and later
           value: "false"
         - name: "RASA_X_HOST"
           value: "http://{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}"
