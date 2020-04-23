@@ -63,8 +63,10 @@ spec:
           value: "false"
         {{- include "rasa-x.psql.envs" . | nindent 8 }}
         {{- include "rasax.event-service.extra.envs" . | nindent 8 }}
+        {{- with .Values.eventService.resources }}
         resources:
-          {{- toYaml .Values.eventService.resources | nindent 10 }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         volumeMounts:
         - mountPath: "/app/endpoints.yml"
           subPath: "endpoints.yml"

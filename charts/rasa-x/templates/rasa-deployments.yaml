@@ -61,8 +61,10 @@ spec:
         - --cors
         - '*'
         {{ if $.Values.debugMode }}- --debug{{ end }}
+        {{- with .resources }}
         resources:
-          {{- toYaml .resources | nindent 10 }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         env:
         - name: "DB_PASSWORD"
           valueFrom:
