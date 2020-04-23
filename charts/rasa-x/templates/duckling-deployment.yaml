@@ -43,6 +43,8 @@ spec:
           httpGet:
             path: "/"
             port: "http"
+        {{- with .Values.duckling.resources }}
         resources:
-          {{- toYaml .Values.duckling.resources | nindent 10 }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
 {{- end }}

@@ -62,8 +62,10 @@ spec:
           readOnly: true
           mountPath: "/opt/bitnami/certs"
         {{ end }}
+        {{- with .Values.nginx.resources }}
         resources:
-          {{- toYaml .Values.nginx.resources | nindent 10 }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
       volumes:
       - configMap:
           items:

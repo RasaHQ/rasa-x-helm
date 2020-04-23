@@ -46,7 +46,7 @@ rasax:
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
   # resources which Rasa X is required / allowed to use
-  resources:
+  resources: {}
   # extraEnvs are environment variables which can be added to the Rasa X deployment
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
@@ -131,7 +131,7 @@ rasa:
       # rasaEnvironment it used to indicate the origin of events published to RabbitMQ (App ID message property)
       rasaEnvironment: "production"
       # resources which rasaProduction is required / allowed to use
-      resources:
+      resources: {}
     # rasaWorker is the container which does computational heavy tasks such as training
     rasaWorker:
       # replicaCount of the Rasa worker container
@@ -145,7 +145,7 @@ rasa:
       # rasaEnvironment it used to indicate the origin of events published to RabbitMQ (App ID message property)
       rasaEnvironment: "worker"
       # resources which rasaWorker is required / allowed to use
-      resources:
+      resources: {}
 
 # event-service specific settings
 eventService:
@@ -172,7 +172,7 @@ eventService:
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
   # resources which the event service is required / allowed to use
-  resources:
+  resources: {}
   # extraEnvs are environment variables which can be added to the eventService deployment
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
@@ -189,9 +189,9 @@ app:
   # port on which the custom action server runs
   port: 5055
   # resources which app is required / allowed to use
-  resources:
+  resources: {}
   # extraEnvs are environment variables which can be added to the app deployment
-  extraEnvs:
+  extraEnvs: []
   #  - name: DATABASE_URL
   #    valueFrom:
   #      secretKeyRef:
@@ -235,7 +235,7 @@ nginx:
     # port is the port which the nginx service exposes for HTTP connections
     port: 8000
     # nodePort can be used with a service of type `NodePort` to expose the service on a certain port of the node (https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)
-    nodePort:
+    nodePort: ""
     # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
     externalIPs: []
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
@@ -253,7 +253,7 @@ nginx:
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
   # resources which nginx is required / allowed to use
-  resources:
+  resources: {}
 
 # Duckling specific settings
 duckling:
@@ -280,7 +280,7 @@ duckling:
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
   # resources which duckling is required / allowed to use
-  resources:
+  resources: {}
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
