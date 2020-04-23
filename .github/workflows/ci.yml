@@ -34,6 +34,7 @@ jobs:
       uses: helm/chart-testing-action@v1.0.0-rc.2
       with:
         command: lint
+        config: ct.yaml
 
   deploy_chart:
     name: Test the deployment of the chart
