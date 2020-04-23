@@ -27,7 +27,6 @@ jobs:
         helm repo add bitnami https://charts.bitnami.com/bitnami
 
     - name: Run chart-releaser
-      uses: wochinge/chart-releaser-action@chart-releaser-from-git
+      uses: helm/chart-releaser-action@v1.0.0-rc.2
       env:
         CR_TOKEN: "${{ secrets.CR_TOKEN }}"
-        CHART_RELEASE_COMMIT_HASH: "89c97cd5a8e28959ffe6c272b64c695d068f3f7f"

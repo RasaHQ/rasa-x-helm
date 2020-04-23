@@ -25,17 +25,16 @@ jobs:
       run: |
         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-    - name: Lint chart
+    - name: Lint chart using Helm CLI
       run: |
         helm lint --strict ${CHART}
 
-    # TODO: Consider switching back to this once it's Helm 3 compatible
-    # - name: Run chart-testing (lint)
-    #   id: lint
-    #   uses: helm/chart-testing-action@v1.0.0-alpha.3
-    #   with:
-    #     command: lint
-    #     image: quay.io/helmpack/chart-testing:v3.0.0-beta.2
+    - name: Run chart-testing (lint)
+      id: lint
+      uses: helm/chart-testing-action@v1.0.0-rc.2
+      with:
+        command: lint
+        config: ct.yaml
 
   deploy_chart:
     name: Test the deployment of the chart

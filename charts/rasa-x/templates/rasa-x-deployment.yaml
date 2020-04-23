@@ -132,8 +132,10 @@ spec:
         - mountPath: "/app/git"
           name: "rasa-x-claim"
           subPath: "git"
+        {{- with .Values.rasax.resources }}
         resources:
-          {{- toYaml .Values.rasax.resources | nindent 10 }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
       volumes:
       - name: "environments"
         configMap:

@@ -42,7 +42,9 @@ spec:
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
+        {{- with .Values.app.resources }}
         resources:
-          {{- toYaml .Values.app.resources | nindent 10 }}
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         env:
           {{- toYaml .Values.app.extraEnvs | nindent 10 }}
