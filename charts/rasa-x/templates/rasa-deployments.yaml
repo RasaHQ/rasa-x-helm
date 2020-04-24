@@ -115,7 +115,7 @@ spec:
           value: "http://{{ include "rasa-x.host" $ }}:{{ $.Values.rasax.port }}/api/projects/default/models/tags/{{ .modelTag }}"
         - name: "RASA_DUCKLING_HTTP_URL"
           value: "http://{{ include "duckling.host" $ }}:{{ $.Values.duckling.port }}"
-        {{- include "rasa.extra.envs" $ | nindent 8 }}
+        {{- include "rasa.extraEnvs" $ | nindent 8 }}
 # this is needed to make it clear that these are two resources
 ---
 
