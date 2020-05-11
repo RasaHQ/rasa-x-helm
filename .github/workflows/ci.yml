@@ -36,6 +36,31 @@ jobs:
         command: lint
         config: ct.yaml
 
+  check-chart-version:
+    name: Check if the chart version is bumped up
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2
+      with:
+        path: branch
+
+    - name: Checkout master
+      uses: actions/checkout@v2
+      with:
+        ref: master
+        path: master
+
+    - name: Download yq
+      run: |
+        curl --location https://github.com/mikefarah/yq/releases/download/3.3.0/yq_linux_amd64 -o yq
+        chmod +x yq
+
+    - name: Check version
+      run: |
+        function version { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+        [ $(version `./yq r branch/charts/rasa-x/Chart.yaml version`) -le $(version `./yq r master/charts/rasa-x/Chart.yaml version`) ] && echo "Oh no! You forgot to bump up the chart version." && exit 1
+
   deploy_chart:
     name: Test the deployment of the chart
     runs-on: ubuntu-latest
