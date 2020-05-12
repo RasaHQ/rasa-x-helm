@@ -35,7 +35,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.rasax.name }}:{{ .Values.rasax.tag | default .Chart.AppVersion }}"
+        image: "{{ .Values.rasax.name }}:{{ include "rasa-x.version" . }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         ports:
           - name: "http"

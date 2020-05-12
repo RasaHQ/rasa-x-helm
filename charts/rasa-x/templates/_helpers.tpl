@@ -192,3 +192,10 @@ Return the checksum of Rasa X values.
 {{- define "rasa-x.checksum" -}}
 {{ toYaml .Values.rasax | sha256sum }}
 {{- end -}}
+
+{{/*
+Return the AppVersion value as a default if the rasax.tag variable is not defined.
+*/}}
+{{- define "rasa-x.version" -}}
+{{ .Values.rasax.tag | default .Chart.AppVersion }}
+{{- end -}}

@@ -28,11 +28,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        {{- if not .Values.nginx.tag }}
-        image: "{{ .Values.nginx.name }}:{{ .Values.rasax.tag | default .Chart.AppVersion }}"
-        {{- else }}
-        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag | default .Chart.AppVersion }}"
-        {{- end }}
+        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag | default (include "rasa-x.version" .) }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         ports:
         - name: "http"
