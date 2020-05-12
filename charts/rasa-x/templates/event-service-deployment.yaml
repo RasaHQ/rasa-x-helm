@@ -29,7 +29,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.eventService.name }}:{{ .Values.eventService.tag | default .Chart.AppVersion }}"
+        image: "{{ .Values.eventService.name }}:{{ .Values.eventService.tag | default (include "rasa-x.version" .) }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         ports:
           - name: "http"
