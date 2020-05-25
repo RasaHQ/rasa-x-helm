@@ -68,7 +68,7 @@ rasa:
   # name of the Rasa image to use
   name: "rasa/rasa"
   # tag refers to the Rasa image tag
-  tag: "1.9.5"  # Please check the README to see all locations which have to be updated for a rasa release)
+  tag: "1.10.1"  # Please check the README to see all locations which have to be updated for a rasa release)
   # port on which Rasa runs
   port: 5005
   # token Rasa accepts as authentication token from other Rasa services
