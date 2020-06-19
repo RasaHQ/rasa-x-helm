@@ -49,10 +49,10 @@ recommend to set at least these values:
 | rabbitmq.rabbitmq.password           | Password for RabbitMq.                                                                     | `test`             |
 | global.postgresql.postgresqlPassword | Password for the Postgresql database.                                                      | `password`         |
 | global.redis.password                | Password for redis.                                                                        | `password`         |
-| rasax.tag                            | Version of Rasa X which you want to use.                                                   | `0.28.3`           |
-| rasa.tag                             | Version of Rasa OSS which you want to use.                                                 | `1.10.1`           |
+| rasax.tag                            | Version of Rasa X which you want to use.                                                   | `0.29.1`           |
+| rasa.tag                             | Version of Rasa OSS which you want to use.                                                 | `1.10.3`           |
 | app.name                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
-| app.tag                              | Tag of your action server image.                                                           |  `0.28.3`          |
+| app.tag                              | Tag of your action server image.                                                           |  `0.29.1`          |
 
 ## Where to get help
 
