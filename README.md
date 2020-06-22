@@ -23,13 +23,14 @@ helm install <your release name> rasa-x/rasa-x
 ```
 
 ## Upgrading the deployment
-```
+
+```bash
 helm upgrade <your release name> rasa-x/rasa-x
 ```
 
 ## Uninstalling
 
-```
+```bash
 helm delete <your release name>
 ```
 
@@ -49,15 +50,15 @@ recommend to set at least these values:
 | rabbitmq.rabbitmq.password           | Password for RabbitMq.                                                                     | `test`             |
 | global.postgresql.postgresqlPassword | Password for the Postgresql database.                                                      | `password`         |
 | global.redis.password                | Password for redis.                                                                        | `password`         |
-| rasax.tag                            | Version of Rasa X which you want to use.                                                   | `0.28.3`           |
-| rasa.tag                             | Version of Rasa OSS which you want to use.                                                 | `1.10.1`           |
+| rasax.tag                            | Version of Rasa X which you want to use.                                                   | `0.29.1`           |
+| rasa.tag                             | Version of Rasa OSS which you want to use.                                                 | `1.10.3`           |
 | app.name                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
-| app.tag                              | Tag of your action server image.                                                           |  `0.28.3`          |
+| app.tag                              | Tag of your action server image.                                                           |  `0.29.1`          |
 
 ## Where to get help
 
-- If you encounter bugs or have suggestions for this Helm chart, please create an issue in this repository.
-- If you have general questions about usage, please create a thread in the [Rasa Forum](https://forum.rasa.com/).
+* If you encounter bugs or have suggestions for this Helm chart, please create an issue in this repository.
+* If you have general questions about usage, please create a thread in the [Rasa Forum](https://forum.rasa.com/).
 
 ## How to contribute
 
@@ -70,8 +71,8 @@ To contribute via pull request, follow these steps:
 1. Create an issue describing the feature you want to work on
 2. Create a pull request describing your changes
 
-
 ## Development Internals
+
 ### Releasing a new version of this chart
 
 This repository automatically release a new version of the Helm chart once new changes
@@ -81,5 +82,6 @@ are merged. The only required steps are:
 2. Increase the chart `version` in `charts/rasa-x/Chart.yaml`
 
 ## License
+
 Licensed under the Apache License, Version 2.0.
 Copyright 2020 Rasa Technologies GmbH. [Copy of the license](LICENSE.txt).
