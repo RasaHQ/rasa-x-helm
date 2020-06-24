@@ -1,0 +1,58 @@
+{{- if .Values.s3.enabled }}
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: {{ .Release.Name }}-s3
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: s3
+spec:
+  replicas: {{ default 1 .Values.s3.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rasa-x.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: s3
+  template:
+    metadata:
+      labels:
+        {{- include "rasa-x.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: s3
+    spec:
+      {{ include "rasa-x.spec" . }}
+      {{- if .Values.s3.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.s3.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.s3.tolerations }}
+      tolerations:
+{{ toYaml .Values.s3.tolerations | indent 6 }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.s3.name }}:{{ .Values.s3.tag }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        {{- with .Values.s3.resources }}
+        env:
+        - name: "AWS_S3_BUCKET"
+          value: "{{ $.Values.s3.bucketName }}"
+        - name: "AWS_S3_URL"
+          value: "{{ $.Values.s3.url }}"
+        - name: "AWS_S3_MOUNT"
+          value: "{{ $.Values.s3.mountPoint }}"
+        - name: "AWS_S3_AUTHFILE"
+          value: "{{ $.Values.s3.authFile }}"
+        - name: "AWS_S3_ACCESS_KEY_ID"
+          value: "{{ $.Values.s3.accessKeyId }}"
+        - name: "AWS_S3_SECRET_ACCESS_KEY"
+          value: "{{ $.Values.s3.secretAccessKey }}"
+        volumeMounts:
+        - name: devfuse
+          mountPath: /dev/fuse
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+      volumes:
+      - name: devfuse
+        hostPath:
+          path: /dev/fuse
+{{- end }}

@@ -175,4 +175,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Customer values files
+values
+
 # End of https://www.gitignore.io/api/helm,linux,macos,pycharm,windows,visualstudiocode

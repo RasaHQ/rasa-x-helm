@@ -282,6 +282,44 @@ duckling:
   # resources which duckling is required / allowed to use
   resources: {}
 
+# s3 specific settings
+s3:
+  # Enable or disable s3
+  enabled: true
+  # name of the s3 image to use, alpine based, https://hub.docker.com/r/efrecon/s3fs
+  name: "efrecon/s3fs"
+  # tag refers to the s3 image tag
+  tag: "1.86"
+  # the name of the bucket, this is mandatory
+  bucketName: ""
+  # the URL to the Amazon service
+  url: ""
+  # is the location within the container where to mount the resource.
+  mountPoint: "/opt/s3fs/bucket"
+  # the path to an authorisation file compatible with the format specified by s3fs
+  authFile: ""
+  # the access key to the S3 bucket, this is only used whenever AWS_S3_AUTHFILE is empty
+  accessKeyId: ""
+  # the secret access key to the S3 bucket, this is only used whenever AWS_S3_AUTHFILE is empty.
+  secretAccessKey: ""
+
+  # replicaCount of s3 containers to run
+  replicaCount: 1
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
+  # resources which s3 is required / allowed to use
+  resources: {}
+
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
 # to see which values are required in the secret in case you want to provide your own.
