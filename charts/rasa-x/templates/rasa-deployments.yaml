@@ -44,6 +44,14 @@ spec:
             port: "http"
           initialDelaySeconds: {{ $.Values.rasa.initialProbeDelay }}
           failureThreshold: 10
+        {{- if $.Values.rasa.command }}
+        command:
+          {{- toYaml $.Values.rasa.command | nindent 10 }}
+        {{- end }}
+        {{- if $.Values.rasa.args }}
+        args:
+          {{- toYaml $.Values.rasa.args | nindent 10 }}
+        {{- else }}
         args:
         - x
         - --no-prompt
@@ -60,7 +68,11 @@ spec:
         - "$(RASA_TOKEN)"
         - --cors
         - '*'
+        {{- if $.Values.rasa.extraArgs }}
+        {{- toYaml $.Values.rasa.extraArgs | nindent 8 }}
+        {{- end }}
         {{ if $.Values.debugMode }}- --debug{{ end }}
+        {{- end }}
         {{- with .resources }}
         resources:
           {{- toYaml . | nindent 10 }}

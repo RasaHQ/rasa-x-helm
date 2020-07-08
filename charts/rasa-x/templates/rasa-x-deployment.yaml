@@ -37,6 +37,14 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.rasax.name }}:{{ include "rasa-x.version" . }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
+        {{- if .Values.rasax.command }}
+        command:
+          {{- toYaml .Values.rasax.command | nindent 10 }}
+        {{- end }}
+        {{- if .Values.rasax.args }}
+        args:
+          {{- toYaml .Values.rasax.args | nindent 10 }}
+        {{- end }}
         ports:
           - name: "http"
             containerPort: {{ default 5002 .Values.rasax.port }}
