@@ -28,8 +28,16 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.app.name }}:{{ .Values.app.tag }}"
+        image: "{{ .Values.app.name }}:{{ include "app.version" . }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
+        {{- if .Values.app.command }}
+        command:
+          {{- toYaml .Values.app.command | nindent 10 }}
+        {{- end }}
+        {{- if .Values.app.args }}
+        args:
+          {{- toYaml .Values.app.args | nindent 10 }}
+        {{- end }}
         ports:
         - name: "http"
           containerPort: {{ template "rasa-x.custom-actions.port" . }}

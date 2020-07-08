@@ -4,6 +4,10 @@
 
 # rasax specific settings
 rasax:
+  # override the default command to run in the container
+  command: []
+  # override the default arguments to run in the container
+  args: []
   # name of the Rasa X image to use
   name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
@@ -65,6 +69,12 @@ rasax:
 
 # rasa: Settings common for all Rasa containers
 rasa:
+  # override the default command to run in the container
+  command: []
+  # override the default arguments to run in the container
+  args: []
+  # add extra arguments to the command in the container
+  extraArgs: []
   # name of the Rasa image to use
   name: "rasa/rasa"
   # tag refers to the Rasa image tag
@@ -149,6 +159,10 @@ rasa:
 
 # event-service specific settings
 eventService:
+  # override the default command to run in the container
+  command: []
+  # override the default arguments to run in the container
+  args: []
   # event service just uses the Rasa X image
   name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
@@ -180,10 +194,14 @@ eventService:
 
 # app (custom action server) specific settings
 app:
+  # override the default command to run in the container
+  command: []
+  # override the default arguments to run in the container
+  args: []
   # name of the custom action server image to use
   name: "rasa/rasa-x-demo"
   # tag refers to the custom action server image tag
-  tag: "0.24.0"
+  tag: ""
   # replicaCount of the custom action server container
   replicaCount: 1
   # port on which the custom action server runs
@@ -218,6 +236,10 @@ app:
 
 # nginx specific settings
 nginx:
+  # override the default command to run in the container
+  command: []
+  # override the default arguments to run in the container
+  args: []
   # name of the nginx image to use
   name: "rasa/nginx"
   # tag refers to the nginx image tag (uses `appVersion` by default)
@@ -257,6 +279,10 @@ nginx:
 
 # Duckling specific settings
 duckling:
+  # override the default command to run in the container
+  command: []
+  # override the default arguments to run in the container
+  args: []
   # Enable or disable duckling
   enabled: true
   # name of the Duckling image to use

@@ -199,3 +199,10 @@ Return the AppVersion value as a default if the rasax.tag variable is not define
 {{- define "rasa-x.version" -}}
 {{ .Values.rasax.tag | default .Chart.AppVersion }}
 {{- end -}}
+
+{{/*
+Return the AppVersion value as a default if the app.tag variable is not defined.
+*/}}
+{{- define "app.version" -}}
+{{ .Values.app.tag | default .Chart.AppVersion }}
+{{- end -}}
