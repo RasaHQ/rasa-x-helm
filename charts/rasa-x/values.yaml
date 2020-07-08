@@ -201,7 +201,7 @@ app:
   # name of the custom action server image to use
   name: "rasa/rasa-x-demo"
   # tag refers to the custom action server image tag
-  tag: "0.24.0"
+  tag: ""
   # replicaCount of the custom action server container
   replicaCount: 1
   # port on which the custom action server runs

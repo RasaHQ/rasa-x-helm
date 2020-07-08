@@ -45,7 +45,6 @@ recommend to set at least these values:
 | `rasax.token`                          | Token which the Rasa X pod uses to authenticate requests from other pods.                  | `rasaXToken`       |
 | `rasax.command`                        | Override the default command to run in the container                                       | `[]`              |
 | `rasax.args`                           | Override the default arguments to run in the container                                     | `[]`              |
-|
 | `rasax.jwtSecret`                      | Secret which is used to sign JWT tokens of Rasa X users.                           | `jwtSecret`        |
 | `rasax.initialUser.username`           | **Only for Rasa Enterprise**. A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified) | `admin`            |
 | `rasax.initialUser.password`           | Password for the initial user. If you use Rasa Enterprise and leave it empty, no users will be created. If you use Rasa CE and leave it empty, the password will be generated automatically. | `""`               |
