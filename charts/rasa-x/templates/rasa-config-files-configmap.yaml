@@ -17,16 +17,12 @@ data:
       token: ${RASA_X_TOKEN}
       wait_time_between_pulls: 10
     tracker_store:
-      type: sql
-      dialect: "postgresql"
-      url: {{ template "rasa-x.psql.host" . }}
-      port: {{ template "rasa-x.psql.port" . }}
-      username: {{ template "rasa-x.psql.username" . }}
-      password: ${DB_PASSWORD}
-      db: ${DB_DATABASE}
-      {{- if .Values.rasa.useLoginDatabase }}
-      login_db: {{ template "rasa-x.psql.database" . }}
-      {{- end }}
+      type: mongod
+      url: "{{ .Values.rasa.trackerStore.url }}"
+      username: "{{ .Values.rasa.trackerStore.username }}"
+      password: ${MONGO_DB_PASSWORD}
+      db: "{{ .Values.rasa.trackerStore.db }}"
+      auth_source: "{{ .Values.rasa.trackerStore.auth_source }}"
     event_broker:
       type: "pika"
       url: "{{ template "rasa-x.rabbitmq.host" . }}"

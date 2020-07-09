@@ -102,6 +102,19 @@ rasa:
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
   # extraEnvs are environment variables which can be added to the Rasa deployment
+  trackerStore:
+    type: "mongod"
+    # url to your mongo instance, e.g. mongodb://localhost:27017
+    url: "mongodb://cluster0.p0ani.mongodb.net:27017"
+    # name of the db within your mongo instance, e.g. rasa
+    db: "rasa"
+    # username used for authentication
+    username: "dbUser"
+    # password used for authentication
+    password: "zerPyc-cydset-bodzo8"
+    # database name associated with the user’s credentials
+    auth_source: ""
+
   extraEnvs: []
     # example which sets env variables in each Rasa Open Source service from a separate k8s secret
     # - name: "TWILIO_ACCOUNT_SID"

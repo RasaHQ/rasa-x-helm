@@ -78,6 +78,8 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         env:
+        - name: "MONGO_DB_PASSWORD"
+          value: "{{ $.Values.rasa.trackerStore.password }}"
         - name: "DB_PASSWORD"
           valueFrom:
             secretKeyRef:
