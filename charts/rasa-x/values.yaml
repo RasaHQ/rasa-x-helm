@@ -101,6 +101,20 @@ rasa:
   useLoginDatabase: true
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
+  # trackerType is the tracker_store type, sql is the default, see endpoints.yml, supports: sql, mongod, dynamo
+  trackerType: "sql"
+  # trackerDialect is sqlalchemy dialect if trackerType is sql
+  trackerDialect: "postgres"
+  # trackerUrl is the db URL for non-Postgres db's
+  trackerUrl: ""
+  # trackerUsername is the db username for non-Postgres db's
+  trackerUsername: ""
+  # trackerAuthSource is the auth_source for mongodb
+  trackerAuthSource: ""
+  # trackerTableName is the table_name for dynamodb
+  trackerTableName: ""
+  # trackerRegion is the region for dynamodb
+  trackerRegion: ""
   # extraEnvs are environment variables which can be added to the Rasa deployment
   extraEnvs: []
     # example which sets env variables in each Rasa Open Source service from a separate k8s secret
