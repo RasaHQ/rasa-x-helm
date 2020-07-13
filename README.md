@@ -67,6 +67,7 @@ recommend to set at least these values:
 | `nginx.args`                           | Override the default arguments to run in the container                                     | `[]`              |
 | `duckling.command`                     | Override the default command to run in the container                                       | `[]`              |
 | `duckling.args`                        | Override the default arguments to run in the container                                     | `[]`              |
+| `global.progressDeadlineSeconds`       | Specifies the number of seconds you want to wait for your Deployment to progress before the system reports back that the Deployment has failed progressing | `600` |
 
 ## Where to get help
 

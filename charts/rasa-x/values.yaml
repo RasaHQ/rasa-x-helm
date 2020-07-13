@@ -432,6 +432,11 @@ fullnameOverride: ""
 
 # global settings of the used subcharts
 global:
+  # specifies the number of seconds you want to wait for your Deployment to progress before
+  # the system reports back that the Deployment has failed progressing - surfaced as a condition
+  # with Type=Progressing, Status=False. and Reason=ProgressDeadlineExceeded in the status of the resource
+  # source: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#progress-deadline-seconds
+  progressDeadlineSeconds: 600
   # storageClass the volume claims should use
   storageClass: ""
   # postgresql: global settings of the postgresql subchart
