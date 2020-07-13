@@ -7,6 +7,7 @@ metadata:
     {{- include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: event-service
 spec:
+  progressDeadlineSeconds: {{ .Values.global.progressDeadlineSeconds }}
   replicas: {{ default 1 .Values.eventService.replicaCount }}
   selector:
     matchLabels:
