@@ -71,6 +71,8 @@ spec:
         - name: "METRICS_CONSENT"
           value: "false"
         {{- end }}
+        - name: "SELF_PORT"
+          value: {{ .Values.rasax.port | quote }}
         - name: "LOCAL_MODE" # This variable doesn't do anything anymore in Rasa X 0.28 and later
           value: "false"
         - name: "RASA_X_HOST"

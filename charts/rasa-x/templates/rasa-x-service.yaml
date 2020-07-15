@@ -8,7 +8,7 @@ metadata:
 spec:
   ports:
   - port: {{ .Values.rasax.port }}
-    targetPort: 5002
+    targetPort: http
     protocol: "TCP"
     name: "http"
   selector:
