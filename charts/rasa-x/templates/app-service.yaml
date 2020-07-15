@@ -11,11 +11,13 @@ spec:
     targetPort: {{ template "rasa-x.custom-actions.port" . }}
     protocol: "TCP"
     name: "http"
+  {{- if .Values.nginx.enabled }}
     # workaround for nginx which curls on port 80 to check availability
   - port: 80
     targetPort: 80
     protocol: "TCP"
     name: "workaround"
+  {{- end }}
   selector:
     {{- include "rasa-x.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: app

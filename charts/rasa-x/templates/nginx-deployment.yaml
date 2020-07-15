@@ -1,3 +1,4 @@
+{{- if .Values.nginx.enabled }}
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
@@ -87,3 +88,4 @@ spec:
         secret:
           secretName: {{ .Values.nginx.certificateSecret }}
       {{ end }}
+{{- end }}

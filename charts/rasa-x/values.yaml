@@ -236,6 +236,9 @@ app:
 
 # nginx specific settings
 nginx:
+  # enabled should be `true` if you want to use nginx
+  # if you set false, you will need to set up some other method of routing (VirtualService/Ingress controller)
+  enabled: true
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
