@@ -1,3 +1,4 @@
+{{- if .Values.nginx.enabled }}
 apiVersion: "v1"
 kind: "Service"
 metadata:
@@ -25,3 +26,4 @@ spec:
   selector:
     {{- include "rasa-x.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: nginx
+{{- end }}
