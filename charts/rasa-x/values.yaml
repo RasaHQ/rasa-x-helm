@@ -399,6 +399,7 @@ redis:
 # ingress settings
 ingress:
   # enabled should be `true` if you want to use this ingress
+  # note that nginx.enabled must also be true for ingress to work
   enabled: true
   # annotations for the ingress
   annotations: {}
