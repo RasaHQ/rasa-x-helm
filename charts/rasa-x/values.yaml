@@ -325,7 +325,7 @@ debugMode: false
 # high-load setups).
 separateEventService: "true"
 
-# postgresql specific settings (https://github.com/bitnami/charts/tree/a4df45b81a9d0a7862f043765bc13bc875bdad96/bitnami/postgresql)
+# postgresql specific settings (https://hub.helm.sh/charts/bitnami/postgresql/8.6.13)
 postgresql:
   # Install should be `true` if the postgres subchart should be used
   install: true
@@ -348,7 +348,7 @@ postgresql:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
-# RabbitMQ specific settings (https://github.com/bitnami/charts/tree/c9ce341bff8c1c5ae3f385aaa8aba129075f2a5c/bitnami/rabbitmq)
+# RabbitMQ specific settings (https://hub.helm.sh/charts/bitnami/rabbitmq/6.19.2)
 rabbitmq:
   # Install should be `true` if the rabbitmq subchart should be used
   install: true
@@ -374,7 +374,7 @@ rabbitmq:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
-# redis specific settings (https://github.com/bitnami/charts/tree/995683528c70af62eb86876e4465414efde6ecbe/bitnami/redis)
+# redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
 redis:
   # Install should be `true` if the redis subchart should be used
   install: true
