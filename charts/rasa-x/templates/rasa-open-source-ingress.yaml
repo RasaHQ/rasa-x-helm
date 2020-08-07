@@ -7,7 +7,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-rasa-open-source
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
   annotations:
@@ -39,10 +39,6 @@ spec:
           serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
           servicePort: {{ $.Values.rasa.port }}
         path: /webhooks/
-      - backend:
-          serviceName: {{ $fullName }}-app
-          servicePort: {{ default 5055 $.Values.app.port }}
-        path: /app/(.*)
       - backend:
           serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
           servicePort: {{ $.Values.rasa.port }}

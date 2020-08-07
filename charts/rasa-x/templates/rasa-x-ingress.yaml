@@ -8,7 +8,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-api
+  name: {{ $fullName }}
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
   annotations:

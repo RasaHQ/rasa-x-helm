@@ -398,8 +398,9 @@ redis:
 
 # ingress settings
 ingress:
-  # enabled should be `true` if you want to use this ingress
-  # note that nginx.enabled must also be true for ingress to work
+  # enabled should be `true` if you want to use this ingress.
+  # Note that if `nginx.enabled` is `true` the `rasa/nginx` image is used as reverse proxy.
+  # In order to use nginx ingress you have to set `nginx.enabled=false`.
   enabled: true
   # annotations for the ingress
   annotations: {}
