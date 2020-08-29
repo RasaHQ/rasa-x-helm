@@ -126,13 +126,6 @@ Return the name of the rasa x volume claim.
 {{- end -}}
 
 {{/*
-Return the name of config map which stores the nginx agreement.
-*/}}
-{{- define "rasa-x.nginx.agreement" -}}
-"{{ .Release.Name }}-agreement"
-{{- end -}}
-
-{{/*
 Return the port of the action container.
 */}}
 {{- define "rasa-x.custom-actions.port" -}}

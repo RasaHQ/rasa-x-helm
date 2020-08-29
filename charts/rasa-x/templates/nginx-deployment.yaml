@@ -65,8 +65,9 @@ spec:
         - name: "CUSTOM_ACTION_HOST"
           value: "{{ include "rasa-x.fullname" . }}-app:{{ template "rasa-x.custom-actions.port" . }}"
         volumeMounts:
-        - mountPath: "/opt/bitnami/nginx/conf/bitnami/terms"
-          name: "agreement"
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
         {{ if .Values.nginx.certificateSecret }}
         - name: "certificates"
           readOnly: true
@@ -77,12 +78,9 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
       volumes:
-      - configMap:
-          items:
-          - key: "agree"
-            path: "agree.txt"
-          name: {{ template "rasa-x.nginx.agreement" . }}
-        name: "agreement"
+      - name: nginx-config
+        configMap:
+          name: nginx-configmap
       {{ if .Values.nginx.certificateSecret }}
       - name: "certificates"
         secret:
