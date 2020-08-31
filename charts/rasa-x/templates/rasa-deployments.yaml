@@ -110,11 +110,13 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.secret" $ }}
               key: "jwtSecret"
+        {{- if $.Values.redis.install }}
         - name: "REDIS_PASSWORD"
           valueFrom:
             secretKeyRef:
               name: {{ template "rasa-x.redis.password.secret" $ }}
               key: {{ template "rasa-x.redis.password.key" $ }}
+        {{- end }}
         - name: "RABBITMQ_PASSWORD"
           valueFrom:
             secretKeyRef:
