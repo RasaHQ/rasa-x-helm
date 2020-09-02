@@ -65,9 +65,10 @@ spec:
         - name: "CUSTOM_ACTION_HOST"
           value: "{{ include "rasa-x.fullname" . }}-app:{{ template "rasa-x.custom-actions.port" . }}"
         volumeMounts:
-        - name: nginx-config
-          mountPath: /etc/nginx/nginx.conf
-          subPath: nginx.conf
+        - name: nginx-conf
+          mountPath: /etc/nginx
+          readOnly: true
+#          subPath: nginx.conf
         {{ if .Values.nginx.certificateSecret }}
         - name: "certificates"
           readOnly: true
@@ -78,9 +79,12 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
       volumes:
-      - name: nginx-config
+      - name: nginx-conf
         configMap:
-          name: nginx-configmap
+          name: nginx-conf
+          items:
+            - key: nginx.conf
+              path: nginx.conf
       {{ if .Values.nginx.certificateSecret }}
       - name: "certificates"
         secret:
