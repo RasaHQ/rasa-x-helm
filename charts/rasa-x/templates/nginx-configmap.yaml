@@ -17,11 +17,11 @@ data:
 
     http {
       upstream docker-stack {
-        server rasa-rasa-x-rasa-production:5005 max_fails=0;
+        server {{ .Release.Name }}-rasa-x-{{ .Values.rasa.versions.rasaProduction.serviceName }}:{{ .Values.rasa.port }} max_fails=0;
       }
 
       upstream docker-rasax-api {
-        server rasa-rasa-x-rasa-x:5002 max_fails=0;
+        server {{ .Release.Name }}-rasa-x-rasa-x:{{ .Values.rasax.port }} max_fails=0;
       }
 
       server {
