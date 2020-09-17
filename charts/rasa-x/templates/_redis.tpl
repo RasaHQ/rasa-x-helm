@@ -32,6 +32,6 @@ Return the redis password secret key.
   {{- else if .Values.redis.install -}}
     "redis-password"
   {{- else -}}
-    {{- .Values.redis.existingSecretPasswordKey -}}
+    {{- default "redis-password" .Values.redis.existingSecretPasswordKey | quote -}}
   {{- end -}}
 {{- end -}}

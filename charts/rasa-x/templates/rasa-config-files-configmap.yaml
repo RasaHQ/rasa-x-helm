@@ -37,9 +37,11 @@ data:
     action_endpoint:
       url: "http://{{ include "rasa-x.fullname" . }}-app:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"
       token:  ""
+    {{- if $.Values.redis.install }}
     lock_store:
       type: "redis"
       url: {{ template "rasa-x.redis.host" . }}
       port: {{ default 6379 .Values.redis.redisPort }}
       password: ${REDIS_PASSWORD}
       db: {{ default "1" .Values.rasa.lockStoreDatabase }}
+    {{- end }}
