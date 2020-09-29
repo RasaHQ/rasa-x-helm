@@ -1,0 +1,71 @@
+{{ if eq "true" (include "db-migration-service.requiredVersion" .) }}
+{{ if .Values.separateDBMigrationService }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-db-migration-service
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: db-migration-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "rasa-x.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: db-migration-service
+  template:
+    metadata:
+      labels:
+        {{- include "rasa-x.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: db-migration-service
+    spec:
+      automountServiceAccountToken: false
+      {{ include "rasa-x.spec" . }}
+      {{- if .Values.dbMigrationService.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.dbMigrationService.nodeSelector | indent 8 }}
+      {{- end }}
+      {{- if .Values.dbMigrationService.tolerations }}
+      tolerations:
+{{ toYaml .Values.dbMigrationService.tolerations | indent 6 }}
+      {{- end }}
+      containers:
+      - name: db-migration-service
+        image: "{{ .Values.dbMigrationService.name }}:{{ .Values.dbMigrationService.tag | default (include "rasa-x.version" .) }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
+        {{- if .Values.dbMigrationService.command }}
+        command:
+          {{- toYaml .Values.dbMigrationService.command | nindent 10 }}
+        {{- end }}
+        args:
+          - python
+          - -m
+          - rasax.community.services.db_migration_service
+        {{- if .Values.dbMigrationService.args }}
+          {{- toYaml .Values.dbMigrationService.args | nindent 10 }}
+        {{- end }}
+        ports:
+          - name: "http"
+            containerPort: {{ .Values.dbMigrationService.port }}
+            protocol: "TCP"
+        livenessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        readinessProbe:
+          httpGet:
+            path: "/health"
+            port: "http"
+        env:
+        - name: "SELF_PORT"
+          value: {{ .Values.dbMigrationService.port | quote }}
+        - name: "RUN_DATABASE_MIGRATION_AS_SEPARATE_SERVICE"
+          value: {{ .Values.separateDBMigrationService | quote }}
+        {{- include "rasa-x.psql.envs" . | nindent 8 }}
+        {{- include "rasax.db-migration-service.extra.envs" . | nindent 8 }}
+        {{- with .Values.dbMigrationService.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+{{end}}
+{{end}}

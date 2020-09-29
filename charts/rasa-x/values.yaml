@@ -194,6 +194,43 @@ rasa:
       # - name: tmpdir
       #   emptyDir: {}
 
+# The database migration service required Rasa X >= 0.33.0
+# db-migration-service specific settings
+dbMigrationService:
+  # settings related to the init-db container used as a init container for services
+  initContainer:
+    image: alpine:latest
+  # override the default command to run in the container
+  command: []
+  # override the default arguments to run in the container
+  args: []
+  # database migration service just uses the Rasa X image
+  name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
+  # tag refers to the Rasa X image tag (uses `appVersion` by default)
+  tag: ""
+  # don't check required minimum version and run the service
+  ignoreVersionCheck: false
+  # port on which which to run the readiness endpoint
+  port: 8000
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
+  # resources which the event service is required / allowed to use
+  resources: {}
+  # extraEnvs are environment variables which can be added to the eventService deployment
+  extraEnvs: []
+  # - name: SOME_CUSTOM_ENV_VAR
+  #   value: "custom value"
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
@@ -398,6 +435,10 @@ debugMode: false
 # If set to 'false', Rasa X will run an event service as a subprocess (not recommended
 # high-load setups).
 separateEventService: "true"
+
+# separateDBMigrationService value determines whether the dbMigrationService will be run as a separate service.
+# If set to 'false', Rasa X will run a database migration service as a subprocess.
+separateDBMigrationService: true
 
 # postgresql specific settings (https://hub.helm.sh/charts/bitnami/postgresql/8.6.13)
 postgresql:

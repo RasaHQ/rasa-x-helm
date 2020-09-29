@@ -167,6 +167,15 @@ Include extra env vars for the EventService.
 {{- end -}}
 
 {{/*
+Include extra env vars for the database migration service.
+*/}}
+{{- define "rasax.db-migration-service.extra.envs" -}}
+  {{- if .Values.dbMigrationService.extraEnvs -}}
+{{ toYaml .Values.dbMigrationService.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Return the storage class name which should be used.
 */}}
 {{- define "rasa-x.persistence.storageClass" -}}
@@ -208,5 +217,48 @@ Return 'true' if an enterprise version is run.
 {{- print "true" -}}
 {{- else -}}
 {{- print "false" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the rasa-x.version value as a default if the dbMigrationService.tag variable is not defined.
+*/}}
+{{- define "db-migration-service.version" -}}
+{{ .Values.dbMigrationService.tag | default (include "rasa-x.version" .) }}
+{{- end -}}
+
+{{/*
+Return 'true' if required version to run the database migration service is correct.
+*/}}
+{{- define "db-migration-service.requiredVersion" -}}
+{{- if semverCompare ">= 0.33.0" (include "db-migration-service.version" .) -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return an init container for database migration.
+*/}}
+{{- define "initContainer.dbMigration" -}}
+{{ if and (eq "true" (include "db-migration-service.requiredVersion" .)) .Values.separateDBMigrationService }}
+initContainers:
+- name: init-db
+  image: {{ .Values.dbMigrationService.initContainer.image }}
+  command:
+  - 'sh'
+  - '-c'
+  - "apk update --no-cache && \
+    apk add jq curl && \
+    until nslookup {{ .Release.Name }}-db-migration-service-headless 1> /dev/null; do echo Waiting for the database migration service; sleep 2; done && \
+    until [[ \"$(curl -s http://{{ .Release.Name }}-db-migration-service-headless:{{ .Values.dbMigrationService.port }} | jq -r .status)\" == \"completed\" ]]; do \
+    STATUS_JSON=$(curl -s http://{{ .Release.Name }}-db-migration-service-headless:{{ .Values.dbMigrationService.port }}); \
+    PROGRESS_IN_PERCENT=$(echo $STATUS_JSON | jq -r .progress_in_percent); \
+    STATUS=$(echo $STATUS_JSON | jq -r .status); \
+    echo The database migration status: ${STATUS}...${PROGRESS_IN_PERCENT}%; \
+    sleep 5; \
+    done; \
+    echo The database migration status: completed...100%"
 {{- end -}}
 {{- end -}}

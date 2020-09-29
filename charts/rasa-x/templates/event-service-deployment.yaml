@@ -29,6 +29,7 @@ spec:
       tolerations:
 {{ toYaml .Values.eventService.tolerations | indent 6 }}
       {{- end }}
+      {{- include "initContainer.dbMigration" . |  nindent 6 }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.eventService.name }}:{{ .Values.eventService.tag | default (include "rasa-x.version" .) }}"
