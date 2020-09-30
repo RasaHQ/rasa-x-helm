@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "required": [
+        "rabbitmq"
+    ],
+    "properties": {
+        "rabbitmq": {
+            "$id": "#/properties/rabbitmq",
+            "type": "object",
+            "required": [
+                "rabbitmq"
+            ],
+            "properties": {
+                "rabbitmq": {
+                    "$id": "#/properties/rabbitmq/properties/rabbitmq",
+                    "type": "object",
+                    "required": [
+                        "password"
+                    ],
+                    "properties": {
+                        "password": {
+                            "$id": "#/properties/rabbitmq/properties/rabbitmq/properties/password",
+                            "type": "string",
+                            "title": "The RabbitMQ password schema",
+                            "description": "RabbitMQ password shouldn't contain '#' character - https://www.rabbitmq.com/passwords.html#credential-validation-limitations.",
+                            "default": "",
+                            "examples": [
+                                "pa$$word"
+                            ],
+                            "pattern": "^[a-zA-Z0-9-_!@$%^&*(),.?:{}|<>]+$"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
