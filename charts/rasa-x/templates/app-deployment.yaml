@@ -57,3 +57,11 @@ spec:
         {{- end }}
         env:
           {{- toYaml .Values.app.extraEnvs | nindent 10 }}
+{{- if .Values.app.extraVolumeMounts }}
+        volumeMounts:
+{{ toYaml .Values.app.extraVolumeMounts | indent 8 }}
+{{- end }}
+{{- if .Values.app.extraVolumes }}
+      volumes:
+{{ toYaml .Values.app.extraVolumes | indent 6 }}
+{{- end }}

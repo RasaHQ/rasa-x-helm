@@ -56,6 +56,16 @@ rasax:
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 
+  # additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
+
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -142,6 +152,15 @@ rasa:
       rasaEnvironment: "production"
       # resources which rasaProduction is required / allowed to use
       resources: {}
+      # additional volumeMounts to the main container
+      extraVolumeMounts: []
+      # - name: tmpdir
+      #   mountPath: /var/lib/mypath
+
+      # additional volumes to the pod
+      extraVolumes: []
+      # - name: tmpdir
+      #   emptyDir: {}
     # rasaWorker is the container which does computational heavy tasks such as training
     rasaWorker:
       # replicaCount of the Rasa worker container
@@ -156,6 +175,15 @@ rasa:
       rasaEnvironment: "worker"
       # resources which rasaWorker is required / allowed to use
       resources: {}
+      # additional volumeMounts to the main container
+      extraVolumeMounts: []
+      # - name: tmpdir
+      #   mountPath: /var/lib/mypath
+
+      # additional volumes to the pod
+      extraVolumes: []
+      # - name: tmpdir
+      #   emptyDir: {}
 
 # event-service specific settings
 eventService:
@@ -191,6 +219,16 @@ eventService:
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
+
+  # additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
 
 # app (custom action server) specific settings
 app:
@@ -233,6 +271,16 @@ app:
     actionEndpointUrl: /webhook
     # healthCheckURL is the URL which is used to check the pod health status
     healthCheckUrl: /health
+
+  # additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
 
 # nginx specific settings
 nginx:
@@ -279,6 +327,16 @@ nginx:
 
   # resources which nginx is required / allowed to use
   resources: {}
+
+  # additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
 
 # Duckling specific settings
 duckling:

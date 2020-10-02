@@ -77,10 +77,16 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         volumeMounts:
+{{- if .Values.eventService.extraVolumeMounts }}
+{{ toYaml .Values.eventService.extraVolumeMounts | indent 8 }}
+{{- end }}
         - mountPath: "/app/endpoints.yml"
           subPath: "endpoints.yml"
           name: "rasa-configuration"
       volumes:
+{{- if .Values.eventService.extraVolumes }}
+{{ toYaml .Values.eventService.extraVolumes | indent 6 }}
+{{- end }}
       - name: "rasa-configuration"
         configMap:
           name: {{ template "rasa-x.rasa.configuration-files" . }}

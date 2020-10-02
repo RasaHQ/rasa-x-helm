@@ -143,11 +143,17 @@ spec:
         - mountPath: "/app/git"
           name: "rasa-x-claim"
           subPath: "git"
+{{- if .Values.rasax.extraVolumeMounts }}
+{{ toYaml .Values.rasax.extraVolumeMounts | indent 8 }}
+{{- end }}
         {{- with .Values.rasax.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
       volumes:
+{{- if .Values.rasax.extraVolumes }}
+{{ toYaml .Values.rasax.extraVolumes | indent 6 }}
+{{- end }}
       - name: "environments"
         configMap:
           name: {{ template "rasa-x.rasa-x.configuration-files" . }}
