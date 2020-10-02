@@ -1,5 +1,4 @@
-{{ if eq "true" (include "db-migration-service.requiredVersion" .) }}
-{{ if .Values.separateDBMigrationService }}
+{{ if and (eq "true" (include "db-migration-service.requiredVersion" .)) .Values.separateDBMigrationService }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -56,6 +55,10 @@ spec:
           httpGet:
             path: "/health"
             port: "http"
+{{- if .Values.dbMigrationService.extraVolumeMounts }}
+        volumeMounts:
+{{ toYaml .Values.dbMigrationService.extraVolumeMounts | indent 8 }}
+{{- end }}
         env:
         - name: "SELF_PORT"
           value: {{ .Values.dbMigrationService.port | quote }}
@@ -67,5 +70,8 @@ spec:
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-{{end}}
+{{- if .Values.dbMigrationService.extraVolumes }}
+      volumes:
+{{ toYaml .Values.dbMigrationService.extraVolumes | indent 6 }}
+{{- end }}
 {{end}}

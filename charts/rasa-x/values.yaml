@@ -231,6 +231,16 @@ dbMigrationService:
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 
+  # additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
