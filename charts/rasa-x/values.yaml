@@ -58,13 +58,13 @@ rasax:
 
   # additional volumeMounts to the main container
   extraVolumeMounts: []
-  #- name: tmpdir
-  #  mountPath: /var/lib/mypath
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
 
   # additional volumes to the pod
   extraVolumes: []
-  #- name: tmpdir
-  #  emptyDir: {}
+  # - name: tmpdir
+  #   emptyDir: {}
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -154,13 +154,13 @@ rasa:
       resources: {}
       # additional volumeMounts to the main container
       extraVolumeMounts: []
-      #- name: tmpdir
-      #  mountPath: /var/lib/mypath
+      # - name: tmpdir
+      #   mountPath: /var/lib/mypath
 
       # additional volumes to the pod
       extraVolumes: []
-      #- name: tmpdir
-      #  emptyDir: {}
+      # - name: tmpdir
+      #   emptyDir: {}
     # rasaWorker is the container which does computational heavy tasks such as training
     rasaWorker:
       # replicaCount of the Rasa worker container
@@ -177,13 +177,13 @@ rasa:
       resources: {}
       # additional volumeMounts to the main container
       extraVolumeMounts: []
-      #- name: tmpdir
-      #  mountPath: /var/lib/mypath
+      # - name: tmpdir
+      #   mountPath: /var/lib/mypath
 
       # additional volumes to the pod
       extraVolumes: []
-      #- name: tmpdir
-      #  emptyDir: {}
+      # - name: tmpdir
+      #   emptyDir: {}
 
 # event-service specific settings
 eventService:
@@ -222,13 +222,13 @@ eventService:
 
   # additional volumeMounts to the main container
   extraVolumeMounts: []
-  #- name: tmpdir
-  #  mountPath: /var/lib/mypath
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
 
   # additional volumes to the pod
   extraVolumes: []
-  #- name: tmpdir
-  #  emptyDir: {}
+  # - name: tmpdir
+  #   emptyDir: {}
 
 # app (custom action server) specific settings
 app:
@@ -274,13 +274,13 @@ app:
 
   # additional volumeMounts to the main container
   extraVolumeMounts: []
-  #- name: tmpdir
-  #  mountPath: /var/lib/mypath
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
 
   # additional volumes to the pod
   extraVolumes: []
-  #- name: tmpdir
-  #  emptyDir: {}
+  # - name: tmpdir
+  #   emptyDir: {}
 
 # nginx specific settings
 nginx:
@@ -330,13 +330,13 @@ nginx:
 
   # additional volumeMounts to the main container
   extraVolumeMounts: []
-  #- name: tmpdir
-  #  mountPath: /var/lib/mypath
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
 
   # additional volumes to the pod
   extraVolumes: []
-  #- name: tmpdir
-  #  emptyDir: {}
+  # - name: tmpdir
+  #   emptyDir: {}
 
 # Duckling specific settings
 duckling:
