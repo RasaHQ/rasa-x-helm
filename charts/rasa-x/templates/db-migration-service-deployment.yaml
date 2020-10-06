@@ -63,7 +63,7 @@ spec:
         - name: "SELF_PORT"
           value: {{ .Values.dbMigrationService.port | quote }}
         - name: "RUN_DATABASE_MIGRATION_AS_SEPARATE_SERVICE"
-          value: {{ .Values.separateDBMigrationService | quote }}
+          value: "true"
         {{- include "rasa-x.psql.envs" . | nindent 8 }}
         {{- include "rasax.db-migration-service.extra.envs" . | nindent 8 }}
         {{- with .Values.dbMigrationService.resources }}

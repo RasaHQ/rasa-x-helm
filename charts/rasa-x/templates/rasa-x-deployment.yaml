@@ -34,7 +34,6 @@ spec:
       tolerations:
 {{ toYaml .Values.rasax.tolerations | indent 6 }}
       {{- end }}
-      {{- include "initContainer.dbMigration" . |  nindent 6 }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.rasax.name }}:{{ include "rasa-x.version" . }}"

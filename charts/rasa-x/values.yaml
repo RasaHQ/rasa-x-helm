@@ -194,7 +194,7 @@ rasa:
       # - name: tmpdir
       #   emptyDir: {}
 
-# The database migration service required Rasa X >= 0.33.0
+# The database migration service requires Rasa X >= 0.33.0
 # db-migration-service specific settings
 dbMigrationService:
   # settings related to the init-db container used as a init container for services
@@ -208,7 +208,7 @@ dbMigrationService:
   name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
   tag: ""
-  # don't check required minimum version and run the service
+  # don't check required minimum Rasa X version and run the service
   ignoreVersionCheck: false
   # port on which which to run the readiness endpoint
   port: 8000
