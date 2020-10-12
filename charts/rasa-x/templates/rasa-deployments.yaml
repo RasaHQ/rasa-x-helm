@@ -79,6 +79,10 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         env:
+        {{- if eq "true" (include "is_enterprise" $) }}
+        - name: "RASA_TELEMETRY_ENABLED"
+          value: "false"
+        {{ end }}
         - name: "DB_PASSWORD"
           valueFrom:
             secretKeyRef:

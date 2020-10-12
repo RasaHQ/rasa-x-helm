@@ -63,6 +63,10 @@ spec:
           initialDelaySeconds: {{ .Values.rasax.initialProbeDelay }}
           failureThreshold: 10
         env:
+        {{- if eq "true" (include "is_enterprise" .) }}
+        - name: "RASA_TELEMETRY_ENABLED"
+          value: "false"
+        {{ end }}
         {{- if .Values.debugMode }}
         - name: "DEBUG_MODE"
           value: "true"
