@@ -25,6 +25,7 @@ spec:
         checksum/rasax:
           {{- include "rasa-x.checksum" . | nindent 10 }}
     spec:
+      automountServiceAccountToken: false
       {{ include "rasa-x.spec" . }}
       {{- if .Values.rasax.nodeSelector }}
       nodeSelector:
