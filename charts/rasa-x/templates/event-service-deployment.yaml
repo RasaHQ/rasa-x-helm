@@ -57,6 +57,10 @@ spec:
           - -m
           - rasax.community.services.event_service
         env:
+        {{- if eq "true" (include "is_enterprise" .) }}
+        - name: "RASA_TELEMETRY_ENABLED"
+          value: "false"
+        {{ end }}
         - name: "SELF_PORT"
           value: {{ default 5673 .Values.eventService.port | quote }}
         - name: "RABBITMQ_QUEUE"

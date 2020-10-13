@@ -206,3 +206,14 @@ Return the AppVersion value as a default if the app.tag variable is not defined.
 {{- define "app.version" -}}
 {{ .Values.app.tag | default .Chart.AppVersion }}
 {{- end -}}
+
+{{/*
+Return 'true' if an enterprise version is run.
+*/}}
+{{- define "is_enterprise" -}}
+{{- if or (contains "rasa-x-ee" .Values.rasa.name) (contains "rasa-x-ee" .Values.rasax.name) (contains "rasa-x-ee" .Values.eventService.name) -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false" -}}
+{{- end -}}
+{{- end -}}
