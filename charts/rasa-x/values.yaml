@@ -282,6 +282,11 @@ app:
   # - name: tmpdir
   #   emptyDir: {}
 
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: true
+
 # nginx specific settings
 nginx:
   # enabled should be `true` if you want to use nginx

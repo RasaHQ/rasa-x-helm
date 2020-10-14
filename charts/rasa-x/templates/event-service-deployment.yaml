@@ -19,6 +19,7 @@ spec:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: event-service
     spec:
+      automountServiceAccountToken: false
       {{ include "rasa-x.spec" . }}
       {{- if .Values.eventService.nodeSelector }}
       nodeSelector:
