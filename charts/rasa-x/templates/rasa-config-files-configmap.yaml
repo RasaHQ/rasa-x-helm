@@ -33,7 +33,7 @@ data:
       username: "{{ .Values.rabbitmq.rabbitmq.username }}"
       password: ${RABBITMQ_PASSWORD}
       port: {{ default 5672 .Values.rabbitmq.service.port }}
-      queue: ${RABBITMQ_QUEUE}
+      queues: ${RABBITMQ_QUEUE}
     action_endpoint:
       url: "http://{{ include "rasa-x.fullname" . }}-app:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"
       token:  ""
