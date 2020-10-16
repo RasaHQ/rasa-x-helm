@@ -85,7 +85,7 @@ spec:
           value: "false"
         {{ end }}
         - name: "MPLCONFIGDIR"
-          value: "/tmp/"
+          value: "/tmp/.matplotlib"
         - name: "DB_PASSWORD"
           valueFrom:
             secretKeyRef:
@@ -139,6 +139,7 @@ spec:
           value: "http://{{ include "duckling.host" $ }}:{{ $.Values.duckling.port }}"
         {{- include "rasa.extra.envs" $ | nindent 8 }}
         volumeMounts:
+        # Mount the temporary directory for the Rasa global configuration
         - name: config-dir
           mountPath: /.config
 {{ if .extraVolumeMounts }}
