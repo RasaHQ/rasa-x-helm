@@ -33,11 +33,16 @@ data:
       username: "{{ .Values.rabbitmq.rabbitmq.username }}"
       password: ${RABBITMQ_PASSWORD}
       port: {{ default 5672 .Values.rabbitmq.service.port }}
+      {{ if or (regexMatch ".*(a|rc)[0-9]+" .Values.rasa.tag) (regexMatch "2.*[0-9]+-full" .Values.rasa.tag) -}}
+      queues:
+      - ${RABBITMQ_QUEUE}
+      {{- else -}}
       {{ if semverCompare ">= 1.9.0" .Values.rasa.tag -}}
       queues:
-        - ${RABBITMQ_QUEUE}
+      - ${RABBITMQ_QUEUE}
       {{- else -}}
       queue: ${RABBITMQ_QUEUE}
+      {{- end }}
       {{- end }}
     action_endpoint:
       url: "http://{{ include "rasa-x.fullname" . }}-app:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"
