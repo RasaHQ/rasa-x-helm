@@ -20,10 +20,9 @@ spec:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: rasa-x
       annotations:
-        checksum/rasa:
-          {{- include "rasa.checksum" . | nindent 10 }}
-        checksum/rasax:
-          {{- include "rasa-x.checksum" . | nindent 10 }}
+        checksum/rasa-config: {{ include (print $.Template.BasePath "/rasa-config-files-configmap.yaml") . | sha256sum }}
+        checksum/rasa-x-config: {{ include (print $.Template.BasePath "/rasa-x-config-files-configmap.yaml") . | sha256sum }}
+        checksum/rasa-secret: {{ include (print $.Template.BasePath "/rasa-secret.yaml") . | sha256sum }}
     spec:
       automountServiceAccountToken: false
       {{ include "rasa-x.spec" . }}
