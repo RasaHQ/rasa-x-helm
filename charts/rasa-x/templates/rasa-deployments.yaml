@@ -84,6 +84,8 @@ spec:
         - name: "RASA_TELEMETRY_ENABLED"
           value: "false"
         {{ end }}
+        - name: "MPLCONFIGDIR"
+          value: "/tmp/.matplotlib"
         - name: "DB_PASSWORD"
           valueFrom:
             secretKeyRef:
@@ -129,12 +131,17 @@ spec:
         - name: "RASA_DUCKLING_HTTP_URL"
           value: "http://{{ include "duckling.host" $ }}:{{ $.Values.duckling.port }}"
         {{- include "rasa.extra.envs" $ | nindent 8 }}
-{{- if .extraVolumeMounts }}
         volumeMounts:
+        # Mount the temporary directory for the Rasa global configuration
+        - name: config-dir
+          mountPath: /.config
+{{ if .extraVolumeMounts }}
 {{ toYaml .extraVolumeMounts | indent 8 }}
 {{- end }}
-{{- if .extraVolumes }}
       volumes:
+      - name: config-dir
+        emptyDir: {}
+{{ if .extraVolumes }}
 {{ toYaml .extraVolumes | indent 6 }}
 {{- end }}
 # this is needed to make it clear that these are two resources
