@@ -473,7 +473,9 @@ ingress:
   enabled: true
   # annotations for the ingress
   annotations:
-    # kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/affinity_mode: persistent
     # kubernetes.io/tls-acme: "true"
   # hosts for this ingress
   hosts:
