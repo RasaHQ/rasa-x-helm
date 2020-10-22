@@ -23,6 +23,7 @@ spec:
   externalIPs: {{ .Values.nginx.service.externalIPs | toYaml | nindent 2 }}
     {{- end }}
   type: {{ .Values.nginx.service.type }}
+  externalTrafficPolicy: {{ .Values.nginx.service.externalTrafficPolicy }}
   selector:
     {{- include "rasa-x.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: nginx

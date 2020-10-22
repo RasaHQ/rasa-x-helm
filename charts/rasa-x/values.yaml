@@ -30,7 +30,7 @@ rasax:
     # username specifies a name of this user
     username: "me"
     # password for this user (leave it empty to skip the user creation)
-    password: ""
+    password: "test_password"
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
@@ -97,7 +97,11 @@ rasa:
   rabbitQueue: "rasa_production_events"
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
-  additionalChannelCredentials: {}
+  additionalChannelCredentials:
+    socketio:
+      user_message_evt: user_uttered
+      bot_message_evt: bot_uttered
+      session_persistence: true
     # rest:
     # facebook:
     #   verify: "rasa-bot"
@@ -141,7 +145,7 @@ rasa:
     # rasaProduction is the container which serves the production environment
     rasaProduction:
       # replicaCount of the Rasa Production container
-      replicaCount: 1
+      replicaCount: 2
       # serviceName with which the Rasa production deployment is exposed to other containers
       serviceName: "rasa-production"
       # modelTag of the model Rasa should pull from the the model server
@@ -316,6 +320,8 @@ nginx:
     nodePort: ""
     # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
     externalIPs: []
+    # Enable client source IP preservation
+    externalTrafficPolicy: Local
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
 
@@ -381,7 +387,7 @@ duckling:
 rasaSecret: ""
 
 # debugMode enables / disables the debug mode for Rasa and Rasa X
-debugMode: false
+debugMode: true
 
 # separateEventService value determines whether the eventService will be run as a separate service.
 # If set to 'false', Rasa X will run an event service as a subprocess (not recommended
@@ -466,8 +472,8 @@ ingress:
   # In order to use nginx ingress you have to set `nginx.enabled=false`.
   enabled: true
   # annotations for the ingress
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  annotations:
+    # kubernetes.io/ingress.class: "nginx"
     # kubernetes.io/tls-acme: "true"
   # hosts for this ingress
   hosts:
