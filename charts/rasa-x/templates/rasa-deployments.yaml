@@ -6,6 +6,8 @@ metadata:
   labels:
     {{- include "rasa-x.labels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ .serviceName }}
+  annotations:
+    sidecar.jaegertracing.io/inject: "{{ $.Values.rasa.jaegerSidecar }}"
 spec:
   progressDeadlineSeconds: {{ $.Values.global.progressDeadlineSeconds }}
   replicas: {{ default 1 .replicaCount }}
