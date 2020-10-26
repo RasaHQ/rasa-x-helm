@@ -25,6 +25,8 @@ rasax:
   databaseName: ""
   # disableTelemetry permanently disables telemetry
   disableTelemetry: false
+  # Jaeger Sidecar
+  jaegerSidecar: "false"
   # initialUser is the user which is created upon the initial start of Rasa X
   initialUser:
     # username specifies a name of this user
@@ -103,6 +105,13 @@ rasa:
     #   verify: "rasa-bot"
     #   secret: "3e34709d01ea89032asdebfe5a74518"
     #   page-access-token: "EAAbHPa7H9rEBAAuFk4Q3gPKbDedQnx4djJJ1JmQ7CAqO4iJKrQcNT0wtD"
+  # input channels
+  additionalEndpoints: {}
+    # telemetry:
+    #   type: jaeger
+    #   service_name: rasa
+  # Jaeger Sidecar
+  jaegerSidecar: "false"
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
   # useLoginDatabase will use the Rasa X database to log in and create the database
@@ -246,6 +255,8 @@ app:
   port: 5055
   # resources which app is required / allowed to use
   resources: {}
+  # Jaeger Sidecar
+  jaegerSidecar: "false"
   # extraEnvs are environment variables which can be added to the app deployment
   extraEnvs: []
   #  - name: DATABASE_URL
