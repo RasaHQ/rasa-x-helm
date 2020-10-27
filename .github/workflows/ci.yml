@@ -27,6 +27,7 @@ jobs:
 
     - name: Lint chart using Helm CLI
       run: |
+        helm dependency update ${CHART}
         helm lint --strict ${CHART}
 
     - name: Run chart-testing (lint)
