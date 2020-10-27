@@ -55,3 +55,6 @@ data:
       password: ${REDIS_PASSWORD}
       db: {{ default "1" .Values.rasa.lockStoreDatabase }}
     {{- end }}
+    {{- with .Values.rasa.additionalEndpoints }}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}

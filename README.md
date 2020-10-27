@@ -93,7 +93,8 @@ This repository automatically release a new version of the Helm chart once new c
 are merged. The only required steps are:
 
 1. Make the changes to the chart
-2. Increase the chart `version` in `charts/rasa-x/Chart.yaml`
+2. Run `helm lint --strict charts/rasa-x`
+3. Increase the chart `version` in `charts/rasa-x/Chart.yaml`
 
 ## License
 
