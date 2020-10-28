@@ -238,6 +238,9 @@ eventService:
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
+  
+  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
+  initialProbeDelay: 10
 
 # app (custom action server) specific settings
 app:
@@ -297,6 +300,9 @@ app:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: true
+
+  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
+  initialProbeDelay: 10
 
 # nginx specific settings
 nginx:
@@ -384,6 +390,9 @@ duckling:
 
   # resources which duckling is required / allowed to use
   resources: {}
+
+  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
+  initialProbeDelay: 10
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret

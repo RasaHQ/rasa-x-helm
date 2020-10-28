@@ -49,10 +49,12 @@ spec:
           httpGet:
             path: "/health"
             port: "http"
+          initialDelaySeconds: {{ .Values.eventService.initialProbeDelay }}
         readinessProbe:
           httpGet:
             path: "/health"
             port: "http"
+          initialDelaySeconds: {{ .Values.eventService.initialProbeDelay }}
         args:
           - python
           - -m

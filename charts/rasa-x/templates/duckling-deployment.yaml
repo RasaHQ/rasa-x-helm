@@ -49,11 +49,13 @@ spec:
           httpGet:
             path: "/"
             port: "http"
+          initialDelaySeconds: {{ .Values.duckling.initialProbeDelay }}
         readinessProbe:
           httpGet:
             path: "/"
             port: "http"
         {{- with .Values.duckling.resources }}
+          initialDelaySeconds: {{ .Values.duckling.initialProbeDelay }}
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
