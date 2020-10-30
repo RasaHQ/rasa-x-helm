@@ -37,10 +37,14 @@ spec:
         command:
           {{- toYaml .Values.eventService.command | nindent 10 }}
         {{- end }}
-        {{- if .Values.eventService.args }}
         args:
+          {{- if .Values.eventService.args }}
           {{- toYaml .Values.eventService.args | nindent 10 }}
-        {{- end }}
+          {{- else }}
+          - python
+          - -m
+          - rasax.community.services.event_service
+          {{- end }}
         ports:
           - name: "http"
             containerPort: {{ default 5673 .Values.eventService.port }}
@@ -53,10 +57,6 @@ spec:
           httpGet:
             path: "/health"
             port: "http"
-        args:
-          - python
-          - -m
-          - rasax.community.services.event_service
         env:
         {{- if eq "true" (include "is_enterprise" .) }}
         - name: "RASA_TELEMETRY_ENABLED"
