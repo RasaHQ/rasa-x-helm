@@ -229,12 +229,19 @@ Return the rasa-x.version value as a default if the dbMigrationService.tag varia
 
 {{/*
 Return 'true' if required version to run the database migration service is correct.
+If version is not valid semantic version then not use the DB migration service.
 */}}
 {{- define "db-migration-service.requiredVersion" -}}
+{{- if and (not (regexMatch "^(v[0-9]|0|[1-9]\\d*).(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$" .Values.rasax.tag)) (not .Values.dbMigrationService.ignoreVersionCheck) -}}
+{{- print "false" -}}
+{{- else if .Values.dbMigrationService.ignoreVersionCheck  -}}
+{{- print "true" -}}
+{{- else -}}
 {{- if semverCompare ">= 0.33.0" (include "db-migration-service.version" .) -}}
 {{- print "true" -}}
 {{- else -}}
 {{- print "false" -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 

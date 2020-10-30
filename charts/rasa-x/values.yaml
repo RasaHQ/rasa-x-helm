@@ -79,6 +79,11 @@ rasax:
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
+  # use an init container in order to wait for database migration to be finished
+  # before the main container will be run
+  # requires Rasa X >= 0.33.0
+  useDBinitContainer: true
+
 # rasa: Settings common for all Rasa containers
 rasa:
   # override the default command to run in the container
