@@ -6,7 +6,7 @@ metadata:
   name: {{ include "rasa-x.fullname" . }}-db-migration-service-headless
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
-    app.kubernetes.io/component: app
+    app.kubernetes.io/component: db-migration-service
 spec:
   clusterIP: "None"
   ports:

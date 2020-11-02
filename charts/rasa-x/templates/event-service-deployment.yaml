@@ -29,6 +29,9 @@ spec:
       tolerations:
 {{ toYaml .Values.eventService.tolerations | indent 6 }}
       {{- end }}
+      # Use the init-db init container to check if database migration is completed.
+      # The event service uses a database, to make sure that the database is ready
+      # to use we use the database migration service to check migration status.
       {{- include "initContainer.dbMigration" . |  nindent 6 }}
       containers:
       - name: {{ .Chart.Name }}

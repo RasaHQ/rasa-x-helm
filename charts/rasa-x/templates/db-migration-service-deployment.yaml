@@ -1,12 +1,13 @@
 {{ if and (eq "true" (include "db-migration-service.requiredVersion" .)) .Values.separateDBMigrationService }}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}-db-migration-service
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: db-migration-service
 spec:
+  serviceName: "default"
   replicas: 1
   selector:
     matchLabels:
@@ -30,7 +31,7 @@ spec:
       {{- end }}
       containers:
       - name: db-migration-service
-        image: "{{ .Values.dbMigrationService.name }}:{{ .Values.dbMigrationService.tag | default (include "rasa-x.version" .) }}"
+        image: "{{ .Values.dbMigrationService.name }}:{{ include "db-migration-service.version" . }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         {{- if .Values.dbMigrationService.command }}
         command:

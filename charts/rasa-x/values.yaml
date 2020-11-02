@@ -79,11 +79,6 @@ rasax:
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
-  # use an init container in order to wait for database migration to be finished
-  # before the main container will be run
-  # requires Rasa X >= 0.33.0
-  useDBinitContainer: true
-
 # rasa: Settings common for all Rasa containers
 rasa:
   # override the default command to run in the container
@@ -199,21 +194,22 @@ rasa:
       # - name: tmpdir
       #   emptyDir: {}
 
+
+# dbMigrationService specifies settings for the database migration service
 # The database migration service requires Rasa X >= 0.33.0
-# db-migration-service specific settings
 dbMigrationService:
   # settings related to the init-db container used as a init container for services
   initContainer:
     image: alpine:latest
-  # override the default command to run in the container
+  #command overrides the default command to run in the container
   command: []
-  # override the default arguments to run in the container
+  # args overrides the default arguments to run in the container
   args: []
-  # database migration service just uses the Rasa X image
+  # name is a Docker image name
   name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
   tag: ""
-  # don't check required minimum Rasa X version and run the service
+  # ignoreVersionCheck defines if check required minimum Rasa X version that is required to run the service
   ignoreVersionCheck: false
   # port on which which to run the readiness endpoint
   port: 8000
@@ -236,12 +232,12 @@ dbMigrationService:
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 
-  # additional volumeMounts to the main container
+  # extraVolumeMounts defines additional volumeMounts to the main container
   extraVolumeMounts: []
   # - name: tmpdir
   #   mountPath: /var/lib/mypath
 
-  # additional volumes to the pod
+  # extraVolumes defines additional volumes to the pod
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
