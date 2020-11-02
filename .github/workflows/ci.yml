@@ -101,3 +101,4 @@ jobs:
         if [[ "${TOKEN}" == "" ]]; then
           echo "Access token is empty: ${TOKEN}" && exit 1
         fi
+        echo "Access token: ${TOKEN}"
