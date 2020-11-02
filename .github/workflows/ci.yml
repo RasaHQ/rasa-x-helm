@@ -87,7 +87,7 @@ jobs:
         kubectl wait \
           --for=condition=available \
           --timeout=10m \
-          -l "app.kubernetes.io/component=rasa-x" deployment
+          deployment --all
 
     - name: Log pod status for debugging
       if: failure()
@@ -97,4 +97,7 @@ jobs:
 
     - name: Validate that logging in works
       run: |
-        curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://localhost/api/auth"
+        TOKEN=$(curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://localhost/api/auth" | jq -r '.access_token')
+        if [[ "${TOKEN}" == "" ]]; then
+          echo "Access token is empty: ${TOKEN}" && exit 1
+        fi
