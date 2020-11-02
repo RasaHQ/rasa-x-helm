@@ -87,7 +87,14 @@ jobs:
         kubectl wait \
           --for=condition=available \
           --timeout=10m \
-          deployment --all
+          -l "app.kubernetes.io/component=rasa-x" deployment
+
+
+        until [[ "$(curl -s http://localhost/api/health | tee /tmp/output_status.txt | jq -r .database_migration.status)" == "completed" ]]
+        do
+          cat /tmp/output_status.txt || true
+          sleep 5
+        done
 
     - name: Log pod status for debugging
       if: failure()
