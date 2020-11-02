@@ -201,7 +201,7 @@ dbMigrationService:
   # settings related to the init-db container used as a init container for services
   initContainer:
     image: alpine:latest
-  #command overrides the default command to run in the container
+  # command overrides the default command to run in the container
   command: []
   # args overrides the default arguments to run in the container
   args: []
