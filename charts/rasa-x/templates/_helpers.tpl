@@ -247,7 +247,7 @@ If version is not valid semantic version then not use the DB migration service.
 Returns the database migration service address
 */}}
 {{- define "db-migration-service.address" -}}
-{{ .Release.Name }}{{- print "-db-migration-service-headless" -}}
+{{ include "rasa-x.fullname" . }}{{ print "-db-migration-service-headless" }}
 {{- end -}}
 {{/*
 Return an init container for database migration.
