@@ -198,14 +198,15 @@ rasa:
 # dbMigrationService specifies settings for the database migration service
 # The database migration service requires Rasa X >= 0.33.0
 dbMigrationService:
-  # settings related to the init-db container used as a init container for services
+  # initContainer describes settings related to the init-db container used as a init container for deployments
   initContainer:
+    # image is the Docker image which is used by the init container
     image: alpine:latest
   # command overrides the default command to run in the container
   command: []
   # args overrides the default arguments to run in the container
   args: []
-  # name is a Docker image name
+  # name is the Docker image name which is used by the migration service
   name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
   tag: ""

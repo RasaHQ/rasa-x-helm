@@ -105,7 +105,7 @@ jobs:
     - name: Validate that logging in works
       run: |
         TOKEN=$(curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://localhost/api/auth" | jq -r '.access_token')
-        if [[ "${TOKEN}" == "" ]]; then
+        if [[ -z "${TOKEN}" ]]; then
           echo "Access token is empty: ${TOKEN}" && exit 1
         fi
         echo "Access token: ${TOKEN}"

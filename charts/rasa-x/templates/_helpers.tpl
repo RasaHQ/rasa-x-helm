@@ -232,9 +232,7 @@ Return 'true' if required version to run the database migration service is corre
 If version is not valid semantic version then not use the DB migration service.
 */}}
 {{- define "db-migration-service.requiredVersion" -}}
-{{- if and (not (regexMatch "^(v[0-9]|0|[1-9]\\d*).(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$" (include "db-migration-service.version" .))) (not .Values.dbMigrationService.ignoreVersionCheck) -}}
-{{- print "false" -}}
-{{- else if .Values.dbMigrationService.ignoreVersionCheck  -}}
+{{- if .Values.dbMigrationService.ignoreVersionCheck  -}}
 {{- print "true" -}}
 {{- else -}}
 {{- if semverCompare ">= 0.33.0" (include "db-migration-service.version" .) -}}
@@ -245,6 +243,12 @@ If version is not valid semantic version then not use the DB migration service.
 {{- end -}}
 {{- end -}}
 
+{{/*
+Returns the database migration service address
+*/}}
+{{- define "db-migration-service.address" -}}
+{{ .Release.Name }}{{- print "-db-migration-service-headless" -}}
+{{- end -}}
 {{/*
 Return an init container for database migration.
 */}}
@@ -258,9 +262,9 @@ initContainers:
   - '-c'
   - "apk update --no-cache && \
     apk add jq curl && \
-    until nslookup {{ .Release.Name }}-db-migration-service-headless 1> /dev/null; do echo Waiting for the database migration service; sleep 2; done && \
-    until [[ \"$(curl -s http://{{ .Release.Name }}-db-migration-service-headless:{{ .Values.dbMigrationService.port }} | jq -r .status)\" == \"completed\" ]]; do \
-    STATUS_JSON=$(curl -s http://{{ .Release.Name }}-db-migration-service-headless:{{ .Values.dbMigrationService.port }}); \
+    until nslookup {{ (include "db-migration-service.address" .) }} 1> /dev/null; do echo Waiting for the database migration service; sleep 2; done && \
+    until [[ \"$(curl -s http://{{ (include "db-migration-service.address" .) }}:{{ .Values.dbMigrationService.port }} | jq -r .status)\" == \"completed\" ]]; do \
+    STATUS_JSON=$(curl -s http://{{ (include "db-migration-service.address" .) }}:{{ .Values.dbMigrationService.port }}); \
     PROGRESS_IN_PERCENT=$(echo $STATUS_JSON | jq -r .progress_in_percent); \
     STATUS=$(echo $STATUS_JSON | jq -r .status); \
     echo The database migration status: ${STATUS}...${PROGRESS_IN_PERCENT}%; \

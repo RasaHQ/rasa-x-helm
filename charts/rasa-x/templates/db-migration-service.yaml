@@ -1,5 +1,4 @@
-{{ if eq "true" (include "db-migration-service.requiredVersion" .) }}
-{{ if .Values.separateDBMigrationService }}
+{{ if and (eq "true" (include "db-migration-service.requiredVersion" .)) .Values.separateDBMigrationService }}
 apiVersion: "v1"
 kind: "Service"
 metadata:
@@ -17,5 +16,4 @@ spec:
   selector:
     {{- include "rasa-x.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: db-migration-service
-{{end}}
 {{end}}
