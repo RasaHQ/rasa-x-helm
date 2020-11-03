@@ -194,6 +194,55 @@ rasa:
       # - name: tmpdir
       #   emptyDir: {}
 
+
+# dbMigrationService specifies settings for the database migration service
+# The database migration service requires Rasa X >= 0.33.0
+dbMigrationService:
+  # initContainer describes settings related to the init-db container used as a init container for deployments
+  initContainer:
+    # image is the Docker image which is used by the init container
+    image: alpine:latest
+  # command overrides the default command to run in the container
+  command: []
+  # args overrides the default arguments to run in the container
+  args: []
+  # name is the Docker image name which is used by the migration service
+  name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
+  # tag refers to the Rasa X image tag (uses `appVersion` by default)
+  tag: ""
+  # ignoreVersionCheck defines if check required minimum Rasa X version that is required to run the service
+  ignoreVersionCheck: false
+  # port on which which to run the readiness endpoint
+  port: 8000
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
+  # resources which the event service is required / allowed to use
+  resources: {}
+  # extraEnvs are environment variables which can be added to the eventService deployment
+  extraEnvs: []
+  # - name: SOME_CUSTOM_ENV_VAR
+  #   value: "custom value"
+
+  # extraVolumeMounts defines additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # extraVolumes defines additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
@@ -398,6 +447,10 @@ debugMode: false
 # If set to 'false', Rasa X will run an event service as a subprocess (not recommended
 # high-load setups).
 separateEventService: "true"
+
+# separateDBMigrationService value determines whether the dbMigrationService will be run as a separate service.
+# If set to 'false', Rasa X will run a database migration service as a subprocess.
+separateDBMigrationService: true
 
 # postgresql specific settings (https://hub.helm.sh/charts/bitnami/postgresql/8.6.13)
 postgresql:

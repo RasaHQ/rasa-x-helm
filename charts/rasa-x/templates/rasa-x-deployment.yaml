@@ -123,6 +123,8 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.secret" . }}
               key: "initialPassword"
+        - name: "RUN_DATABASE_MIGRATION_AS_SEPARATE_SERVICE"
+          value: {{ .Values.separateDBMigrationService | quote }}
         {{- include "rasa-x.psql.envs" . | nindent 8 }}
         {{- include "rasax.extra.envs" . | nindent 8 }}
         volumeMounts:
