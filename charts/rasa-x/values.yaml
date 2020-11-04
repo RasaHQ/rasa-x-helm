@@ -81,6 +81,9 @@ rasax:
 
 # rasa: Settings common for all Rasa containers
 rasa:
+  # version is the Rasa Open Source version which should be used.
+  # Used to ensure backward compatibility with older Rasa Open Source versions.
+  version: "2.0.3"  # Please update the default value in the Readme when updating this
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
@@ -89,8 +92,8 @@ rasa:
   extraArgs: []
   # name of the Rasa image to use
   name: "rasa/rasa"
-  # tag refers to the Rasa image tag
-  tag: "1.10.3"  # Please check the README to see all locations which have to be updated for a rasa release)
+  # tag refers to the Rasa image tag. If empty `.Values.rasa.version-full` is used.
+  tag: ""
   # port on which Rasa runs
   port: 5005
   # token Rasa accepts as authentication token from other Rasa services
