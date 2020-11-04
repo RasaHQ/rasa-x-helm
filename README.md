@@ -56,7 +56,7 @@ recommend to set at least these values:
 | `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                      | `password`         |
 | `global.redis.password`                | Password for redis.                                                                        | `password`         |
 | `rasax.tag`                            | Version of Rasa X which you want to use.                                                   | `0.29.1`           |
-| `rasa.version`                         | Version of Rasa Open Source which you want to use.                                         | `1.10.3`           |
+| `rasa.version`                         | Version of Rasa Open Source which you want to use.                                         | `2.0.3`            |
 | `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty          | ``                 |
 | `app.name`                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
 | `app.tag`                              | Tag of your action server image.                                                           | `0.29.1`           |

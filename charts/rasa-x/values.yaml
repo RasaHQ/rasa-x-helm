@@ -83,7 +83,7 @@ rasax:
 rasa:
   # version is the Rasa Open Source version which should be used
   # Used to ensure backward compatibility
-  version: "1.10.3" # Please check the README to see all locations which have to be updated for a rasa release)
+  version: "2.0.3" # Please check the README to see all locations which have to be updated for a rasa release)
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
