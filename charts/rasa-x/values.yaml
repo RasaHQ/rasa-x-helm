@@ -206,8 +206,8 @@ dbMigrationService:
   command: []
   # args overrides the default arguments to run in the container
   args: []
-  # name is the Docker image name which is used by the migration service
-  name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
+  # name is the Docker image name which is used by the migration service (uses `rasax.name` by default)
+  name: ""  # gcr.io/rasa-platform/rasa-x-ee
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
   tag: ""
   # ignoreVersionCheck defines if check required minimum Rasa X version that is required to run the service
