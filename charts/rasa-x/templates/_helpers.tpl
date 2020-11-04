@@ -216,7 +216,6 @@ Return the Rasa image tag. Use `.Values.rasa.version` if `Values.rasa.tag` is no
 {{ .Values.rasa.tag | default (printf "%s-full" .Values.rasa.version) }}
 {{- end -}}
 
-
 {{/*
 Return 'true' if an enterprise version is run.
 */}}
