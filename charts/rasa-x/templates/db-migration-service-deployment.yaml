@@ -31,7 +31,7 @@ spec:
       {{- end }}
       containers:
       - name: db-migration-service
-        image: "{{ .Values.dbMigrationService.name }}:{{ include "db-migration-service.version" . }}"
+        image: "{{ include "dbMigrationService-name" . }}:{{ include "db-migration-service.version" . }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         {{- if .Values.dbMigrationService.command }}
         command:
@@ -61,6 +61,8 @@ spec:
 {{ toYaml .Values.dbMigrationService.extraVolumeMounts | indent 8 }}
 {{- end }}
         env:
+        - name: "RASA_TELEMETRY_ENABLED"
+          value: "false"
         - name: "SELF_PORT"
           value: {{ .Values.dbMigrationService.port | quote }}
         - name: "RUN_DATABASE_MIGRATION_AS_SEPARATE_SERVICE"
