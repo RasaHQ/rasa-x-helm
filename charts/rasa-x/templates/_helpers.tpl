@@ -280,3 +280,10 @@ initContainers:
     echo The database migration status: completed...100%"
 {{- end -}}
 {{- end -}}
+
+{{/*
+Return the rasa x image name value as a default if the dbMigrationService.name variable is not defined.
+*/}}
+{{- define "dbMigrationService-name" -}}
+{{ .Values.dbMigrationService.name | default .Values.rasax.name }}
+{{- end -}}
