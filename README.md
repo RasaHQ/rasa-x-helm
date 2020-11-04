@@ -39,36 +39,36 @@ helm delete <your release name>
 All configurable values are documented in `values.yaml`. For a quick installation we
 recommend to set at least these values:
 
-| Parameter                            | Description                                                                                | Default              |
-|--------------------------------------|--------------------------------------------------------------------------------------------|----------------------|
+| Parameter                            | Description                                                                                  | Default            |
+|--------------------------------------|----------------------------------------------------------------------------------------------|--------------------|
 | `rasax.passwordSalt`                   | Password salt which Rasa X uses for the user passwords.                                    | `passwordSalt`     |
 | `rasax.token`                          | Token which the Rasa X pod uses to authenticate requests from other pods.                  | `rasaXToken`       |
-| `rasax.command`                        | Override the default command to run in the container                                       | `[]`               |
-| `rasax.args`                           | Override the default arguments to run in the container                                     | `[]`               |
+| `rasax.command`                        | Override the default command to run in the container.                                      | `[]`               |
+| `rasax.args`                           | Override the default arguments to run in the container.                                    | `[]`               |
 | `rasax.jwtSecret`                      | Secret which is used to sign JWT tokens of Rasa X users.                                   | `jwtSecret`        |
-| `rasax.initialUser.username`           | **Only for Rasa Enterprise**. A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified) | `admin`            |
+| `rasax.initialUser.username`           | **Only for Rasa Enterprise**. A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified). | `admin`            |
 | `rasax.initialUser.password`           | Password for the initial user. If you use Rasa Enterprise and leave it empty, no users will be created. If you use Rasa CE and leave it empty, the password will be generated automatically. | `""`               |
 | `rasa.token`                           | Token which the Rasa pods use to authenticate requests from other pods.                    | `rasaToken`        |
-| `rasa.command`                         | Override the default command to run in the container                                       | `[]`               |
-| `rasa.args`                            | Override the default arguments to run in the container                                     | `[]`               |
-| `rasa.extraArgs`                       | Additional rasa arguments                                                                  | `[]`               |
+| `rasa.command`                         | Override the default command to run in the container.                                      | `[]`               |
+| `rasa.args`                            | Override the default arguments to run in the container.                                    | `[]`               |
+| `rasa.extraArgs`                       | Additional rasa arguments.                                                                 | `[]`               |
 | `rabbitmq.rabbitmq.password`           | Password for RabbitMq.                                                                     | `test`             |
 | `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                      | `password`         |
 | `global.redis.password`                | Password for redis.                                                                        | `password`         |
 | `rasax.tag`                            | Version of Rasa X which you want to use.                                                   | `0.29.1`           |
 | `rasa.version`                         | Version of Rasa Open Source which you want to use.                                         | `2.0.3`            |
-| `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty          | ``                 |
+| `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty.         | ``                 |
 | `app.name`                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
 | `app.tag`                              | Tag of your action server image.                                                           | `0.29.1`           |
-| `app.command`                          | Override the default command to run in the container                                       | `[]`               |
-| `app.args`                             | Override the default arguments to run in the container                                     | `[]`               |
-| `eventService.command`                 | Override the default command to run in the container                                       | `[]`               |
-| `eventService.args`                    | Override the default arguments to run in the container                                     | `[]`               |
-| `nginx.command`                        | Override the default command to run in the container                                       | `[]`               |
-| `nginx.args`                           | Override the default arguments to run in the container                                     | `[]`               |
-| `duckling.command`                     | Override the default command to run in the container                                       | `[]`               |
-| `duckling.args`                        | Override the default arguments to run in the container                                     | `[]`               |
-| `global.progressDeadlineSeconds`       | Specifies the number of seconds you want to wait for your Deployment to progress before the system reports back that the Deployment has failed progressing | `600` |
+| `app.command`                          | Override the default command to run in the container.                                      | `[]`               |
+| `app.args`                             | Override the default arguments to run in the container.                                    | `[]`               |
+| `eventService.command`                 | Override the default command to run in the container.                                      | `[]`               |
+| `eventService.args`                    | Override the default arguments to run in the container.                                    | `[]`               |
+| `nginx.command`                        | Override the default command to run in the container.                                      | `[]`               |
+| `nginx.args`                           | Override the default arguments to run in the container.                                    | `[]`               |
+| `duckling.command`                     | Override the default command to run in the container.                                      | `[]`               |
+| `duckling.args`                        | Override the default arguments to run in the container.                                    | `[]`               |
+| `global.progressDeadlineSeconds`       | Specifies the number of seconds you want to wait for your Deployment to progress before the system reports back that the Deployment has failed progressing. | `600` |
 
 ## Where to get help
 
