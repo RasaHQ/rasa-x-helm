@@ -33,11 +33,11 @@ data:
       username: "{{ .Values.rabbitmq.rabbitmq.username }}"
       password: ${RABBITMQ_PASSWORD}
       port: {{ default 5672 .Values.rabbitmq.service.port }}
-      {{ if or (regexMatch ".*(a|rc)[0-9]+" .Values.rasa.tag) (regexMatch "2.*[0-9]+-full" .Values.rasa.tag) -}}
+      {{ if or (regexMatch ".*(a|rc)[0-9]+" .Values.rasa.version) (regexMatch "2.*[0-9]+-full" .Values.rasa.version) -}}
       queues:
       - ${RABBITMQ_QUEUE}
       {{- else -}}
-      {{ if semverCompare ">= 1.9.0" .Values.rasa.tag -}}
+      {{ if semverCompare ">= 1.9.0" .Values.rasa.version -}}
       queues:
       - ${RABBITMQ_QUEUE}
       {{- else -}}

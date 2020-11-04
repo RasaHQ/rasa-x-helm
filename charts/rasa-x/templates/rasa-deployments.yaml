@@ -41,7 +41,7 @@ spec:
       {{- include "initContainer.dbMigration" $ |  nindent 6 }}
       containers:
       - name: {{ $.Chart.Name }}
-        image: "{{ $.Values.rasa.name }}:{{ $.Values.rasa.tag }}"
+        image: '{{ $.Values.rasa.name }}:{{ include "rasa.tag" $ }}'
         imagePullPolicy: {{ $.Values.images.pullPolicy }}
         ports:
         - name: "http"

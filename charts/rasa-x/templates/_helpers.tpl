@@ -210,6 +210,14 @@ Return the AppVersion value as a default if the app.tag variable is not defined.
 {{- end -}}
 
 {{/*
+Return the Rasa image tag. Use `.Values.rasa.version` if `Values.rasa.tag` is not defined.
+*/}}
+{{- define "rasa.tag" -}}
+{{ .Values.rasa.tag | default (printf "%s-full" .Values.rasa.version) }}
+{{- end -}}
+
+
+{{/*
 Return 'true' if an enterprise version is run.
 */}}
 {{- define "is_enterprise" -}}
