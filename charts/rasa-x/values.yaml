@@ -129,7 +129,7 @@ rasa:
   jaegerSidecar: "false"
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
-  # scheme to be used by the `readinessProbe` and the `livenessProbe`
+  # scheme to be used by the `livenessProbe`
   probeScheme: "HTTP"
   # useLoginDatabase will use the Rasa X database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created

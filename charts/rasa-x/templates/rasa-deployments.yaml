@@ -47,7 +47,6 @@ spec:
         - name: "http"
           containerPort: {{ default 5005 $.Values.rasa.port }}
           protocol: "TCP"
-          scheme: {{ default "HTTP" $.Values.rasa.probeScheme }}
         livenessProbe:
           httpGet:
             path: "/"
