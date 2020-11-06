@@ -63,10 +63,6 @@ spec:
             path: "/health"
             port: "http"
           initialDelaySeconds: {{ .Values.eventService.initialProbeDelay }}
-        args:
-          - python
-          - -m
-          - rasax.community.services.event_service
 
         env:
         {{- if eq "true" (include "is_enterprise" .) }}
