@@ -9,6 +9,7 @@ metadata:
 {{- with .Values.duckling.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
+{{- end }}
 spec:
   ports:
   - port: {{ .Values.duckling.port }}

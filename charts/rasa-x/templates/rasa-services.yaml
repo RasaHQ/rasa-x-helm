@@ -10,6 +10,7 @@ metadata:
 {{- with .Values.rasa.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
+{{- end }}
 spec:
   ports:
   - port: {{ $.Values.rasa.port }}

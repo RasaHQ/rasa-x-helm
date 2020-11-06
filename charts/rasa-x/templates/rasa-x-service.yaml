@@ -8,6 +8,7 @@ metadata:
 {{- with .Values.rasax.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
+{{- end }}
 spec:
   ports:
   - port: {{ .Values.rasax.port }}

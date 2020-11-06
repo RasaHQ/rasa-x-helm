@@ -9,6 +9,7 @@ metadata:
 {{- with .Values.dbMigrationService.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
+{{- end }}
 spec:
   clusterIP: "None"
   ports:

@@ -8,6 +8,7 @@ metadata:
 {{- with .Values.app.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
+{{- end }}
 spec:
   ports:
   - port: {{ template "rasa-x.custom-actions.port" . }}
