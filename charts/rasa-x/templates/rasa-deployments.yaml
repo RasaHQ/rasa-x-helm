@@ -51,7 +51,7 @@ spec:
           httpGet:
             path: "/"
             port: "http"
-            scheme: {{ default "HTTP" $.Values.rasa.probeScheme }}
+            scheme: {{ default "HTTP" $.Values.rasa.livenessProbe.scheme }}
           initialDelaySeconds: {{ $.Values.rasa.initialProbeDelay }}
           failureThreshold: 10
         {{- if $.Values.rasa.command }}

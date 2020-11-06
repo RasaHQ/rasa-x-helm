@@ -52,12 +52,12 @@ spec:
           httpGet:
             path: "/health"
             port: "http"
-            scheme: {{ default "HTTP" .Values.dbMigrationService.probeScheme }}
+            scheme: {{ default "HTTP" .Values.dbMigrationService.livenessProbe.scheme }}
         readinessProbe:
           httpGet:
             path: "/health"
             port: "http"
-            scheme: {{ default "HTTP" .Values.dbMigrationService.probeScheme }}
+            scheme: {{ default "HTTP" .Values.dbMigrationService.readinessProbe.scheme }}
 {{- if .Values.dbMigrationService.extraVolumeMounts }}
         volumeMounts:
 {{ toYaml .Values.dbMigrationService.extraVolumeMounts | indent 8 }}

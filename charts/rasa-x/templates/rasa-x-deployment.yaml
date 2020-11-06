@@ -54,14 +54,14 @@ spec:
           httpGet:
             path: "/"
             port: "http"
-            scheme: {{ default "HTTP" .Values.rasax.probeScheme }}
+            scheme: {{ default "HTTP" .Values.rasax.livenessProbe.scheme }}
           initialDelaySeconds: {{ .Values.rasax.initialProbeDelay }}
           failureThreshold: 10
         readinessProbe:
           httpGet:
             path: "/"
             port: "http"
-            scheme: {{ default "HTTP" .Values.rasax.probeScheme }}
+            scheme: {{ default "HTTP" .Values.readinessProbe.scheme }}
           initialDelaySeconds: {{ .Values.rasax.initialProbeDelay }}
           failureThreshold: 10
         env:
