@@ -6,6 +6,9 @@ metadata:
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: db-migration-service
+{{- with .Values.dbMigrationService.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
 spec:
   clusterIP: "None"
   ports:
