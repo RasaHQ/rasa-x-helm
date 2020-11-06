@@ -19,7 +19,7 @@ spec:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: db-migration-service
     spec:
-      automountServiceAccountToken: false
+      automountServiceAccountToken: {{ .Values.dbMigrationService.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
       {{- if .Values.dbMigrationService.nodeSelector }}
       nodeSelector:
