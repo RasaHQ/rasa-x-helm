@@ -61,7 +61,7 @@ spec:
           httpGet:
             path: "/"
             port: "http"
-            scheme: {{ default "HTTP" .Values.readinessProbe.scheme }}
+            scheme: {{ default "HTTP" .Values.rasax.readinessProbe.scheme }}
           initialDelaySeconds: {{ .Values.rasax.initialProbeDelay }}
           failureThreshold: 10
         env:
