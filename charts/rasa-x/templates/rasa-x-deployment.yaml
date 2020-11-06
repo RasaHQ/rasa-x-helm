@@ -50,10 +50,12 @@ spec:
           - name: "http"
             containerPort: {{ default 5002 .Values.rasax.port }}
             protocol: "TCP"
+            scheme: {{ default "HTTP" .Values.rasax.probeScheme }}
         livenessProbe:
           httpGet:
             path: "/"
             port: "http"
+            scheme: {{ default "HTTP" .Values.rasax.probeScheme }}
           initialDelaySeconds: {{ .Values.rasax.initialProbeDelay }}
           failureThreshold: 10
         readinessProbe:

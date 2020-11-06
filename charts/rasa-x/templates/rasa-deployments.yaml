@@ -47,10 +47,12 @@ spec:
         - name: "http"
           containerPort: {{ default 5005 $.Values.rasa.port }}
           protocol: "TCP"
+          scheme: {{ default "HTTP" $.Values.rasaa.probeScheme }}
         livenessProbe:
           httpGet:
             path: "/"
             port: "http"
+            scheme: {{ default "HTTP" $.Values.rasa.probeScheme }}
           initialDelaySeconds: {{ $.Values.rasa.initialProbeDelay }}
           failureThreshold: 10
         {{- if $.Values.rasa.command }}

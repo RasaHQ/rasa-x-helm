@@ -51,6 +51,8 @@ rasax:
     existingClaim: ""
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+  # scheme to be used by the `readinessProbe` and the `livenessProbe`
+  probeScheme: "HTTP"
   # resources which Rasa X is required / allowed to use
   resources: {}
   # extraEnvs are environment variables which can be added to the Rasa X deployment
@@ -127,6 +129,8 @@ rasa:
   jaegerSidecar: "false"
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+  # scheme to be used by the `readinessProbe` and the `livenessProbe`
+  probeScheme: "HTTP"
   # useLoginDatabase will use the Rasa X database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
   # previously.
@@ -326,6 +330,9 @@ eventService:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
 
+  # scheme to be used by the `readinessProbe` and the `livenessProbe`
+  probeScheme: "HTTP"
+
 # app (custom action server) specific settings
 app:
   # override the default command to run in the container
@@ -421,6 +428,8 @@ nginx:
     externalIPs: []
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+  # scheme to be used by the `readinessProbe` and the `livenessProbe`
+  probeScheme: "HTTP"
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -491,6 +500,9 @@ duckling:
   service:
     # annotations for the service
     annotations: {}
+
+  # scheme to be used by the `readinessProbe` and the `livenessProbe`
+  probeScheme: "HTTP"
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret

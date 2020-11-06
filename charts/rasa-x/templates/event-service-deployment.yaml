@@ -57,10 +57,12 @@ spec:
           httpGet:
             path: "/health"
             port: "http"
+            scheme: {{ default "HTTP" .Values.eventService.probeScheme }}
         readinessProbe:
           httpGet:
             path: "/health"
             port: "http"
+            scheme: {{ default "HTTP" .Values.eventService.probeScheme }}
         env:
         {{- if eq "true" (include "is_enterprise" .) }}
         - name: "RASA_TELEMETRY_ENABLED"
