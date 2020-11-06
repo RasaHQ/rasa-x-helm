@@ -320,9 +320,9 @@ eventService:
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
-  
+
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
+    initialProbeDelay: 10
 
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
