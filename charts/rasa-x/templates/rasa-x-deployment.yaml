@@ -24,7 +24,7 @@ spec:
         checksum/rasa-x-config: {{ include (print $.Template.BasePath "/rasa-x-config-files-configmap.yaml") . | sha256sum }}
         checksum/rasa-secret: {{ include (print $.Template.BasePath "/rasa-secret.yaml") . | sha256sum }}
     spec:
-      automountServiceAccountToken: false
+      automountServiceAccountToken: {{ .Values.rasax.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
       {{- if .Values.rasax.nodeSelector }}
       nodeSelector:

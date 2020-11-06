@@ -79,6 +79,11 @@ rasax:
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
 # rasa: Settings common for all Rasa containers
 rasa:
   # version is the Rasa Open Source version which should be used.
@@ -147,6 +152,11 @@ rasa:
   # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
 
   # versions of the Rasa container which are running
   versions:
@@ -246,6 +256,11 @@ dbMigrationService:
   # - name: tmpdir
   #   emptyDir: {}
 
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
@@ -290,6 +305,11 @@ eventService:
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
+
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
 
 # app (custom action server) specific settings
 app:
@@ -406,6 +426,11 @@ nginx:
   # - name: tmpdir
   #   emptyDir: {}
 
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
 # Duckling specific settings
 duckling:
   # override the default command to run in the container
@@ -436,6 +461,11 @@ duckling:
 
   # resources which duckling is required / allowed to use
   resources: {}
+
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
