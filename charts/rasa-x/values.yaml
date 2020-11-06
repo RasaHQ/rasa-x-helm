@@ -280,6 +280,9 @@ dbMigrationService:
     # annotations for the service
     annotations: {}
 
+  # scheme to be used by the `readinessProbe` and the `livenessProbe`
+  probeScheme: "HTTP"
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
@@ -397,6 +400,9 @@ app:
     # annotations for the service
     annotations: {}
 
+  # scheme to be used by the `readinessProbe` and the `livenessProbe`
+  probeScheme: "HTTP"
+
 # nginx specific settings
 nginx:
   # enabled should be `true` if you want to use nginx
@@ -428,8 +434,6 @@ nginx:
     externalIPs: []
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
-  # scheme to be used by the `readinessProbe` and the `livenessProbe`
-  probeScheme: "HTTP"
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
