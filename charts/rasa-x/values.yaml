@@ -84,6 +84,11 @@ rasax:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
 
+  # service specifies settings for exposing rasa x to other services
+  service:
+    # annotations for the service
+    annotations: {}
+
 # rasa: Settings common for all Rasa containers
 rasa:
   # version is the Rasa Open Source version which should be used.
@@ -157,6 +162,11 @@ rasa:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
+
+  # service specifies settings for exposing rasa to other services
+  service:
+    # annotations for the service
+    annotations: {}
 
   # versions of the Rasa container which are running
   versions:
@@ -260,6 +270,11 @@ dbMigrationService:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
+
+  # service specifies settings for exposing the db migration service to other services
+  service:
+    # annotations for the service
+    annotations: {}
 
 # event-service specific settings
 eventService:
@@ -370,6 +385,11 @@ app:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: true
 
+  # service specifies settings for exposing app to other services
+  service:
+    # annotations for the service
+    annotations: {}
+
 # nginx specific settings
 nginx:
   # enabled should be `true` if you want to use nginx
@@ -466,6 +486,11 @@ duckling:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
+
+  # service specifies settings for exposing duckling to other services
+  service:
+    # annotations for the service
+    annotations: {}
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret

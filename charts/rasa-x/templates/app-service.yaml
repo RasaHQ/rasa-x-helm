@@ -5,6 +5,10 @@ metadata:
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: app
+{{- with .Values.app.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
 spec:
   ports:
   - port: {{ template "rasa-x.custom-actions.port" . }}
