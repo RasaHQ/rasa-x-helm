@@ -51,6 +51,14 @@ rasax:
     existingClaim: ""
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+  # livenessProbe checks whether rasa x needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether rasa x can receive traffic
+  readinessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
   # resources which Rasa X is required / allowed to use
   resources: {}
   # extraEnvs are environment variables which can be added to the Rasa X deployment
@@ -125,8 +133,12 @@ rasa:
     #   service_name: rasa
   # Jaeger Sidecar
   jaegerSidecar: "false"
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
+  # initialProbeDelay for the `livenessProbe`
   initialProbeDelay: 10
+  # livenessProbe checks whether rasa needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
   # useLoginDatabase will use the Rasa X database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
   # previously.
@@ -276,6 +288,15 @@ dbMigrationService:
     # annotations for the service
     annotations: {}
 
+  # livenessProbe checks whether the db migration service needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether the db migration service can receive traffic
+  readinessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
@@ -325,6 +346,15 @@ eventService:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
+
+  # livenessProbe checks whether the event service needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether the event service can receive traffic
+  readinessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
 
 # app (custom action server) specific settings
 app:
@@ -389,6 +419,15 @@ app:
   service:
     # annotations for the service
     annotations: {}
+
+  # livenessProbe checks whether app needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether app can receive traffic
+  readinessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
 
 # nginx specific settings
 nginx:
@@ -491,6 +530,15 @@ duckling:
   service:
     # annotations for the service
     annotations: {}
+
+  # livenessProbe checks whether duckling needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether duckling can receive traffic
+  readinessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret

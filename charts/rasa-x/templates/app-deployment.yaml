@@ -50,10 +50,12 @@ spec:
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
+            scheme: {{ default "HTTP" .Values.app.livenessProbe.scheme }}
         readinessProbe:
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
+            scheme: {{ default "HTTP" .Values.app.readinessProbe.scheme }}
         {{- with .Values.app.resources }}
         resources:
           {{- toYaml . | nindent 10 }}

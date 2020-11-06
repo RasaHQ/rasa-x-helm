@@ -49,10 +49,12 @@ spec:
           httpGet:
             path: "/"
             port: "http"
+            scheme: {{ default "HTTP" .Values.duckling.livenessProbe.scheme }}
         readinessProbe:
           httpGet:
             path: "/"
             port: "http"
+            scheme: {{ default "HTTP" .Values.duckling.readinessProbe.scheme }}
         {{- with .Values.duckling.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
