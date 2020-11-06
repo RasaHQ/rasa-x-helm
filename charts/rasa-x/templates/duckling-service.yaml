@@ -6,6 +6,10 @@ metadata:
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: duckling
+{{- with .Values.duckling.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
 spec:
   ports:
   - port: {{ .Values.duckling.port }}

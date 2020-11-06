@@ -19,7 +19,7 @@ spec:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: event-service
     spec:
-      automountServiceAccountToken: false
+      automountServiceAccountToken: {{ .Values.eventService.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
       {{- if .Values.eventService.nodeSelector }}
       nodeSelector:
@@ -29,6 +29,10 @@ spec:
       tolerations:
 {{ toYaml .Values.eventService.tolerations | indent 6 }}
       {{- end }}
+      # Use the init-db init container to check if database migration is completed.
+      # The event service uses a database, to make sure that the database is ready
+      # to use we use the database migration service to check migration status.
+      {{- include "initContainer.dbMigration" . |  nindent 6 }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.eventService.name }}:{{ .Values.eventService.tag | default (include "rasa-x.version" .) }}"
@@ -37,10 +41,14 @@ spec:
         command:
           {{- toYaml .Values.eventService.command | nindent 10 }}
         {{- end }}
-        {{- if .Values.eventService.args }}
         args:
+          {{- if .Values.eventService.args }}
           {{- toYaml .Values.eventService.args | nindent 10 }}
-        {{- end }}
+          {{- else }}
+          - python
+          - -m
+          - rasax.community.services.event_service
+          {{- end }}
         ports:
           - name: "http"
             containerPort: {{ default 5673 .Values.eventService.port }}
@@ -59,6 +67,7 @@ spec:
           - python
           - -m
           - rasax.community.services.event_service
+
         env:
         {{- if eq "true" (include "is_enterprise" .) }}
         - name: "RASA_TELEMETRY_ENABLED"

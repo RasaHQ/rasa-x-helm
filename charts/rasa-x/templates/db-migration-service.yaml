@@ -1,0 +1,23 @@
+{{ if and (eq "true" (include "db-migration-service.requiredVersion" .)) .Values.separateDBMigrationService }}
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: {{ include "rasa-x.fullname" . }}-db-migration-service-headless
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+    app.kubernetes.io/component: db-migration-service
+{{- with .Values.dbMigrationService.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+{{- end }}
+spec:
+  clusterIP: "None"
+  ports:
+  - port: {{ .Values.dbMigrationService.port }}
+    targetPort: {{ .Values.dbMigrationService.port }}
+    protocol: "TCP"
+    name: "http"
+  selector:
+    {{- include "rasa-x.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: db-migration-service
+{{end}}

@@ -19,7 +19,7 @@ spec:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: nginx
     spec:
-      automountServiceAccountToken: false
+      automountServiceAccountToken: {{ .Values.nginx.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
       {{- if .Values.nginx.nodeSelector }}
       nodeSelector:

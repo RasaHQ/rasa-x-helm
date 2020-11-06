@@ -89,6 +89,13 @@ jobs:
           --timeout=10m \
           -l "app.kubernetes.io/component=rasa-x" deployment
 
+
+        until [[ "$(curl -s http://localhost/api/health | tee /tmp/output_status.txt | jq -r .database_migration.status)" == "completed" ]]
+        do
+          cat /tmp/output_status.txt || true
+          sleep 5
+        done
+
     - name: Log pod status for debugging
       if: failure()
       run: |
@@ -97,4 +104,8 @@ jobs:
 
     - name: Validate that logging in works
       run: |
-        curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://localhost/api/auth"
+        TOKEN=$(curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://localhost/api/auth" | jq -r '.access_token')
+        if [[ -z "${TOKEN}" ]]; then
+          echo "Access token is empty: ${TOKEN}" && exit 1
+        fi
+        echo "Access token: ${TOKEN}"

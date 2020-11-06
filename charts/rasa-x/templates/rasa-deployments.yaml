@@ -24,7 +24,7 @@ spec:
         checksum/rasa-config: {{ include (print $.Template.BasePath "/rasa-config-files-configmap.yaml") $ | sha256sum }}
         checksum/rasa-secret: {{ include (print $.Template.BasePath "/rasa-secret.yaml") $ | sha256sum }}
     spec:
-      automountServiceAccountToken: false
+      automountServiceAccountToken: {{ $.Values.rasa.automountServiceAccountToken }}
       {{ include "rasa-x.spec" $ }}
       {{- if $.Values.rasa.nodeSelector }}
       nodeSelector:
@@ -34,9 +34,14 @@ spec:
       tolerations:
 {{ toYaml $.Values.rasa.tolerations | indent 6 }}
       {{- end }}
+      # Use the init-db init container to check if database migration is completed.
+      # The rasa service depends on the rasa x server, to make sure that the database is ready
+      # and the rasa x server is fully operational we use the database migration service
+      # to check migration status.
+      {{- include "initContainer.dbMigration" $ |  nindent 6 }}
       containers:
       - name: {{ $.Chart.Name }}
-        image: "{{ $.Values.rasa.name }}:{{ $.Values.rasa.tag }}"
+        image: '{{ $.Values.rasa.name }}:{{ include "rasa.tag" $ }}'
         imagePullPolicy: {{ $.Values.images.pullPolicy }}
         ports:
         - name: "http"

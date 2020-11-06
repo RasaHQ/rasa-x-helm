@@ -79,8 +79,21 @@ rasax:
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
+  # service specifies settings for exposing rasa x to other services
+  service:
+    # annotations for the service
+    annotations: {}
+
 # rasa: Settings common for all Rasa containers
 rasa:
+  # version is the Rasa Open Source version which should be used.
+  # Used to ensure backward compatibility with older Rasa Open Source versions.
+  version: "2.0.3"  # Please update the default value in the Readme when updating this
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
@@ -89,8 +102,8 @@ rasa:
   extraArgs: []
   # name of the Rasa image to use
   name: "rasa/rasa"
-  # tag refers to the Rasa image tag
-  tag: "1.10.3"  # Please check the README to see all locations which have to be updated for a rasa release)
+  # tag refers to the Rasa image tag. If empty `.Values.rasa.version-full` is used.
+  tag: ""
   # port on which Rasa runs
   port: 5005
   # token Rasa accepts as authentication token from other Rasa services
@@ -145,6 +158,16 @@ rasa:
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
+  # service specifies settings for exposing rasa to other services
+  service:
+    # annotations for the service
+    annotations: {}
+
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
@@ -194,6 +217,65 @@ rasa:
       # - name: tmpdir
       #   emptyDir: {}
 
+
+# dbMigrationService specifies settings for the database migration service
+# The database migration service requires Rasa X >= 0.33.0
+dbMigrationService:
+  # initContainer describes settings related to the init-db container used as a init container for deployments
+  initContainer:
+    # image is the Docker image which is used by the init container
+    image: alpine:latest
+  # command overrides the default command to run in the container
+  command: []
+  # args overrides the default arguments to run in the container
+  args: []
+  # name is the Docker image name which is used by the migration service (uses `rasax.name` by default)
+  name: ""  # gcr.io/rasa-platform/rasa-x-ee
+  # tag refers to the Rasa X image tag (uses `appVersion` by default)
+  tag: ""
+  # ignoreVersionCheck defines if check required minimum Rasa X version that is required to run the service
+  ignoreVersionCheck: false
+  # port on which which to run the readiness endpoint
+  port: 8000
+
+  # tolerations can be used to control the pod to node assignment
+  # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+    # - key: "nvidia.com/gpu"
+    #   operator: "Exists"
+
+  # nodeSelector to specify which node the pods should run on
+  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  nodeSelector: {}
+    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
+
+  # resources which the event service is required / allowed to use
+  resources: {}
+  # extraEnvs are environment variables which can be added to the eventService deployment
+  extraEnvs: []
+  # - name: SOME_CUSTOM_ENV_VAR
+  #   value: "custom value"
+
+  # extraVolumeMounts defines additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # extraVolumes defines additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
+
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
+  # service specifies settings for exposing the db migration service to other services
+  service:
+    # annotations for the service
+    annotations: {}
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
@@ -241,6 +323,11 @@ eventService:
   
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
 
 # app (custom action server) specific settings
 app:
@@ -303,6 +390,10 @@ app:
 
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+  # service specifies settings for exposing app to other services
+  service:
+    # annotations for the service
+    annotations: {}
 
 # nginx specific settings
 nginx:
@@ -360,6 +451,11 @@ nginx:
   # - name: tmpdir
   #   emptyDir: {}
 
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
 # Duckling specific settings
 duckling:
   # override the default command to run in the container
@@ -393,6 +489,15 @@ duckling:
 
   # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
   initialProbeDelay: 10
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
+  # service specifies settings for exposing duckling to other services
+  service:
+    # annotations for the service
+    annotations: {}
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
@@ -407,6 +512,10 @@ debugMode: false
 # If set to 'false', Rasa X will run an event service as a subprocess (not recommended
 # high-load setups).
 separateEventService: "true"
+
+# separateDBMigrationService value determines whether the dbMigrationService will be run as a separate service.
+# If set to 'false', Rasa X will run a database migration service as a subprocess.
+separateDBMigrationService: true
 
 # postgresql specific settings (https://hub.helm.sh/charts/bitnami/postgresql/8.6.13)
 postgresql:
@@ -485,10 +594,17 @@ ingress:
   # Note that if `nginx.enabled` is `true` the `rasa/nginx` image is used as reverse proxy.
   # In order to use nginx ingress you have to set `nginx.enabled=false`.
   enabled: true
-  # annotations for the ingress
+  # annotations for the ingress - annotations are applied for the rasa and rasax ingresses
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
+  # annotationsRasa is extra annotations for the rasa nginx ingress
+  annotationsRasa: {}
+  # annotationsRasaX is extra annotations for the rasa x nginx ingress
+  annotationsRasaX:
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
   # hosts for this ingress
   hosts:
     - host: rasa-x.example.com
