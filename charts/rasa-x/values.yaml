@@ -14,6 +14,8 @@ rasax:
   tag: ""
   # port on which Rasa X runs
   port: 5002
+  # scheme
+  scheme: http
   # passwordSalt Rasa X uses to salt the user passwords
   passwordSalt: "passwordSalt"
   # token Rasa X accepts as authentication token from other Rasa services
@@ -114,6 +116,8 @@ rasa:
   tag: ""
   # port on which Rasa runs
   port: 5005
+  # scheme
+  scheme: https
   # token Rasa accepts as authentication token from other Rasa services
   token: "rasaToken"
   # rabbitQueue it should use to dispatch events to Rasa X
@@ -506,6 +510,8 @@ duckling:
   replicaCount: 1
   # port on which duckling should run
   port: 8000
+  # scheme
+  scheme: http
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
