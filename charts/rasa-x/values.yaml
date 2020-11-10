@@ -117,7 +117,7 @@ rasa:
   # port on which Rasa runs
   port: 5005
   # scheme
-  scheme: https
+  scheme: http
   # token Rasa accepts as authentication token from other Rasa services
   token: "rasaToken"
   # rabbitQueue it should use to dispatch events to Rasa X
