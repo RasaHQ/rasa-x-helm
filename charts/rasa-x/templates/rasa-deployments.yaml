@@ -46,7 +46,7 @@ spec:
           httpGet:
             path: "/"
             port: "http"
-          initialDelaySeconds: {{ $.Values.rasa.initialProbeDelay }}
+          initialDelaySeconds: {{ $.Values.rasa.livenessProbe.initialProbeDelay }}
           failureThreshold: 10
         {{- if $.Values.rasa.command }}
         command:

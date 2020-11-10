@@ -116,8 +116,9 @@ rasa:
     #   service_name: rasa
   # Jaeger Sidecar
   jaegerSidecar: "false"
-  # initialProbeDelay for the `livenessProbe`
-  initialProbeDelay: 10
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
   # useLoginDatabase will use the Rasa X database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
   # previously.
