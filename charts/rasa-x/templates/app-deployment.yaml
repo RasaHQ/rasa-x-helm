@@ -50,13 +50,13 @@ spec:
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
-          initialDelaySeconds: {{ .Values.app.initialProbeDelay }}
+            initialDelaySeconds: {{ .Values.app.livenessProbe.initialProbeDelay }}
         readinessProbe:
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
+            initialDelaySeconds: {{ .Values.app.readinessProbe.initialProbeDelay }}
         {{- with .Values.app.resources }}
-          initialDelaySeconds: {{ .Values.app.initialProbeDelay }}
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}

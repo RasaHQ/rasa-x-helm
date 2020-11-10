@@ -49,8 +49,12 @@ rasax:
     - kubernetes.io/pvc-protection
     # existingClaim which should be used instead of a new one
     existingClaim: ""
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
+  readinessProbe:
+  # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+  livenessProbe:
+  # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
   # resources which Rasa X is required / allowed to use
   resources: {}
   # extraEnvs are environment variables which can be added to the Rasa X deployment
@@ -112,7 +116,7 @@ rasa:
     #   service_name: rasa
   # Jaeger Sidecar
   jaegerSidecar: "false"
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
+  # initialProbeDelay for the `livenessProbe`
   initialProbeDelay: 10
   # useLoginDatabase will use the Rasa X database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
@@ -239,8 +243,12 @@ eventService:
   # - name: tmpdir
   #   emptyDir: {}
   
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+      initialProbeDelay: 10
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+      initialProbeDelay: 10
 
 # app (custom action server) specific settings
 app:
@@ -301,8 +309,12 @@ app:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: true
 
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+      initialProbeDelay: 10
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+      initialProbeDelay: 10
 
 # nginx specific settings
 nginx:
@@ -333,8 +345,12 @@ nginx:
     nodePort: ""
     # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
     externalIPs: []
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+      initialProbeDelay: 10
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+      initialProbeDelay: 10
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -391,8 +407,12 @@ duckling:
   # resources which duckling is required / allowed to use
   resources: {}
 
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+      initialProbeDelay: 10
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+      initialProbeDelay: 10
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret

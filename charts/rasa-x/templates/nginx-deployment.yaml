@@ -50,14 +50,14 @@ spec:
             command:
             - curl
             - localhost:8080/nginx_status
-          initialDelaySeconds: {{ .Values.nginx.initialProbeDelay }}
+          initialDelaySeconds: {{ .Values.nginx.livenessProbe.initialProbeDelay }}
           failureThreshold: 10
         readinessProbe:
           exec:
             command:
             - curl
             - localhost:8080/nginx_status
-          initialDelaySeconds: {{ .Values.nginx.initialProbeDelay }}
+          initialDelaySeconds: {{ .Values.nginx.readinessProbe.initialProbeDelay }}
         env:
         - name: "RASA_X_HOST"
           value: "{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}"
