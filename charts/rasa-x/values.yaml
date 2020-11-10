@@ -397,21 +397,15 @@ app:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: true
 
-<<<<<<< HEAD
   readinessProbe:
     # initialProbeDelay for the `readinessProbe`
       initialProbeDelay: 10
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
       initialProbeDelay: 10
-=======
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
-  # service specifies settings for exposing app to other services
   service:
     # annotations for the service
     annotations: {}
->>>>>>> 255fdb2854ba22f1625f97fc6fd1d5e3057e60e1
 
 # nginx specific settings
 nginx:
@@ -509,26 +503,16 @@ duckling:
   # resources which duckling is required / allowed to use
   resources: {}
 
-<<<<<<< HEAD
   readinessProbe:
     # initialProbeDelay for the `readinessProbe`
       initialProbeDelay: 10
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
       initialProbeDelay: 10
-=======
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
-  # automountServiceAccountToken specifies whether the Kubernetes service account
-  # credentials should be automatically mounted into the pods. See more about it in
-  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
-  automountServiceAccountToken: false
-
   # service specifies settings for exposing duckling to other services
   service:
     # annotations for the service
     annotations: {}
->>>>>>> 255fdb2854ba22f1625f97fc6fd1d5e3057e60e1
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
