@@ -546,6 +546,16 @@ duckling:
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
 
+  # additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
+
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
 # to see which values are required in the secret in case you want to provide your own.
@@ -613,7 +623,7 @@ rabbitmq:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
-# redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
+# redis specific settings (https://artifacthub.io/packages/helm/bitnami/redis/10.5.14)
 redis:
   # Install should be `true` if the redis subchart should be used
   install: true
@@ -634,6 +644,28 @@ redis:
   #   enabled: true
   #   fsGroup: 1001
   #   runAsUser: 1001
+  tls:
+    # Enable TLS traffic
+        enabled: false
+        #
+        # Whether to require clients to authenticate or not.
+        # authClients: true
+        # #
+        # # Name of the Secret that contains the certificates
+        # certificatesSecret: 
+        # #
+        # # Certificate filename
+        # certFilename: tls.crt
+        # #
+        # # Certificate Key filename
+        # certKeyFilename: tls.key
+        # #
+        # # CA Certificate filename
+        # certCAFilename: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+        #
+        # File containing DH params (in order to support DH based ciphers)
+        # dhParamsFilename:
+
 
 # ingress settings
 ingress:

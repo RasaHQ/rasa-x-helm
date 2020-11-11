@@ -35,3 +35,4 @@ Return the redis password secret key.
     {{- default "redis-password" .Values.redis.existingSecretPasswordKey | quote -}}
   {{- end -}}
 {{- end -}}
+

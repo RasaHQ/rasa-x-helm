@@ -28,7 +28,7 @@ dependencies:
   condition: postgresql.install
 
 - name: redis
-  version: ~10.5.12
+  version: ~10.7.0
   repository: https://charts.bitnami.com/bitnami
   condition: redis.install
 
