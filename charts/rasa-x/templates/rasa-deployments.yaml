@@ -67,7 +67,7 @@ spec:
         - --no-prompt
         - --production
         - --config-endpoint
-        - {{ default "HTTP" $.Values.rasax.scheme }}://{{ include "rasa-x.fullname" $ }}-rasa-x.{{ $.Release.Namespace }}.svc:{{ default 5002 $.Values.rasax.port }}/api/config?token=$(RASA_X_TOKEN)
+        - {{  $.Values.rasax.scheme }}://{{ include "rasa-x.fullname" $ }}-rasa-x.{{ $.Release.Namespace }}.svc:{{ default 5002 $.Values.rasax.port }}/api/config?token=$(RASA_X_TOKEN)
         - --port
         - "{{ $.Values.rasa.port }}"
         - --jwt-method
@@ -135,9 +135,9 @@ spec:
         - name: "RASA_ENVIRONMENT"
           value: "{{ .rasaEnvironment }}"
         - name: "RASA_MODEL_SERVER"
-          value: {{ default "HTTP" $.Values.rasax.scheme }}://{{ include "rasa-x.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.rasax.port }}/api/projects/default/models/tags/{{ .modelTag }}
+          value: {{ $.Values.rasax.scheme }}://{{ include "rasa-x.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.rasax.port }}/api/projects/default/models/tags/{{ .modelTag }}
         - name: "RASA_DUCKLING_HTTP_URL"
-          value: {{ default "HTTP" $.Values.duckling.scheme }}://{{ include "duckling.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.duckling.port }}
+          value: {{ $.Values.duckling.scheme }}://{{ include "duckling.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.duckling.port }}
         {{- include "rasa.extra.envs" $ | nindent 8 }}
         volumeMounts:
         # Mount the temporary directory for the Rasa global configuration
