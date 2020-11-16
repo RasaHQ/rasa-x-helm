@@ -521,6 +521,16 @@ duckling:
   # resources which duckling is required / allowed to use
   resources: {}
 
+  # additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
+
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
