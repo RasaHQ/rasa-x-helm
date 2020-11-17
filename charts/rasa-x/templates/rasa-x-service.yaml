@@ -5,13 +5,13 @@ metadata:
   labels:
     {{ include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: rasa-x
-{{- with .Values.rasax.service.annotations }}
+{{- with $.Values.rasax.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
 {{- end }}
 spec:
   ports:
-  - port: {{ .Values.rasax.port }}
+  - port: {{ $.Values.rasax.port }}
     targetPort: http
     protocol: "TCP"
     name: "http"
