@@ -25,6 +25,11 @@ metadata:
       if ($arg_environment = "production") {
           rewrite ^/api/chat$ /core/webhooks/rasa/webhook last;
       }
+      if ($request_uri ~ ^/robots.txt$) {
+          return 200 "User-agent: *\nDisallow: /\n";
+      }
+    nginx.ingress.kubernetes.io/server-snippet: |
+      add_header X-Robots-Tag none;
   {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
