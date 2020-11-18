@@ -50,7 +50,7 @@ jobs:
       run: |
         curl -sfL https://get.k3s.io | sh -
         sudo chmod 744 /etc/rancher/k3s/k3s.yaml
-        echo "::set-env name=KUBECONFIG::/etc/rancher/k3s/k3s.yaml"
+        echo "KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $GITHUB_ENV
 
     - name: Install Helm
       run: |
@@ -59,7 +59,7 @@ jobs:
     - name: Generate credentials
       run: |
         USER_PASSWORD=$(openssl rand -base64 32)
-        echo "::set-env name=INITIAL_USER_PASSWORD::${USER_PASSWORD}"
+        echo "INITIAL_USER_PASSWORD=${USER_PASSWORD}" >> $GITHUB_ENV
 
     - name: Free disk space
       # tries to make sure we do not run out of disk space, see
