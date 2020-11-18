@@ -59,4 +59,12 @@ spec:
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
+        {{ if .Values.duckling.extraVolumeMounts }}
+        volumeMounts:
+{{ toYaml .Values.duckling.extraVolumeMounts | indent 8 }}
+        {{- end }}
+      {{ if .Values.duckling.extraVolumes }}
+      volumes:
+{{ toYaml .Values.duckling.extraVolumes | indent 6 }}
+      {{- end }}
 {{- end }}
