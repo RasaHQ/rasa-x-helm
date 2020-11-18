@@ -49,12 +49,20 @@ rasax:
     - kubernetes.io/pvc-protection
     # existingClaim which should be used instead of a new one
     existingClaim: ""
-  readinessProbe:
-  # initialProbeDelay for the `readinessProbe`
-    initialProbeDelay: 10
+  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
+  initialProbeDelay: 10
+  # livenessProbe checks whether rasa x needs to be restarted
   livenessProbe:
-  # initialProbeDelay for the `livenessProbe`
+    # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether rasa x can receive traffic
+  readinessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
   # resources which Rasa X is required / allowed to use
   resources: {}
   # extraEnvs are environment variables which can be added to the Rasa X deployment
@@ -132,6 +140,8 @@ rasa:
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
   # useLoginDatabase will use the Rasa X database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
   # previously.
@@ -281,6 +291,15 @@ dbMigrationService:
     # annotations for the service
     annotations: {}
 
+  # livenessProbe checks whether the db migration service needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether the db migration service can receive traffic
+  readinessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
@@ -337,6 +356,15 @@ eventService:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
+
+  # livenessProbe checks whether the event service needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether the event service can receive traffic
+  readinessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
 
 # app (custom action server) specific settings
 app:
@@ -406,6 +434,15 @@ app:
   service:
     # annotations for the service
     annotations: {}
+
+  # livenessProbe checks whether app needs to be restarted
+  livenessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether app can receive traffic
+  readinessProbe:
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
 
 # nginx specific settings
 nginx:
@@ -506,9 +543,28 @@ duckling:
   readinessProbe:
     # initialProbeDelay for the `readinessProbe`
       initialProbeDelay: 10
+      # scheme to be used by the `readinessProbe`
+      scheme: "HTTP"
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
       initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+      scheme: "HTTP"
+  # additional volumeMounts to the main container
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes to the pod
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
+
+  # automountServiceAccountToken specifies whether the Kubernetes service account
+  # credentials should be automatically mounted into the pods. See more about it in
+  # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
+  automountServiceAccountToken: false
+
   # service specifies settings for exposing duckling to other services
   service:
     # annotations for the service

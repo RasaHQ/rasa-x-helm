@@ -55,12 +55,14 @@ spec:
             path: "/"
             port: "http"
           initialDelaySeconds: {{ .Values.rasax.livenessProbe.initialProbeDelay }}
+          scheme: {{ default "HTTP" .Values.rasax.livenessProbe.scheme }}
           failureThreshold: 10
         readinessProbe:
           httpGet:
             path: "/"
             port: "http"
           initialDelaySeconds: {{ .Values.rasax.readinessProbe.initialProbeDelay }}
+          scheme: {{ default "HTTP" .Values.rasax.readinessProbe.scheme }}
           failureThreshold: 10
         env:
         {{- if eq "true" (include "is_enterprise" .) }}

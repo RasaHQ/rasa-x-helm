@@ -57,13 +57,14 @@ spec:
           httpGet:
             path: "/health"
             port: "http"
-          initialDelaySeconds: {{ .Values.eventService.livenessProbe.initialProbeDelay }}
+            initialDelaySeconds: {{ .Values.eventService.livenessProbe.initialProbeDelay }}
+            scheme: {{ default "HTTP" .Values.eventService.livenessProbe.scheme }}
         readinessProbe:
           httpGet:
             path: "/health"
             port: "http"
-          initialDelaySeconds: {{ .Values.eventService.readinessProbe.initialProbeDelay }}
-
+            initialDelaySeconds: {{ .Values.eventService.readinessProbe.initialProbeDelay }}
+            scheme: {{ default "HTTP" .Values.eventService.readinessProbe.scheme }}
         env:
         {{- if eq "true" (include "is_enterprise" .) }}
         - name: "RASA_TELEMETRY_ENABLED"
