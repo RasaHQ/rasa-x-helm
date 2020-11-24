@@ -67,7 +67,7 @@ spec:
         - --no-prompt
         - --production
         - --config-endpoint
-        - {{  $.Values.rasax.scheme }}://{{ include "rasa-x.fullname" $ }}-rasa-x.{{ $.Release.Namespace }}.svc:{{ default 5002 $.Values.rasax.port }}/api/config?token=$(RASA_X_TOKEN)
+        - {{ $.Values.rasax.scheme }}://{{ include "rasa-x.fullname" $ }}-rasa-x.{{ $.Release.Namespace }}.svc:{{ default 5002 $.Values.rasax.port }}/api/config?token=$(RASA_X_TOKEN)
         - --port
         - "{{ $.Values.rasa.port }}"
         - --jwt-method

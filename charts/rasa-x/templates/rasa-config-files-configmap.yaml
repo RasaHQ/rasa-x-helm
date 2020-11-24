@@ -7,7 +7,7 @@ metadata:
 data:
   rasa-credentials: |
     rasa:
-      url: {{  .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}/api
+      url: {{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}/api
     {{- with .Values.rasa.additionalChannelCredentials }}
     {{ toYaml . | nindent 4 }}
     {{- end }}
@@ -45,7 +45,7 @@ data:
       {{- end }}
       {{- end }}
     action_endpoint:
-      url: "{{  .Values.app.scheme }}://{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"
+      url: "{{ .Values.app.scheme }}://{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"
       token:  ""
     {{- if $.Values.redis.install }}
     lock_store:
