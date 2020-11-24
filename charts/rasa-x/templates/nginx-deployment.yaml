@@ -60,11 +60,11 @@ spec:
           initialDelaySeconds: {{ .Values.nginx.initialProbeDelay }}
         env:
         - name: "RASA_X_HOST"
-          value: "{{ include "rasa-x.host" . }}:{{ .Values.rasax.port }}"
+          value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
         - name: "RASA_PRODUCTION_HOST"
-          value: "{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}:{{ .Values.rasa.port }}"
+          value: "{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
         - name: "CUSTOM_ACTION_HOST"
-          value: "{{ include "rasa-x.fullname" . }}-app:{{ template "rasa-x.custom-actions.port" . }}"
+          value: "{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}"
         volumeMounts:
 {{- if .Values.nginx.extraVolumeMounts }}
 {{ toYaml .Values.nginx.extraVolumeMounts | indent 8 }}
