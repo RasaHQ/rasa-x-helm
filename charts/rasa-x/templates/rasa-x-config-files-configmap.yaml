@@ -11,5 +11,5 @@ data:
         url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
         token: ${RASA_TOKEN}
       worker:
-        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}:{{ .Values.rasa.port }}"
+        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
         token: ${RASA_TOKEN}

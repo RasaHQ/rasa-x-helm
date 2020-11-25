@@ -179,11 +179,6 @@ rasa:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
 
-  # service specifies settings for exposing rasa to other services
-  service:
-    # annotations for the service
-    annotations: {}
-
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
@@ -192,6 +187,10 @@ rasa:
       replicaCount: 1
       # serviceName with which the Rasa production deployment is exposed to other containers
       serviceName: "rasa-production"
+      # service specifies settings for exposing rasa production to other services
+      service:
+        # annotations for the service
+        annotations: {}
       # modelTag of the model Rasa should pull from the the model server
       modelTag: "production"
       # trackerDatabase it should use to to store conversation trackers
@@ -215,6 +214,10 @@ rasa:
       replicaCount: 1
       # serviceName with which the Rasa worker deployment is exposed to other containers
       serviceName: "rasa-worker"
+      # service specifies settings for exposing rasa worker to other services
+      service:
+        # annotations for the service
+        annotations: {}
       # modelTag of the model Rasa should pull from the the model server
       modelTag: "production"
       # trackerDatabase it should use to to store conversation trackers
