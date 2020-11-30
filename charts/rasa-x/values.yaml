@@ -99,10 +99,6 @@ rasax:
     # annotations for the service
     annotations: {}
 
-  # additional labels can be used to map organizational structures onto system objects
-  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-  labels: {}
-
 # rasa: Settings common for all Rasa containers
 rasa:
   # version is the Rasa Open Source version which should be used.
@@ -726,3 +722,7 @@ global:
   redis:
     # password to use in case there no external secret was provided
     password: "redis-password"
+
+  # additionalDeploymentLabels can be used to map organizational structures onto system objects
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  additionalDeploymentLabels: {}
