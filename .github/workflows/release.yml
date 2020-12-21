@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
 
     - name: Configure Git
       run: |
@@ -27,6 +27,6 @@ jobs:
         helm repo add bitnami https://charts.bitnami.com/bitnami
 
     - name: Run chart-releaser
-      uses: helm/chart-releaser-action@v1.0.0-rc.2
+      uses: helm/chart-releaser-action@v1.1.0
       env:
         CR_TOKEN: "${{ secrets.CR_TOKEN }}"
