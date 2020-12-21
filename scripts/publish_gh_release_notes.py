@@ -34,6 +34,20 @@ def create_github_release(slug: Text, token: Text, tag_name: Text, body: Text):
     return repo.create_release(tag_name=tag_name, body=body)
 
 
+def update_github_release_body(slug: Text, token: Text, tag_name, body: Text) -> bool:
+    """Update a github release body if it exists."""
+    github = github3.login(token=token)
+    owner, repo = slug.split("/")
+    repo = github.repository(owner, repo)
+    # get the release object according to tag name
+    release = repo.release_from_tag(tag_name=tag_name)
+
+    # if the release associated with tag name does not exist
+    if not release:
+        return False
+    return release.edit(body=body)  # update body
+
+
 def parse_changelog(tag_name: Text) -> Text:
     """Read the changelog and extract the most recently release entry."""
 
@@ -86,10 +100,12 @@ def main():
         print("Failed to extract changelog entries for version from changelog.")
         return 2
 
-    if not create_github_release(slug, token, tag_name, md_body):
-        print("Could not publish release notes:", file=sys.stderr)
-        print(md_body, file=sys.stderr)
-        return 5
+    if not update_github_release_body(slug, token, tag_name, md_body):
+        # create a new one if updating an existing release fails
+        if not create_github_release(slug, token, tag_name, md_body):
+            print("Could not publish release notes:", file=sys.stderr)
+            print(md_body, file=sys.stderr)
+            return 5
 
     print()
     print(f"Release notes for {tag_name} published successfully:")
