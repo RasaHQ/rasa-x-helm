@@ -4,6 +4,11 @@ on:
   push:
     branches:
     - master
+    tags:
+    - '**'
+
+env:
+  IS_TAG_BUILD: ${{ startsWith(github.event.ref, 'refs/tags') }
 
 jobs:
   release:
@@ -30,3 +35,19 @@ jobs:
       uses: helm/chart-releaser-action@v1.1.0
       env:
         CR_TOKEN: "${{ secrets.CR_TOKEN }}"
+
+    - name: Publish Release Notes 🗞
+      if: env.IS_TAG_BUILD
+      env:
+        GITHUB_TAG: ${{ github.ref }}
+        GITHUB_REPO_SLUG: ${{ github.repository }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TAG=${GITHUB_TAG/refs\/tags\//}
+        sudo apt-get update
+        sudo apt-get -y install pandoc
+        pip install -U github3.py pep440_version_utils
+        python3 ${GITHUB_WORKSPACE}/scripts/publish_gh_release_notes.py
+
+    # TODO: clean changlog
