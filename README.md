@@ -97,7 +97,7 @@ are merged. The only required steps are:
 2. Run `helm lint --strict charts/rasa-x`
 3. Increase the chart `version` in `charts/rasa-x/Chart.yaml`
 
-### Constructing Change logs
+### Changelog
 
 [generate-changelog-action](https://github.com/scottbrenner/generate-changelog-action) is used to capture changelogs from commit messages. This means there is a special format for commit messages if you want them to appear in release change logs.
 
