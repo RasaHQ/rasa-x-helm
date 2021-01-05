@@ -11,6 +11,11 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
     - name: Generate Changelog
       uses: scottbrenner/generate-changelog-action@1.0.1
       id: changelog
