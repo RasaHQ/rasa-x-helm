@@ -97,6 +97,32 @@ are merged. The only required steps are:
 2. Run `helm lint --strict charts/rasa-x`
 3. Increase the chart `version` in `charts/rasa-x/Chart.yaml`
 
+### Changelog
+
+[generate-changelog-action](https://github.com/scottbrenner/generate-changelog-action) is used to capture changelogs from commit messages. This means there is a special format for commit messages if you want them to appear in release change logs.
+
+The format is as following:
+```
+type: description [flags]
+```
+where `type` is the category of the change, `description` is a short sentence to describe the change, and `flags` is an optional comma-separated list of one or more of the following (must be surrounded in square brackets):
+
+`breaking`: alters `type` to be a breaking change
+
+`type` can be
+- feature
+- fix
+- build
+- other
+- perf
+- refactor
+- style
+- test
+- doc
+- ...
+
+For more information, please see [here](https://github.com/lob/generate-changelog#usage).
+
 ## License
 
 Licensed under the Apache License, Version 2.0.
