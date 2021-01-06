@@ -38,7 +38,7 @@ jobs:
           echo "Latest Rasa X minor: ${LATEST_RASA_X_MINOR}"
           echo "LATEST_RASA_X_MINOR=${LATEST_RASA_X_MINOR}" >> $GITHUB_ENV
 
-      - name: Compare latest Rasa X minor with rasa-xhelm version ⏯
+      - name: Compare latest Rasa X minor with rasa-x-helm version ⏯
         run: |
           # Get current rasa-x version in Chart.yaml using yq
           pip3 install yq
