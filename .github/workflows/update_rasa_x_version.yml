@@ -33,7 +33,7 @@ jobs:
       - name: Get latest Rasa X minor 🏷
         run: |
           DOCKERHUB_TAGS_URL="https://registry.hub.docker.com/v2/repositories/rasa/rasa-x/tags?page_size=10000"
-          LATEST_RASA_X_MINOR=$(curl -s ${DOCKERHUB_TAGS_URL} | jq -r '.results[].name' | grep -vE 'refs|aws|latest|stable|master|ls|list' | sort -Vr | head -n1 | sed 's/[a-z].*//')
+          LATEST_RASA_X_MINOR=$(curl -s ${DOCKERHUB_TAGS_URL} | jq -r '.results[].name' | grep -E '^[0-9.]+$' | sort -Vr | head -n1)
 
           echo "Latest Rasa X minor: ${LATEST_RASA_X_MINOR}"
           echo "LATEST_RASA_X_MINOR=${LATEST_RASA_X_MINOR}" >> $GITHUB_ENV
