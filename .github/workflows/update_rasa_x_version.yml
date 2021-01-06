@@ -49,10 +49,10 @@ jobs:
 
           if [[ ${LATEST_RASA_X_MINOR} == ${CURRENT_CHART_RASA_X_VERSION} ]]
           then
-            echo "Version is good. Nothing to update."
+            echo "No newer version has found. Nothing to update."
             echo "CREATE_UPDATE_PR=false" >> $GITHUB_ENV
           else
-            echo "Version does not match. Bumping it now."
+            echo "A newer version has found. Bumping it now."
             echo "CREATE_UPDATE_PR=true" >> $GITHUB_ENV
           fi
 
