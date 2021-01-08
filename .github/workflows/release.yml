@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: Configure Git
       run: |
@@ -19,8 +21,7 @@ jobs:
 
     # See https://github.com/helm/chart-releaser-action/issues/6
     - name: Install Helm
-      run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      uses: azure/setup-helm@v1
 
     - name: Add dependency chart repos
       run: |
