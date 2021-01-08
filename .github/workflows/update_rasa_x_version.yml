@@ -6,11 +6,6 @@ on:
     - cron: '0 8 * * *'
   workflow_dispatch: {}
 
-env:
-  RASABOT_GITHUB_TOKEN: ${{ secrets.RASABOT_GITHUB_TOKEN }}
-  RASABOT_USERNAME: Roberto
-  RASABOT_EMAIL: 43567378+rasabot@users.noreply.github.com
-
 
 jobs:
   open_pull_request:
@@ -24,11 +19,6 @@ jobs:
 
       - name: Checkout rasa-x-helm github repository 🕝
         uses: actions/checkout@v2
-        with:
-          # The workflow needs to push to a new branch that changes a workflow file.
-          # To do this, we need the rasabot service account.
-          token: ${{ env.RASABOT_GITHUB_TOKEN }}
-
 
       - name: Get latest Rasa X minor 🏷
         run: |
@@ -66,16 +56,16 @@ jobs:
         uses: peterjgrainger/action-create-branch@v2.0.1
         if: env.CREATE_UPDATE_PR == 'true'
         env:
-          GITHUB_TOKEN: ${{ env.RASABOT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: ${{ steps.get-branch-name.outputs.new_branch }}
 
       - name: Update Chart YAML containing Rasa X version tags 🗂
         if: env.CREATE_UPDATE_PR == 'true'
         run: |
-          git config user.name ${{ env.RASABOT_USERNAME }}
-          git config user.email ${{ env.RASABOT_EMAIL }}
-
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          
           git remote update origin --prune
           git checkout ${{ steps.get-branch-name.outputs.new_branch }}
 
@@ -89,7 +79,7 @@ jobs:
         uses: repo-sync/pull-request@v2
         if: env.CREATE_UPDATE_PR == 'true'
         with:
-          github_token: ${{ env.RASABOT_GITHUB_TOKEN }}
+          github_token:  ${{ secrets.GITHUB_TOKEN }}
           source_branch: ${{ steps.get-branch-name.outputs.new_branch }}
           destination_branch: master
           pr_title: Bump Rasa X version to ${LATEST_RASA_X_MINOR}
