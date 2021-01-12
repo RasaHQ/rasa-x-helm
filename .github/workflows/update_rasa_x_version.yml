@@ -65,7 +65,7 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          
+
           git remote update origin --prune
           git checkout ${{ steps.get-branch-name.outputs.new_branch }}
 
@@ -83,3 +83,4 @@ jobs:
           source_branch: ${{ steps.get-branch-name.outputs.new_branch }}
           destination_branch: master
           pr_title: Bump Rasa X version to ${LATEST_RASA_X_MINOR}
+          pr_reviewer: "@RasaHQ/infrastructure"
