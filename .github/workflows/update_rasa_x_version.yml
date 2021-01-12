@@ -72,7 +72,7 @@ jobs:
           sed -i "s/^appVersion.*/appVersion: \"${LATEST_RASA_X_MINOR}\"/" charts/rasa-x/Chart.yaml
 
           git add -u
-          git commit -m "bump rasa-x version to ${LATEST_RASA_X_MINOR}"
+          git commit -m "other: Bump Rasa X version to ${LATEST_RASA_X_MINOR}"
           git push origin ${{ steps.get-branch-name.outputs.new_branch }}
 
       - name: Open pull request ☄️
