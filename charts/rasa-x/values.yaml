@@ -9,9 +9,10 @@ rasax:
   # override the default arguments to run in the container
   args: []
   # name of the Rasa X image to use
-  name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
+  #name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
+  name: "gcr.io/rasa-platform/rasa-x-ee"
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
-  tag: ""
+  tag: "0.34.0"
   # port on which Rasa X runs
   port: 5002
   # scheme by which Rasa X is accessible
@@ -32,7 +33,7 @@ rasax:
   # initialUser is the user which is created upon the initial start of Rasa X
   initialUser:
     # username specifies a name of this user
-    username: "me"
+    username: "rasaadmin"
     # password for this user (leave it empty to skip the user creation)
     password: ""
   ## Enable persistence using Persistent Volume Claims
@@ -62,7 +63,10 @@ rasax:
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
   # resources which Rasa X is required / allowed to use
-  resources: {}
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
   # extraEnvs are environment variables which can be added to the Rasa X deployment
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
@@ -103,7 +107,7 @@ rasax:
 rasa:
   # version is the Rasa Open Source version which should be used.
   # Used to ensure backward compatibility with older Rasa Open Source versions.
-  version: "2.0.3"  # Please update the default value in the Readme when updating this
+  version: "2.1.2"  # Please update the default value in the Readme when updating this
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
@@ -112,8 +116,8 @@ rasa:
   extraArgs: []
   # name of the Rasa image to use
   name: "rasa/rasa"
-  # tag refers to the Rasa image tag. If empty `.Values.rasa.version-full` is used.
-  tag: ""
+  # tag refers to the Rasa image tag
+  tag: "2.1.2-full"  # Please check the README to see all locations which have to be updated for a rasa release)
   # port on which Rasa runs
   port: 5005
   # scheme by which Rasa services are accessible
@@ -198,7 +202,10 @@ rasa:
       # rasaEnvironment it used to indicate the origin of events published to RabbitMQ (App ID message property)
       rasaEnvironment: "production"
       # resources which rasaProduction is required / allowed to use
-      resources: {}
+      resources:
+        requests:
+          memory: 1Gi
+          cpu: 1
       # additional volumeMounts to the main container
       extraVolumeMounts: []
       # - name: tmpdir
@@ -225,7 +232,10 @@ rasa:
       # rasaEnvironment it used to indicate the origin of events published to RabbitMQ (App ID message property)
       rasaEnvironment: "worker"
       # resources which rasaWorker is required / allowed to use
-      resources: {}
+      resources:
+        requests:
+          memory: 4Gi
+          cpu: 2
       # additional volumeMounts to the main container
       extraVolumeMounts: []
       # - name: tmpdir
@@ -311,9 +321,10 @@ eventService:
   # override the default arguments to run in the container
   args: []
   # event service just uses the Rasa X image
-  name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
+  #name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
+  name: "gcr.io/rasa-platform/rasa-x-ee"
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
-  tag: ""
+  tag: "0.34.0"
   # port on which which to run the readiness endpoint
   port: 5673
   # replicaCount of the event-service container
@@ -333,7 +344,11 @@ eventService:
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
   # resources which the event service is required / allowed to use
-  resources: {}
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 0.2
+
   # extraEnvs are environment variables which can be added to the eventService deployment
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
@@ -380,7 +395,10 @@ app:
   # scheme by which custom action server is accessible
   scheme: http
   # resources which app is required / allowed to use
-  resources: {}
+  resources:
+    requests:
+      memory: 200Mi
+      cpu: 100m
   # Jaeger Sidecar
   jaegerSidecar: "false"
   # extraEnvs are environment variables which can be added to the app deployment
@@ -482,7 +500,10 @@ nginx:
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
   # resources which nginx is required / allowed to use
-  resources: {}
+  resources:
+    requests:
+      memory: 200Mi
+      cpu: 100m
 
   # additional volumeMounts to the main container
   extraVolumeMounts: []
@@ -530,7 +551,10 @@ duckling:
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
 
   # resources which duckling is required / allowed to use
-  resources: {}
+  resources:
+    requests:
+      memory: 200Mi
+      cpu: 100m
 
   # additional volumeMounts to the main container
   extraVolumeMounts: []
@@ -568,7 +592,7 @@ duckling:
 rasaSecret: ""
 
 # debugMode enables / disables the debug mode for Rasa and Rasa X
-debugMode: false
+debugMode: true
 
 # separateEventService value determines whether the eventService will be run as a separate service.
 # If set to 'false', Rasa X will run an event service as a subprocess (not recommended
@@ -589,6 +613,15 @@ postgresql:
   existingHost: ""
   # existingSecretKey is the key to get the password when an external postgresql instance is provided (`install: false`)
   existingSecretKey: ""
+
+  resources:
+    requests:
+      memory: 200Mi
+      cpu: 100m
+
+  persistence:
+    enabled: true
+    size: 30Gi
 
   # Configure security context for the postgresql init container
   # volumePermissions:
@@ -628,6 +661,11 @@ rabbitmq:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
+  resources:
+    requests:
+      memory: 250Mi
+      cpu: 100m
+
 # redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
 redis:
   # Install should be `true` if the redis subchart should be used
@@ -657,9 +695,10 @@ ingress:
   # In order to use nginx ingress you have to set `nginx.enabled=false`.
   enabled: true
   # annotations for the ingress - annotations are applied for the rasa and rasax ingresses
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   # annotationsRasa is extra annotations for the rasa nginx ingress
   annotationsRasa: {}
   # annotationsRasaX is extra annotations for the rasa x nginx ingress
@@ -669,21 +708,22 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
   # hosts for this ingress
   hosts:
-    - host: rasa-x.example.com
+    - host: rasa-x-staging.connected.platform.mattel
       paths:
       - /
   # tls: Secrets for the certificates
-  tls: []
-  #  - secretName: rasa-x-tls
-  #    hosts:
-  #      - rasa-x.example.com
+  tls:
+    - secretName: rasa-x-staging-tls
+      hosts:
+        - rasa-x-staging.connected.platform.mattel
 
 # images: Settings for the images
 images:
   # pullPolicy to use when deploying images
   pullPolicy: "Always"
   # imagePullSecrets which are required to pull images for private registries
-  imagePullSecrets: []
+  imagePullSecrets:
+    - name: "gcr-json-key"
 
 # securityContext to use
 securityContext:
