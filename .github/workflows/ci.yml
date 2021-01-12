@@ -5,6 +5,7 @@ on:
     branches:
     - 'master'
     - '[0-9]+.[0-9]+.x'
+    - 'bump-rasa-x-version*'
   pull_request:
     types:
       - opened
