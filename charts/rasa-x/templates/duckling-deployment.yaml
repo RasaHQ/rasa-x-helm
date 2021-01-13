@@ -58,7 +58,7 @@ spec:
             port: "http"
             scheme: {{ default "HTTP" .Values.duckling.readinessProbe.scheme }}
         {{- with .Values.duckling.resources }}
-          initialDelaySeconds: {{ .Values.duckling.readinessProbe.initialProbeDelay }}
+            initialDelaySeconds: {{ .Values.duckling.readinessProbe.initialProbeDelay }}
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
