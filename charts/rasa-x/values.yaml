@@ -51,8 +51,6 @@ rasax:
     - kubernetes.io/pvc-protection
     # existingClaim which should be used instead of a new one
     existingClaim: ""
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
   # livenessProbe checks whether rasa x needs to be restarted
   livenessProbe:
     # initialProbeDelay for the `readinessProbe`
@@ -354,15 +352,15 @@ eventService:
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
-  
+
   readinessProbe:
     # initialProbeDelay for the `readinessProbe`
-      initialProbeDelay: 10
-      scheme: "HTTP"
+    initialProbeDelay: 10
+    scheme: "HTTP"
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
-      initialProbeDelay: 10
-      scheme: "HTTP"
+    initialProbeDelay: 10
+    scheme: "HTTP"
 
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
@@ -432,12 +430,12 @@ app:
 
   readinessProbe:
     # initialProbeDelay for the `readinessProbe`
-      initialProbeDelay: 10
-      scheme: "HTTP"
+    initialProbeDelay: 10
+    scheme: "HTTP"
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
-      initialProbeDelay: 10
-      scheme: "HTTP"
+    initialProbeDelay: 10
+    scheme: "HTTP"
   service:
     # annotations for the service
     annotations: {}
@@ -547,14 +545,14 @@ duckling:
 
   readinessProbe:
     # initialProbeDelay for the `readinessProbe`
-      initialProbeDelay: 10
-      # scheme to be used by the `readinessProbe`
-      scheme: "HTTP"
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
-      initialProbeDelay: 10
+    initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
-      scheme: "HTTP"
+    scheme: "HTTP"
   # additional volumeMounts to the main container
   extraVolumeMounts: []
   # - name: tmpdir
