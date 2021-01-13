@@ -695,10 +695,7 @@ ingress:
   # In order to use nginx ingress you have to set `nginx.enabled=false`.
   enabled: true
   # annotations for the ingress - annotations are applied for the rasa and rasax ingresses
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+  annotations: {}
   # annotationsRasa is extra annotations for the rasa nginx ingress
   annotationsRasa: {}
   # annotationsRasaX is extra annotations for the rasa x nginx ingress
