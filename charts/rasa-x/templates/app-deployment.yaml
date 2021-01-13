@@ -47,16 +47,16 @@ spec:
           containerPort: {{ template "rasa-x.custom-actions.port" . }}
           protocol: "TCP"
         livenessProbe:
+          initialDelaySeconds: {{ .Values.app.livenessProbe.initialProbeDelay }}
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
-            initialDelaySeconds: {{ .Values.app.livenessProbe.initialProbeDelay }}
             scheme: {{ default "HTTP" .Values.app.livenessProbe.scheme }}
         readinessProbe:
+          initialDelaySeconds: {{ .Values.app.readinessProbe.initialProbeDelay }}
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
-            initialDelaySeconds: {{ .Values.app.readinessProbe.initialProbeDelay }}
             scheme: {{ default "HTTP" .Values.app.readinessProbe.scheme }}
         {{- with .Values.app.resources }}
         resources:

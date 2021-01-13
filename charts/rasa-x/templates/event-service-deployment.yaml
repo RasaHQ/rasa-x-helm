@@ -54,16 +54,16 @@ spec:
             containerPort: {{ default 5673 .Values.eventService.port }}
             protocol: "TCP"
         livenessProbe:
+          initialDelaySeconds: {{ .Values.eventService.livenessProbe.initialProbeDelay }}
           httpGet:
             path: "/health"
             port: "http"
-            initialDelaySeconds: {{ .Values.eventService.livenessProbe.initialProbeDelay }}
             scheme: {{ default "HTTP" .Values.eventService.livenessProbe.scheme }}
         readinessProbe:
+          initialDelaySeconds: {{ .Values.eventService.readinessProbe.initialProbeDelay }}
           httpGet:
             path: "/health"
             port: "http"
-            initialDelaySeconds: {{ .Values.eventService.readinessProbe.initialProbeDelay }}
             scheme: {{ default "HTTP" .Values.eventService.readinessProbe.scheme }}
         env:
         {{- if eq "true" (include "is_enterprise" .) }}

@@ -472,14 +472,10 @@ nginx:
   livenessProbe:
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
