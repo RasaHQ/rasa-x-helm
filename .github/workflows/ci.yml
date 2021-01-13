@@ -65,7 +65,7 @@ jobs:
 
     - name: Setup k3s
       run: |
-        curl -sfL https://get.k3s.io | sh -
+        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --no-deploy traefik" sh
         sudo chmod 744 /etc/rancher/k3s/k3s.yaml
         echo "KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $GITHUB_ENV
 
