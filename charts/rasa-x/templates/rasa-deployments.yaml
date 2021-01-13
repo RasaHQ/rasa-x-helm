@@ -53,7 +53,6 @@ spec:
             port: "http"
           initialDelaySeconds: {{ $.Values.rasa.livenessProbe.initialProbeDelay }}
           scheme: {{ default "HTTP" $.Values.rasa.livenessProbe.scheme }}
-          initialDelaySeconds: {{ $.Values.rasa.initialProbeDelay }}
 
           failureThreshold: 10
         {{- if $.Values.rasa.command }}

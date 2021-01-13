@@ -51,6 +51,7 @@ spec:
             - curl
             - localhost:8080/nginx_status
           initialDelaySeconds: {{ .Values.nginx.livenessProbe.initialProbeDelay }}
+          scheme: {{ default "HTTP" .Values.nginx.livenessProbe.scheme }}
           failureThreshold: 10
         readinessProbe:
           exec:
@@ -58,6 +59,7 @@ spec:
             - curl
             - localhost:8080/nginx_status
           initialDelaySeconds: {{ .Values.nginx.readinessProbe.initialProbeDelay }}
+          scheme: {{ default "HTTP" .Values.nginx.readinessProbe.scheme }}
         env:
         - name: "RASA_X_HOST"
           value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"

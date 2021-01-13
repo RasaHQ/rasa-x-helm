@@ -53,11 +53,13 @@ spec:
           httpGet:
             path: "/health"
             port: "http"
+            initialDelaySeconds: {{ .Values.dbMigrationService.livenessProbe.initialProbeDelay }}
             scheme: {{ default "HTTP" .Values.dbMigrationService.livenessProbe.scheme }}
         readinessProbe:
           httpGet:
             path: "/health"
             port: "http"
+            initialDelaySeconds: {{ .Values.dbMigrationService.readinessProbe.initialProbeDelay }}
             scheme: {{ default "HTTP" .Values.dbMigrationService.readinessProbe.scheme }}
 {{- if .Values.dbMigrationService.extraVolumeMounts }}
         volumeMounts:

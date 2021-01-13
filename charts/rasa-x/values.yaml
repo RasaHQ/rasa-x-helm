@@ -142,7 +142,7 @@ rasa:
   # Jaeger Sidecar
   jaegerSidecar: "false"
   livenessProbe:
-    # initialProbeDelay for the `livenessProbe`
+    # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
@@ -298,12 +298,15 @@ dbMigrationService:
     # annotations for the service
     annotations: {}
 
-  # livenessProbe checks whether the db migration service needs to be restarted
   livenessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
-  # readinessProbe checks whether the db migration service can receive traffic
+  # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
 
@@ -355,23 +358,16 @@ eventService:
   readinessProbe:
     # initialProbeDelay for the `readinessProbe`
       initialProbeDelay: 10
+      scheme: "HTTP"
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
       initialProbeDelay: 10
+      scheme: "HTTP"
 
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
-
-  # livenessProbe checks whether the event service needs to be restarted
-  livenessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
-  # readinessProbe checks whether the event service can receive traffic
-  readinessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
 
 # app (custom action server) specific settings
 app:
@@ -437,21 +433,14 @@ app:
   readinessProbe:
     # initialProbeDelay for the `readinessProbe`
       initialProbeDelay: 10
+      scheme: "HTTP"
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
       initialProbeDelay: 10
+      scheme: "HTTP"
   service:
     # annotations for the service
     annotations: {}
-
-  # livenessProbe checks whether app needs to be restarted
-  livenessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
-  # readinessProbe checks whether app can receive traffic
-  readinessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
 
 # nginx specific settings
 nginx:
@@ -482,12 +471,17 @@ nginx:
     nodePort: ""
     # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
     externalIPs: []
-  readinessProbe:
-    # initialProbeDelay for the `readinessProbe`
-      initialProbeDelay: 10
   livenessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether rasa x can receive traffic
+  readinessProbe:
     # initialProbeDelay for the `livenessProbe`
-      initialProbeDelay: 10
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
