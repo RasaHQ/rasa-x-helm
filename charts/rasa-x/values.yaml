@@ -14,6 +14,8 @@ rasax:
   tag: ""
   # port on which Rasa X runs
   port: 5002
+  # scheme by which Rasa X is accessible
+  scheme: http
   # passwordSalt Rasa X uses to salt the user passwords
   passwordSalt: "passwordSalt"
   # token Rasa X accepts as authentication token from other Rasa services
@@ -118,6 +120,8 @@ rasa:
   tag: ""
   # port on which Rasa runs
   port: 5005
+  # scheme by which Rasa services are accessible
+  scheme: http
   # token Rasa accepts as authentication token from other Rasa services
   token: "rasaToken"
   # rabbitQueue it should use to dispatch events to Rasa X
@@ -178,11 +182,6 @@ rasa:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
 
-  # service specifies settings for exposing rasa to other services
-  service:
-    # annotations for the service
-    annotations: {}
-
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
@@ -191,6 +190,10 @@ rasa:
       replicaCount: 1
       # serviceName with which the Rasa production deployment is exposed to other containers
       serviceName: "rasa-production"
+      # service specifies settings for exposing rasa production to other services
+      service:
+        # annotations for the service
+        annotations: {}
       # modelTag of the model Rasa should pull from the the model server
       modelTag: "production"
       # trackerDatabase it should use to to store conversation trackers
@@ -214,6 +217,10 @@ rasa:
       replicaCount: 1
       # serviceName with which the Rasa worker deployment is exposed to other containers
       serviceName: "rasa-worker"
+      # service specifies settings for exposing rasa worker to other services
+      service:
+        # annotations for the service
+        annotations: {}
       # modelTag of the model Rasa should pull from the the model server
       modelTag: "production"
       # trackerDatabase it should use to to store conversation trackers
@@ -380,6 +387,8 @@ app:
   replicaCount: 1
   # port on which the custom action server runs
   port: 5055
+  # scheme by which custom action server is accessible
+  scheme: http
   # resources which app is required / allowed to use
   resources: {}
   # Jaeger Sidecar
@@ -525,6 +534,8 @@ duckling:
   replicaCount: 1
   # port on which duckling should run
   port: 8000
+  # scheme by which duckling is accessible
+  scheme: http
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -731,3 +742,7 @@ global:
   redis:
     # password to use in case there no external secret was provided
     password: "redis-password"
+
+  # additionalDeploymentLabels can be used to map organizational structures onto system objects
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  additionalDeploymentLabels: {}

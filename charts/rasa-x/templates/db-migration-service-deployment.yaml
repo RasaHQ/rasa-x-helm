@@ -38,11 +38,12 @@ spec:
           {{- toYaml .Values.dbMigrationService.command | nindent 10 }}
         {{- end }}
         args:
+        {{- if .Values.dbMigrationService.args }}
+          {{- toYaml .Values.dbMigrationService.args | nindent 10 }}
+        {{- else }}
           - python
           - -m
           - rasax.community.services.db_migration_service
-        {{- if .Values.dbMigrationService.args }}
-          {{- toYaml .Values.dbMigrationService.args | nindent 10 }}
         {{- end }}
         ports:
           - name: "http"

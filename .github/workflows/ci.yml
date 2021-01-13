@@ -5,6 +5,7 @@ on:
     branches:
     - 'master'
     - '[0-9]+.[0-9]+.x'
+    - 'bump-rasa-x-version*'
   pull_request:
     types:
       - opened
@@ -36,6 +37,22 @@ jobs:
       with:
         command: lint
         config: ct.yaml
+
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        helm dependency update ${CHART}
+        cd ./tests && go get -t || true
+
+    - name: Run tests
+      working-directory: ./tests
+      run: go test -v
 
   deploy_chart:
     name: Test the deployment of the chart

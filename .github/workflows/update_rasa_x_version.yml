@@ -1,0 +1,85 @@
+name: Update Rasa X version
+
+on:
+  schedule:
+    # Run once a day at 08:00
+    - cron: '0 8 * * *'
+  workflow_dispatch: {}
+
+
+jobs:
+  open_pull_request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Python 3.7 🐍
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - name: Checkout rasa-x-helm github repository 🕝
+        uses: actions/checkout@v2
+
+      - name: Get latest Rasa X minor 🏷
+        run: |
+          DOCKERHUB_TAGS_URL="https://registry.hub.docker.com/v2/repositories/rasa/rasa-x/tags?page_size=10000"
+          LATEST_RASA_X_MINOR=$(curl -s ${DOCKERHUB_TAGS_URL} | jq -r '.results[].name' | grep -E '^[0-9.]+$' | sort -Vr | head -n1)
+
+          echo "Latest Rasa X minor: ${LATEST_RASA_X_MINOR}"
+          echo "LATEST_RASA_X_MINOR=${LATEST_RASA_X_MINOR}" >> $GITHUB_ENV
+
+      - name: Compare latest Rasa X minor with rasa-x-helm version ⏯
+        run: |
+          # Get current rasa-x version in Chart.yaml using yq
+          pip3 install yq
+          CURRENT_CHART_RASA_X_VERSION=$(yq .appVersion charts/rasa-x/Chart.yaml | sed 's/\"//g')
+
+          echo "Current Chart Rasa X version: ${CURRENT_CHART_RASA_X_VERSION}"
+          echo "Latest Rasa X minor: ${LATEST_RASA_X_MINOR}"
+
+          if [[ ${LATEST_RASA_X_MINOR} == ${CURRENT_CHART_RASA_X_VERSION} ]]
+          then
+            echo "No newer version has found. Nothing to update."
+            echo "CREATE_UPDATE_PR=false" >> $GITHUB_ENV
+          else
+            echo "A newer version has found. Bumping it now."
+            echo "CREATE_UPDATE_PR=true" >> $GITHUB_ENV
+          fi
+
+      - name: Get branch name ✍️
+        id: get-branch-name
+        if: env.CREATE_UPDATE_PR == 'true'
+        run: |
+          echo "::set-output name=new_branch::bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}-${GITHUB_SHA:0:7}"
+
+      - name: Create new branch 🐣
+        uses: peterjgrainger/action-create-branch@v2.0.1
+        if: env.CREATE_UPDATE_PR == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: ${{ steps.get-branch-name.outputs.new_branch }}
+
+      - name: Update Chart YAML containing Rasa X version tags 🗂
+        if: env.CREATE_UPDATE_PR == 'true'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git remote update origin --prune
+          git checkout ${{ steps.get-branch-name.outputs.new_branch }}
+
+          sed -i "s/^appVersion.*/appVersion: \"${LATEST_RASA_X_MINOR}\"/" charts/rasa-x/Chart.yaml
+
+          git add -u
+          git commit -m "other: Bump Rasa X version to ${LATEST_RASA_X_MINOR}"
+          git push origin ${{ steps.get-branch-name.outputs.new_branch }}
+
+      - name: Open pull request ☄️
+        uses: repo-sync/pull-request@v2
+        if: env.CREATE_UPDATE_PR == 'true'
+        with:
+          github_token:  ${{ secrets.GITHUB_TOKEN }}
+          source_branch: ${{ steps.get-branch-name.outputs.new_branch }}
+          destination_branch: master
+          pr_title: Bump Rasa X version to ${LATEST_RASA_X_MINOR}
