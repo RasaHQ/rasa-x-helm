@@ -244,7 +244,7 @@ dbMigrationService:
   # initContainer describes settings related to the init-db container used as a init container for deployments
   initContainer:
     # image is the Docker image which is used by the init container
-    image: alpine:latest
+    image: alpine:3.12.3
   # command overrides the default command to run in the container
   command: []
   # args overrides the default arguments to run in the container
