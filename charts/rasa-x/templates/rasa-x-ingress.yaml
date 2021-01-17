@@ -49,6 +49,7 @@ spec:
   - host: {{ .host | quote }}
     http:
       paths:
+      pathType: Prefix
       - backend:
           service:
             name: {{ $rasaxHost }}
