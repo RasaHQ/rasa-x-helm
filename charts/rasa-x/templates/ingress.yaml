@@ -29,8 +29,8 @@ spec:
   {{- end }}
 {{- end }}
   rules:
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
   {{- range .Values.ingress.hosts }}
-    {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -43,7 +43,9 @@ spec:
                 port: 
                   number: {{ $svcPort }}
         {{- end }}
-    {{- else -}}
+  {{- end }}          
+{{- else -}}
+  {{- range .Values.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -52,6 +54,6 @@ spec:
             backend:
               service.name: {{ $fullName }}-nginx
               service.port: {{ $svcPort }}
-    {{- end }}    
-  {{- end }}
-{{- end }}
+        {{- end }}
+  {{- end }}      
+{{- end }}  
