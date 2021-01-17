@@ -35,16 +35,16 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
-          servicePort: {{ $.Values.rasa.port }}
+          service.name: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
+          service.port: {{ $.Values.rasa.port }}
         path: /core/(.*)
       - backend:
-          serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
-          servicePort: {{ $.Values.rasa.port }}
+          service.name: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
+          service.port: {{ $.Values.rasa.port }}
         path: /webhooks/
       - backend:
-          serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
-          servicePort: {{ $.Values.rasa.port }}
+          service.name: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
+          service.port: {{ $.Values.rasa.port }}
         path: /socket.io
   {{- end }}
 {{- end }}

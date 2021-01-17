@@ -50,8 +50,8 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: {{ $rasaxHost }}
-          servicePort: {{ $.Values.rasax.port }}
+          service.name: {{ $rasaxHost }}
+          service.port: {{ $.Values.rasax.port }}
         path: /
   {{- end }}
 {{- end }}
