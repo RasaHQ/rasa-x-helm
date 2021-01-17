@@ -29,15 +29,32 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.ingress.hosts }}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+    {{- range .Values.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
-        {{- range .paths }}
+          {{- range .paths }}
+          - path: {{ . }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-nginx
+                port:
+                  number: {{ $svcPort }}
+          {{- end }}
+    {{- end }}
+{{- else -}}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
           - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}-nginx
               servicePort: {{ $svcPort }}
-        {{- end }}
-  {{- end }}
+          {{- end }}
+    {{- end }}
+{{- end }}
 {{- end }}
