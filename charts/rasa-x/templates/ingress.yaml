@@ -34,8 +34,9 @@ spec:
         {{- range .paths }}
           - path: {{ . }}
             backend:
-              service.name: {{ $fullName }}-nginx
-              service.port: {{ $svcPort }}
+              service:
+                name: {{ $fullName }}-nginx
+                port: {{ $svcPort }}
         {{- end }}
   {{- end }}
 {{- end }}
