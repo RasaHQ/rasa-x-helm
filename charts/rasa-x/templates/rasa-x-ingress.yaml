@@ -44,8 +44,8 @@ spec:
   {{- end }}
 {{- end }}
   rules:
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
   {{- range .Values.ingress.hosts }}
-  {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
   - host: {{ .host | quote }}
     http:
       paths:
@@ -56,14 +56,16 @@ spec:
               number: {{ $.Values.rasax.port }}
         pathType: Prefix
         path: /
-  {{- else }}
+  {{- end }}          
+{{- else }}
+  {{- range .Values.ingress.hosts }}
   - host: {{ .host | quote }}
     http:
       paths:
       - backend:
           serviceName: {{ $rasaxHost }}
           servicePort: {{ $.Values.rasax.port }}
-        path: /
-  {{- end }}      
+        path: /   
   {{- end }}
+{{- end }}
 {{- end }}
