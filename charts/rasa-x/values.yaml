@@ -51,14 +51,16 @@ rasax:
     - kubernetes.io/pvc-protection
     # existingClaim which should be used instead of a new one
     existingClaim: ""
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
   # livenessProbe checks whether rasa x needs to be restarted
   livenessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
   # resources which Rasa X is required / allowed to use
@@ -137,10 +139,9 @@ rasa:
     #   service_name: rasa
   # Jaeger Sidecar
   jaegerSidecar: "false"
-  # initialProbeDelay for the `livenessProbe`
-  initialProbeDelay: 10
-  # livenessProbe checks whether rasa needs to be restarted
   livenessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
   # useLoginDatabase will use the Rasa X database to log in and create the database
@@ -243,7 +244,7 @@ dbMigrationService:
   # initContainer describes settings related to the init-db container used as a init container for deployments
   initContainer:
     # image is the Docker image which is used by the init container
-    image: alpine:latest
+    image: alpine:3.12.3
   # command overrides the default command to run in the container
   command: []
   # args overrides the default arguments to run in the container
@@ -295,12 +296,15 @@ dbMigrationService:
     # annotations for the service
     annotations: {}
 
-  # livenessProbe checks whether the db migration service needs to be restarted
   livenessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
-  # readinessProbe checks whether the db migration service can receive traffic
+  # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
 
@@ -349,19 +353,19 @@ eventService:
   # - name: tmpdir
   #   emptyDir: {}
 
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    scheme: "HTTP"
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
+    scheme: "HTTP"
+
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
-
-  # livenessProbe checks whether the event service needs to be restarted
-  livenessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
-  # readinessProbe checks whether the event service can receive traffic
-  readinessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
 
 # app (custom action server) specific settings
 app:
@@ -424,19 +428,17 @@ app:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: true
 
-  # service specifies settings for exposing app to other services
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    scheme: "HTTP"
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
+    scheme: "HTTP"
   service:
     # annotations for the service
     annotations: {}
-
-  # livenessProbe checks whether app needs to be restarted
-  livenessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
-  # readinessProbe checks whether app can receive traffic
-  readinessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
 
 # nginx specific settings
 nginx:
@@ -467,8 +469,13 @@ nginx:
     nodePort: ""
     # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
     externalIPs: []
-  # initialProbeDelay for the `readinessProbe` and the `livenessProbe`
-  initialProbeDelay: 10
+  livenessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+  # readinessProbe checks whether rasa x can receive traffic
+  readinessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
 
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -532,6 +539,16 @@ duckling:
   # resources which duckling is required / allowed to use
   resources: {}
 
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
   # additional volumeMounts to the main container
   extraVolumeMounts: []
   # - name: tmpdir
@@ -551,15 +568,6 @@ duckling:
   service:
     # annotations for the service
     annotations: {}
-
-  # livenessProbe checks whether duckling needs to be restarted
-  livenessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
-  # readinessProbe checks whether duckling can receive traffic
-  readinessProbe:
-    # scheme to be used by the `readinessProbe`
-    scheme: "HTTP"
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret

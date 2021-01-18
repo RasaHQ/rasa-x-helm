@@ -50,11 +50,13 @@ spec:
             containerPort: {{ .Values.dbMigrationService.port }}
             protocol: "TCP"
         livenessProbe:
+          initialDelaySeconds: {{ .Values.dbMigrationService.livenessProbe.initialProbeDelay }}
           httpGet:
             path: "/health"
             port: "http"
             scheme: {{ default "HTTP" .Values.dbMigrationService.livenessProbe.scheme }}
         readinessProbe:
+          initialDelaySeconds: {{ .Values.dbMigrationService.readinessProbe.initialProbeDelay }}
           httpGet:
             path: "/health"
             port: "http"
