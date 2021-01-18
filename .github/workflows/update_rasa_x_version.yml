@@ -46,7 +46,7 @@ jobs:
             echo "CREATE_UPDATE_PR=true" >> $GITHUB_ENV
           fi
 
-      - name: Check if duplicated branch exists
+      - name: Check if duplicated branch exists 🔍
         run: |
           # find duplicates
           BRANCH_NAME=$(curl https://api.github.com/repos/$GITHUB_REPOSITORY/branches | jq '.[].name' | grep -m 1 "bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}")
