@@ -69,16 +69,20 @@ jobs:
         sudo chmod 744 /etc/rancher/k3s/k3s.yaml
         echo "KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $GITHUB_ENV
 
-    - name: Install Helm
+    - name: Install Helm and helmfile ⛑
       run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+        chmod 700 get_helm.sh
+        ./get_helm.sh
+        sudo curl -fsSL https://github.com/roboll/helmfile/releases/download/v0.130.0/helmfile_linux_amd64 --output /usr/local/bin/helmfile
+        sudo chmod +x /usr/local/bin/helmfile
 
-    - name: Generate credentials
+    - name: Generate credentials 🔐
       run: |
         USER_PASSWORD=$(openssl rand -base64 32)
         echo "INITIAL_USER_PASSWORD=${USER_PASSWORD}" >> $GITHUB_ENV
 
-    - name: Free disk space
+    - name: Free disk space 🧹
       # tries to make sure we do not run out of disk space, see
       # https://github.community/t5/GitHub-Actions/BUG-Strange-quot-No-space-left-on-device-quot-IOExceptions-on/td-p/46101
       run: |
@@ -88,18 +92,22 @@ jobs:
         docker rmi $(docker image ls -aq)
         df -h
 
-    - name: Deploy chart
+    - name: Deploy chart ☕️
       run: |
-        helm dependency update ${CHART}
-        helm install \
-          --set rasax.disableTelemetry=true \
-          --set duckling.enabled=false \
-          --set rasax.initialUser.password=${INITIAL_USER_PASSWORD} \
-          --set nginx.service.type=ClusterIP \
-          --set ingress.hosts[0].host=,ingress.hosts[0].paths={/} \
-          ${RELEASE_NAME} ${CHART}
+        helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
+        helm repo update
+        helmfile -f .github/deployments/helmfile.yaml sync
 
-    - name: Wait for deployment to be ready
+    - name: Set host name and address env variables 🖌
+        ADDRESS=$(kubectl get ingress  -o json | jq .items[0].status.loadBalancer.ingress[0].ip)
+        HOST=$(kubectl get ingress  -o json | jq .items[0].spec.rules[0].host)
+        # add external IP address and host name to /etc/hosts
+        sudo /bin/sh -c 'echo "${ADDRESS} ${HOST}" >> /etc/hosts'
+
+        echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
+        echo "HOST=${HOST}" >> $GITHUB_ENV
+
+    - name: Wait for deployment to be ready ⏱
       run: |
         kubectl wait \
           --for=condition=available \
@@ -107,21 +115,21 @@ jobs:
           -l "app.kubernetes.io/component=rasa-x" deployment
 
 
-        until [[ "$(curl -s http://localhost/api/health | tee /tmp/output_status.txt | jq -r .database_migration.status)" == "completed" ]]
+        until [[ "$(curl -s http://${HOST}/api/health | tee /tmp/output_status.txt | jq -r .database_migration.status)" == "completed" ]]
         do
           cat /tmp/output_status.txt || true
           sleep 5
         done
 
-    - name: Log pod status for debugging
+    - name: Log pod status for debugging 🖥
       if: failure()
       run: |
         kubectl get pods
         df -h
 
-    - name: Validate that logging in works
+    - name: Validate that logging in works ✅
       run: |
-        TOKEN=$(curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://localhost/api/auth" | jq -r '.access_token')
+        TOKEN=$(curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://${HOST}/api/auth" | jq -r '.access_token')
         if [[ -z "${TOKEN}" ]]; then
           echo "Access token is empty: ${TOKEN}" && exit 1
         fi
