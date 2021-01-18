@@ -69,9 +69,13 @@ jobs:
         sudo chmod 744 /etc/rancher/k3s/k3s.yaml
         echo "KUBECONFIG=/etc/rancher/k3s/k3s.yaml" >> $GITHUB_ENV
 
-    - name: Install Helm
+    - name: Install Helm and helmfile ⛑
       run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+        chmod 700 get_helm.sh
+        ./get_helm.sh
+        sudo curl -fsSL https://github.com/roboll/helmfile/releases/download/v0.130.0/helmfile_linux_amd64 --output /usr/local/bin/helmfile
+        sudo chmod +x /usr/local/bin/helmfile
 
     - name: Generate credentials
       run: |
@@ -90,14 +94,8 @@ jobs:
 
     - name: Deploy chart
       run: |
-        helm dependency update ${CHART}
-        helm install \
-          --set rasax.disableTelemetry=true \
-          --set duckling.enabled=false \
-          --set rasax.initialUser.password=${INITIAL_USER_PASSWORD} \
-          --set nginx.service.type=ClusterIP \
-          --set ingress.hosts[0].host=,ingress.hosts[0].paths={/} \
-          ${RELEASE_NAME} ${CHART}
+        helmfile -f .github/deployments/helmfile.yaml sync
+        kubectl get svc
 
     - name: Wait for deployment to be ready
       run: |

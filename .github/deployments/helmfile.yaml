@@ -1,9 +1,6 @@
 # helmfile for Rasa X deployment
 releases:
-  - name: {{ requiredEnv "RELEASE_NAME" }}
-    namespace: {{ requiredEnv "NAMESPACE" }}
-    labels:
-        release: {{ requiredEnv "RELEASE_NAME" }}
+  - name: "rasa-x"
     chart: rasa-x/rasa-x
     values:
       - nginx:
@@ -14,6 +11,6 @@ releases:
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
             nginx.ingress.kubernetes.io/enable-cors: "true"
           hosts:
-            - host: {{ requiredEnv "DOMAIN" }}
+            - host: example.test.com
               paths:
                 - /
