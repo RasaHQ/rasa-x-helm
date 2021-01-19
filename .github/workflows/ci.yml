@@ -92,9 +92,20 @@ jobs:
         docker rmi $(docker image ls -aq)
         df -h
 
-    - name: Deploy chart ☕️
+    - name: Deploy nginx chart ☕️
       run: |
-        helmfile -f .github/deployments/helmfile.yaml sync
+        helmfile -f .github/deployments/nginx-helmfile.yaml sync
+
+    - name: Wait for nginx deployment to be ready ⏱
+      run: |
+        kubectl wait \
+           --for=condition=Ready \
+           --timeout=90s \
+           -l "app.kubernetes.io/component=controller" pod
+
+    - name: Deploy Rasa X chart ☕️
+      run: |
+        helmfile -f .github/deployments/rasa-x-helmfile.yaml sync
 
     - name: Set host name and address env variables 🖌
       run: |
@@ -103,9 +114,7 @@ jobs:
 
         echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
         echo "HOST=${HOST}" >> $GITHUB_ENV
-
-        kubectl get svc
-
+        echo "Address: ${ADDRESS}, Host: ${HOST}"
         # add external IP address and host name to /etc/hosts
         sudo /bin/sh -c 'echo "${ADDRESS} ${HOST}" >> /etc/hosts'
 
