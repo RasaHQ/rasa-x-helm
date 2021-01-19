@@ -100,6 +100,9 @@ jobs:
       run: |
         ADDRESS=$(kubectl get ingress  -o json | jq .items[0].status.loadBalancer.ingress[0].ip)
         HOST=$(kubectl get ingress  -o json | jq .items[0].spec.rules[0].host)
+
+        echo "${ADDRESS} ${HOST}"
+
         # add external IP address and host name to /etc/hosts
         sudo /bin/sh -c 'echo "${ADDRESS} ${HOST}" >> /etc/hosts'
 
