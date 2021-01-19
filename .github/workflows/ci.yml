@@ -101,13 +101,13 @@ jobs:
         ADDRESS=$(kubectl get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
         HOST=$(kubectl get ingress -o jsonpath='{.items[0].spec.rules[0].host}')
 
-        echo "${ADDRESS} ${HOST}"
+        echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
+        echo "HOST=${HOST}" >> $GITHUB_ENV
+
+        kubectl get svc
 
         # add external IP address and host name to /etc/hosts
         sudo /bin/sh -c 'echo "${ADDRESS} ${HOST}" >> /etc/hosts'
-
-        echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
-        echo "HOST=${HOST}" >> $GITHUB_ENV
 
     - name: Wait for deployment to be ready ⏱
       run: |
@@ -127,6 +127,7 @@ jobs:
       if: failure()
       run: |
         kubectl get pods
+        kubectl get svc
         df -h
 
     - name: Validate that logging in works ✅
