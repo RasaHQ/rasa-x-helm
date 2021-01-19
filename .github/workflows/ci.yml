@@ -103,6 +103,11 @@ jobs:
            --timeout=90s \
            -l "app.kubernetes.io/component=controller" pod
 
+        ADDRESS=$(kubectl get services ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+        echo "${ADDRESS}"
+        if [[ -z "$ADDRESS" ]]; then
+            echo "External IP address is empty" & exit 1
+
     - name: Deploy Rasa X chart ☕️
       run: |
         helmfile -f .github/deployments/rasa-x-helmfile.yaml sync
@@ -112,9 +117,13 @@ jobs:
         ADDRESS=$(kubectl get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
         HOST=$(kubectl get ingress -o jsonpath='{.items[0].spec.rules[0].host}')
 
+        if [[ -z "${ADDRESS}" ]]; then
+          echo "External IP address is empty" && exit 1
+        if [[ -z "${HOST}" ]]; then
+          echo "No host." && exit 1
+
         echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
         echo "HOST=${HOST}" >> $GITHUB_ENV
-        echo "Address: ${ADDRESS}, Host: ${HOST}"
         # add external IP address and host name to /etc/hosts
         sudo /bin/sh -c 'echo "${ADDRESS} ${HOST}" >> /etc/hosts'
 
