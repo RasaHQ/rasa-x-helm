@@ -1,29 +1,9 @@
 # helmfile for Rasa X deployment
 repositories:
-- name: ingress-nginx
-  url: https://kubernetes.github.io/ingress-nginx
 - name: rasa-x
   url: https://rasahq.github.io/rasa-x-helm
 
 releases:
-  - name: ingress-nginx
-    namespace: default
-    chart: ingress-nginx/ingress-nginx
-    values:
-    - rbac:
-        create: true
-    - controller:
-        kind: Deployment
-        replicaCount: 1
-        publishService:
-          enabled: true
-        metrics:
-          enabled: false
-        config:
-          server-tokens: "false"
-          proxy-read-timeout: "720"
-          proxy-send-timeout: "720"
-          client-body-timeout: "720"
   - name: rasa-x
     namespace: default
     chart: rasa-x/rasa-x
