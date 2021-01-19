@@ -104,9 +104,10 @@ jobs:
            -l "app.kubernetes.io/component=controller" pod
 
         ADDRESS=$(kubectl get services ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-        echo "${ADDRESS}"
         if [[ -z "$ADDRESS" ]]; then
-            echo "External IP address is empty" & exit 1
+          echo "External IP address is empty" & exit 1
+        else
+          echo "External IP Address: ${ADDRESS}"
         fi
 
     - name: Deploy Rasa X chart ☕️
@@ -115,14 +116,14 @@ jobs:
 
     - name: Set host name and address env variables 🖌
       run: |
-        ADDRESS=$(kubectl get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
+        ADDRESS=$(kubectl get services ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
         HOST=$(kubectl get ingress -o jsonpath='{.items[0].spec.rules[0].host}')
 
         if [[ -z "${ADDRESS}" ]]; then
           echo "External IP address is empty" && exit 1
         fi
         if [[ -z "${HOST}" ]]; then
-          echo "No host." && exit 1
+          echo "No host found." && exit 1
         fi
 
         echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
