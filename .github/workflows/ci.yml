@@ -98,8 +98,8 @@ jobs:
 
     - name: Set host name and address env variables 🖌
       run: |
-        ADDRESS=$(kubectl -n ingress-nginx get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
-        HOST=$(kubectl -n ingress-nginx get ingress -o jsonpath='{.items[0].spec.rules[0].host}')
+        ADDRESS=$(kubectl get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
+        HOST=$(kubectl get ingress -o jsonpath='{.items[0].spec.rules[0].host}')
 
         echo "${ADDRESS} ${HOST}"
 

@@ -7,7 +7,7 @@ repositories:
 
 releases:
   - name: ingress-nginx
-    namespace: ingress-nginx
+    namespace: default
     chart: ingress-nginx/ingress-nginx
     values:
     - rbac:
@@ -25,7 +25,7 @@ releases:
           proxy-send-timeout: "720"
           client-body-timeout: "720"
   - name: rasa-x
-    namespace: rasa-x
+    namespace: default
     chart: rasa-x/rasa-x
     values:
       - rasax:
