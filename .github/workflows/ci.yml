@@ -107,6 +107,7 @@ jobs:
         echo "${ADDRESS}"
         if [[ -z "$ADDRESS" ]]; then
             echo "External IP address is empty" & exit 1
+        fi
 
     - name: Deploy Rasa X chart ☕️
       run: |
@@ -119,8 +120,10 @@ jobs:
 
         if [[ -z "${ADDRESS}" ]]; then
           echo "External IP address is empty" && exit 1
+        fi
         if [[ -z "${HOST}" ]]; then
           echo "No host." && exit 1
+        fi
 
         echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
         echo "HOST=${HOST}" >> $GITHUB_ENV
