@@ -8,6 +8,12 @@ releases:
     namespace: default
     chart: rasa-x/rasa-x
     values:
+      - rasax:
+          disableTelemetry: true
+          initialUser:
+            password: {{ requiredEnv "INITIAL_USER_PASSWORD" }}
+      - duckling:
+          enabled: false
       - nginx:
           enabled: false
       - ingress:
