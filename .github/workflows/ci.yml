@@ -99,7 +99,7 @@ jobs:
     - name: Set host name and address env variables 🖌
         ADDRESS=$(kubectl get ingress  -o json | jq .items[0].status.loadBalancer.ingress[0].ip)
         HOST=$(kubectl get ingress  -o json | jq .items[0].spec.rules[0].host)
-        # add external IP address and host name to /etc/hosts
+
         sudo /bin/sh -c 'echo "${ADDRESS} ${HOST}" >> /etc/hosts'
 
         echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
