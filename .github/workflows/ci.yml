@@ -137,7 +137,7 @@ jobs:
           -l "app.kubernetes.io/component=rasa-x" deployment
 
         # add external IP address and host name to /etc/hosts
-        sudo echo "${ADDRESS} ${HOST}" >> /etc/hosts
+        echo "${ADDRESS} ${HOST}" | sudo tee -a /etc/hosts
 
         until [[ "$(curl -s http://${HOST}/api/health | tee /tmp/output_status.txt | jq -r .database_migration.status)" == "completed" ]]
         do
