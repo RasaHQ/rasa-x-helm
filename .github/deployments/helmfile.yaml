@@ -1,9 +1,11 @@
 # helmfile for Rasa X deployment
+repositories:
+- name: rasa-x
+  url: https://rasahq.github.io/rasa-x-helm
+
 releases:
-  - name: {{ requiredEnv "RELEASE_NAME" }}
-    namespace: {{ requiredEnv "NAMESPACE" }}
-    labels:
-        release: {{ requiredEnv "RELEASE_NAME" }}
+  - name: example
+    namespace: default
     chart: rasa-x/rasa-x
     values:
       - nginx:
@@ -14,6 +16,6 @@ releases:
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
             nginx.ingress.kubernetes.io/enable-cors: "true"
           hosts:
-            - host: {{ requiredEnv "DOMAIN" }}
+            - host: example.test.com
               paths:
                 - /

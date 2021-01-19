@@ -94,8 +94,6 @@ jobs:
 
     - name: Deploy chart ☕️
       run: |
-        helm repo add rasa-x https://rasahq.github.io/rasa-x-helm
-        helm repo update
         helmfile -f .github/deployments/helmfile.yaml sync
 
     - name: Set host name and address env variables 🖌
