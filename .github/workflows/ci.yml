@@ -130,7 +130,7 @@ jobs:
         echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
         echo "HOST=${HOST}" >> $GITHUB_ENV
         # add external IP address and host name to /etc/hosts
-        sudo /bin/sh -c 'echo "${ADDRESS} ${HOST}" >> /etc/hosts'
+        echo "${ADDRESS} ${HOST}" | sudo tee -a /etc/hosts
 
     - name: Wait for deployment to be ready ⏱
       run: |
