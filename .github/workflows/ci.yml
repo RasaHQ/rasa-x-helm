@@ -125,12 +125,9 @@ jobs:
         if [[ -z "${HOST}" ]]; then
           echo "No host found." && exit 1
         fi
-        echo "${ADDRESS} ${HOST}"
 
         echo "ADDRESS=${ADDRESS}" >> $GITHUB_ENV
         echo "HOST=${HOST}" >> $GITHUB_ENV
-        # add external IP address and host name to /etc/hosts
-        echo "${ADDRESS} ${HOST}" | sudo tee -a /etc/hosts
 
     - name: Wait for deployment to be ready ⏱
       run: |
@@ -139,8 +136,8 @@ jobs:
           --timeout=10m \
           -l "app.kubernetes.io/component=rasa-x" deployment
 
-        kubectl get ingress
-        cat /etc/hosts
+        # add external IP address and host name to /etc/hosts
+        sudo echo "${ADDRESS} ${HOST}" >> /etc/hosts
 
         until [[ "$(curl -s http://${HOST}/api/health | tee /tmp/output_status.txt | jq -r .database_migration.status)" == "completed" ]]
         do
