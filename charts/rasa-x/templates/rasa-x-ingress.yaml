@@ -65,7 +65,7 @@ spec:
       - backend:
           serviceName: {{ $rasaxHost }}
           servicePort: {{ $.Values.rasax.port }}
-        path: /   
+        path: /
   {{- end }}
 {{- end }}
 {{- end }}
