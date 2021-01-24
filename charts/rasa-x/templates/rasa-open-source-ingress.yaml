@@ -58,7 +58,7 @@ spec:
             port: 
               number: {{ $.Values.rasa.port }}
         path: /socket.io
-        pathType: Exact
+        pathType: Prefix
     {{- end }}    
 {{- else -}}
     {{- range .Values.ingress.hosts }}
