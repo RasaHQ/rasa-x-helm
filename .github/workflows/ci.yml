@@ -92,9 +92,9 @@ jobs:
         docker rmi $(docker image ls -aq)
         df -h
 
-    - name: Deploy nginx chart ☕️
+    - name: Deploy ingress-nginx chart ☕️
       run: |
-        helmfile -f .github/deployments/nginx-helmfile.yaml sync
+        helmfile -f .github/deployments/ingress-nginx-helmfile.yaml sync
 
     - name: Wait for nginx deployment to be ready ⏱
       run: |
