@@ -33,7 +33,7 @@ jobs:
 
     - name: Run chart-testing (lint)
       id: lint
-      uses: helm/chart-testing-action@v1.0.0
+      uses: helm/chart-testing-action@b0d4458c71155b54fcf33e11dd465dc923550009
       with:
         command: lint
         config: ct.yaml
