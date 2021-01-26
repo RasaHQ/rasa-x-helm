@@ -257,7 +257,6 @@ Return 'true' if the version is master or latest, or contains a or rc.
 {{- end -}}
 {{- end -}}
 {{- end -}}
-{{- end -}}
 
 {{/*
 Returns the database migration service address
