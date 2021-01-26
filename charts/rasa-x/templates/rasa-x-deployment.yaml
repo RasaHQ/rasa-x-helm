@@ -34,11 +34,6 @@ spec:
       tolerations:
 {{ toYaml .Values.rasax.tolerations | indent 6 }}
       {{- end }}
-
-      {{- if .Values.rasax.initContainers }}
-      initContainers:
-{{ toYaml .Values.rasax.initContainers | indent 6 }}
-      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.rasax.name }}:{{ include "rasa-x.version" . }}"
