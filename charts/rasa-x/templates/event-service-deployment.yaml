@@ -33,10 +33,6 @@ spec:
       # The event service uses a database, to make sure that the database is ready
       # to use we use the database migration service to check migration status.
       {{- include "initContainer.dbMigration" . |  nindent 6 }}
-      {{- if .Values.eventService.initContainers }}
-      initContainers:
-{{ toYaml .Values.eventService.initContainers | indent 6 }}
-      {{- end }}
 
       containers:
       - name: {{ .Chart.Name }}
