@@ -92,6 +92,7 @@ spec:
           value: "/app/models"
         - name: "RUN_EVENT_CONSUMER_AS_SEPARATE_SERVICE"
           value: {{ default "true" .Values.separateEventService | quote }}
+        {{- if $.Values.rabbitmq.enabled }}
         - name: "RABBITMQ_QUEUE"
           value: {{ template "rasa-x.rabbitmq.queue" . }}
         - name: "RABBITMQ_PASSWORD"
@@ -99,6 +100,7 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.rabbitmq.password.secret" . }}
               key: {{ template "rasa-x.rabbitmq.password.key" . }}
+        {{- end }}
         - name: "PASSWORD_SALT"
           valueFrom:
             secretKeyRef:

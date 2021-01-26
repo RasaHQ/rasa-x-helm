@@ -123,7 +123,7 @@ spec:
               name: {{ template "rasa-x.redis.password.secret" $ }}
               key: {{ template "rasa-x.redis.password.key" $ }}
         {{- end }}
-        {{- if $.Values.rabbitmq.install }}
+        {{- if $.Values.rabbitmq.enabled }}
         - name: "RABBITMQ_QUEUE"
           value: "{{ $.Values.rasa.rabbitQueue }}"
         - name: "RABBITMQ_PASSWORD"

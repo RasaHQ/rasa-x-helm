@@ -614,6 +614,8 @@ postgresql:
 rabbitmq:
   # Install should be `true` if the rabbitmq subchart should be used
   install: true
+  # Enabled should be `true` if any version of rabbit is used
+  enabled: true
   # rabbitmq settings of the subchart
   rabbitmq:
     # username which is used for the authentication

@@ -27,7 +27,7 @@ data:
       {{- if .Values.rasa.useLoginDatabase }}
       login_db: {{ template "rasa-x.psql.database" . }}
       {{- end }}
-    {{- if $.Values.rabbitmq.install }}
+    {{- if $.Values.rabbitmq.enabled }}
     event_broker:
       type: "pika"
       url: "{{ template "rasa-x.rabbitmq.host" . }}"
