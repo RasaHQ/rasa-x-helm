@@ -249,14 +249,10 @@ If version is not valid semantic version then not use the DB migration service.
 If the version is non-semantic, use regex to check the versoin.
 Return 'true' if the version is master or latest or >=0.33.0.
 */}}
-{{- if regexMatch "(?:master|latest)" (include "db-migration-service.version" .) -}}
+{{- if or (regexMatch "(?:master|latest)" (include "db-migration-service.version" .)) (regexMatch ".*(3[3-9]|[4-9]).*" (include "db-migration-service.version" .)) -}}
 {{- print "true" -}}
-{{- else if regexMatch ".*(a|rc)[0-9]+" (include "db-migration-service.version" .) -}}
-{{- if (regexMatch "[0-9].(3[3-9]|[4-9]).*" (include "db-migration-service.version" .)) -}}
-{{- print "true" -}}
-{{- else -}}
+{{- else if regexMatch ".*[0-9](a|rc)+" (include "db-migration-service.version" .) -}}
 {{- print "false" -}}
-{{- end -}}
 {{- else -}}
 {{- if semverCompare ">= 0.33.0" (include "db-migration-service.version" .) -}}
 {{- print "true" -}}
