@@ -245,10 +245,21 @@ If version is not valid semantic version then not use the DB migration service.
 {{- if .Values.dbMigrationService.ignoreVersionCheck  -}}
 {{- print "true" -}}
 {{- else -}}
+{{/*
+If the version is non-semantic, use regex to check the versoin.
+*/}}
+{{- if regexMatch ".*(a|rc)[0-9]+" (include "db-migration-service.version" .) -}}
+{{- if or (regexMatch "(?:master|latest)" (include "db-migration-service.version" .)) (regexMatch "[0-9].(3[3-9]|[4-9]\d+).*" (include "db-migration-service.version" .)) -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false"-}}
+{{- end-}}
+{{- else -}}
 {{- if semverCompare ">= 0.33.0" (include "db-migration-service.version" .) -}}
 {{- print "true" -}}
 {{- else -}}
 {{- print "false" -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
