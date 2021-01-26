@@ -48,8 +48,9 @@ jobs:
 
       - name: Check if duplicated branch exists 🔍
         run: |
-          # find duplicates
-          BRANCH_NAME=$(curl https://api.github.com/repos/$GITHUB_REPOSITORY/branches | jq '.[].name' | grep -m 1 "bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}")
+          git fetch origin
+
+          BRANCH_NAME=$(git branch | grep -m 1 "bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}")
 
           if [[ ! -z ${BRANCH_NAME} ]]; then
             echo "Found related branch ${BRANCH_NAME}."
