@@ -7,9 +7,8 @@ metadata:
 data:
   environments: |
     rasa:
-      production:
-        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
+    {{- range .$version, $version_config := .Values.rasa.versions }}
+      {{ .$version_config.rasaEnvironment }}:
+        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ $version_config.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
         token: ${RASA_TOKEN}
-      worker:
-        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
-        token: ${RASA_TOKEN}
+    {{ end }}
