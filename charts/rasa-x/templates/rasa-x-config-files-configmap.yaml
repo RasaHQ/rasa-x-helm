@@ -7,8 +7,8 @@ metadata:
 data:
   environments: |
     rasa:
-    {{- range .$version, $version_config := .Values.rasa.versions }}
-      {{ .$version_config.rasaEnvironment }}:
-        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ $version_config.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
+    {{- range .Values.rasa.versions }}
+      {{ .rasaEnvironment }}:
+        url: "{{ $.Values.rasa.scheme }}://{{ include "rasa-x.fullname" $ }}-{{ .serviceName }}.{{ $.Release.Namespace }}.svc:{{ $.Values.rasa.port }}"
         token: ${RASA_TOKEN}
-    {{ end }}
+    {{- end }}
