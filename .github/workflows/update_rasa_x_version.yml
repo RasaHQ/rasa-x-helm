@@ -93,5 +93,5 @@ jobs:
         with:
           github_token:  ${{ secrets.GITHUB_TOKEN }}
           source_branch: ${{ steps.get-branch-name.outputs.new_branch }}
-          destination_branch: master
+          destination_branch: main
           pr_title: Bump Rasa X version to ${LATEST_RASA_X_MINOR}
