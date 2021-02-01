@@ -31,6 +31,12 @@ jobs:
         helm dependency update ${CHART}
         helm lint --strict ${CHART}
 
+    # helm/chart-testing-action requires python version >= 3.7
+    # see: https://github.com/helm/chart-testing-action/issues/65
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+
     - name: Run chart-testing (lint)
       id: lint
       uses: helm/chart-testing-action@b0d4458c71155b54fcf33e11dd465dc923550009
