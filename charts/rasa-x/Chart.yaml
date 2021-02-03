@@ -36,4 +36,4 @@ dependencies:
 - name: rabbitmq
   version: ~6.19.2
   repository: https://charts.bitnami.com/bitnami
-  condition: rabbitmq.install && rabbitmq.enabled
+  condition: rabbitmq.install
