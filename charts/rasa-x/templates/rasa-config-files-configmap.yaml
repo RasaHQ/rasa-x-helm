@@ -27,6 +27,7 @@ data:
       {{- if .Values.rasa.useLoginDatabase }}
       login_db: {{ template "rasa-x.psql.database" . }}
       {{- end }}
+    {{- if $.Values.rabbitmq.enabled }}
     event_broker:
       type: "pika"
       url: "{{ template "rasa-x.rabbitmq.host" . }}"
@@ -44,6 +45,7 @@ data:
       queue: ${RABBITMQ_QUEUE}
       {{- end }}
       {{- end }}
+    {{- end }}
     action_endpoint:
       url: "{{ .Values.app.scheme }}://{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"
       token:  ""

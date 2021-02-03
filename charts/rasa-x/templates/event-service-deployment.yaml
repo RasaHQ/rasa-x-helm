@@ -33,6 +33,7 @@ spec:
       # The event service uses a database, to make sure that the database is ready
       # to use we use the database migration service to check migration status.
       {{- include "initContainer.dbMigration" . |  nindent 6 }}
+
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.eventService.name }}:{{ .Values.eventService.tag | default (include "rasa-x.version" .) }}"
@@ -72,6 +73,7 @@ spec:
         {{ end }}
         - name: "SELF_PORT"
           value: {{ default 5673 .Values.eventService.port | quote }}
+        {{- if $.Values.rabbitmq.enabled }}
         - name: "RABBITMQ_QUEUE"
           value: {{ template "rasa-x.rabbitmq.queue" . }}
         - name: "RABBITMQ_PASSWORD"
@@ -79,6 +81,7 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.rabbitmq.password.secret" . }}
               key: {{ template "rasa-x.rabbitmq.password.key" . }}
+        {{ end }}
         - name: "RASA_X_USER_ANALYTICS"
           value: "0"
         - name: "LOCAL_MODE" # This variable doesn't do anything anymore in Rasa X 0.28 and later
