@@ -150,6 +150,8 @@ rasa:
   useLoginDatabase: true
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
+  # cacheDatabase is the database in redis which Rasa X uses to store cached values
+  cacheDatabase: "2"
   # extraEnvs are environment variables which can be added to the Rasa deployment
   extraEnvs: []
     # example which sets env variables in each Rasa Open Source service from a separate k8s secret
