@@ -59,7 +59,7 @@ spec:
                   number: {{ $svcPort }}
           {{- end }}
     {{- end }}
-{{- else -}}
+{{- end }}
     {{- range .Values.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
