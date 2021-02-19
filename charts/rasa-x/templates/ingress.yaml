@@ -49,27 +49,13 @@ spec:
     - host: {{ .host | quote }}
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ . }}
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ $fullName }}-nginx
-                port:
-                  number: {{ $svcPort }}
-          {{- end }}
-    {{- end }}
-{{- end }}
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
-      http:
-        paths:
-          {{- range .paths }}
+        {{- range .paths }}
           - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}-nginx
               servicePort: {{ $svcPort }}
-          {{- end }}
-    {{- end }}
+        {{- end }}
+  {{- end }}
+{{- end }}
 {{- end }}
 
