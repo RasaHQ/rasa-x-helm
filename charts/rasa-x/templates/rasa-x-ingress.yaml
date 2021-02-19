@@ -1,7 +1,9 @@
 {{- if and .Values.ingress.enabled (not .Values.nginx.enabled) -}}
 {{- $fullName := include "rasa-x.fullname" . -}}
 {{- $rasaxHost := include "rasa-x.host" . -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if semverCompare ">=1.19" .Capabilities.KubeVersion.Version -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14" .Capabilities.KubeVersion.Version -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
 apiVersion: extensions/v1beta1
@@ -42,6 +44,20 @@ spec:
   {{- end }}
 {{- end }}
   rules:
+{{- if semverCompare ">=1.19" .Capabilities.KubeVersion.Version -}}
+  {{- range .Values.ingress.hosts }}
+  - host: {{ .host | quote }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ $rasaxHost }}
+            port:
+              number: {{ $.Values.rasax.port }}
+        pathType: Prefix
+        path: /
+  {{- end }}
+{{- else }}
   {{- range .Values.ingress.hosts }}
   - host: {{ .host | quote }}
     http:
@@ -51,4 +67,5 @@ spec:
           servicePort: {{ $.Values.rasax.port }}
         path: /
   {{- end }}
+{{- end }}
 {{- end }}

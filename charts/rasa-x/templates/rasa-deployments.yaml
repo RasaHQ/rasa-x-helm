@@ -111,8 +111,6 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.secret" $ }}
               key: "rasaToken"
-        - name: "RABBITMQ_QUEUE"
-          value: "{{ $.Values.rasa.rabbitQueue }}"
         - name: "JWT_SECRET"
           valueFrom:
             secretKeyRef:
@@ -125,6 +123,9 @@ spec:
               name: {{ template "rasa-x.redis.password.secret" $ }}
               key: {{ template "rasa-x.redis.password.key" $ }}
         {{- end }}
+        {{- if $.Values.rabbitmq.enabled }}
+        - name: "RABBITMQ_QUEUE"
+          value: "{{ $.Values.rasa.rabbitQueue }}"
         - name: "RABBITMQ_PASSWORD"
           valueFrom:
             secretKeyRef:
@@ -132,6 +133,7 @@ spec:
               key: {{ template "rasa-x.rabbitmq.password.key" $ }}
         - name: "RABBITMQ_QUEUE"
           value: "{{ $.Values.rasa.rabbitQueue }}"
+        {{- end }}
         - name: "RASA_ENVIRONMENT"
           value: "{{ .rasaEnvironment }}"
         - name: "RASA_MODEL_SERVER"

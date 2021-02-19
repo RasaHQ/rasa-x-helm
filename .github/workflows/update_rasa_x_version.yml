@@ -46,6 +46,18 @@ jobs:
             echo "CREATE_UPDATE_PR=true" >> $GITHUB_ENV
           fi
 
+      - name: Check if duplicated branch exists 🔍
+        run: |
+          git fetch origin
+
+          BRANCH_NAME=$(git branch | grep -m 1 "bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}")
+
+          if [[ ! -z ${BRANCH_NAME} ]]; then
+            echo "Found related branch ${BRANCH_NAME}."
+            echo "The newest version of Rasa X (${LATEST_RASA_X_MINOR}) has already been bumped."
+            echo "CREATE_UPDATE_PR=false" >> $GITHUB_ENV
+          fi
+
       - name: Get branch name ✍️
         id: get-branch-name
         if: env.CREATE_UPDATE_PR == 'true'
@@ -81,5 +93,5 @@ jobs:
         with:
           github_token:  ${{ secrets.GITHUB_TOKEN }}
           source_branch: ${{ steps.get-branch-name.outputs.new_branch }}
-          destination_branch: master
+          destination_branch: main
           pr_title: Bump Rasa X version to ${LATEST_RASA_X_MINOR}

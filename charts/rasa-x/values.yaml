@@ -105,7 +105,7 @@ rasax:
 rasa:
   # version is the Rasa Open Source version which should be used.
   # Used to ensure backward compatibility with older Rasa Open Source versions.
-  version: "2.0.3"  # Please update the default value in the Readme when updating this
+  version: "2.2.7"  # Please update the default value in the Readme when updating this
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
@@ -614,6 +614,8 @@ postgresql:
 rabbitmq:
   # Install should be `true` if the rabbitmq subchart should be used
   install: true
+  # Enabled should be `true` if any version of rabbit is used
+  enabled: true
   # rabbitmq settings of the subchart
   rabbitmq:
     # username which is used for the authentication
