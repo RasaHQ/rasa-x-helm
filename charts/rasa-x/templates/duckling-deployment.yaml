@@ -18,6 +18,9 @@ spec:
       labels:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: duckling
+        {{- if .Values.duckling.podLabels }}
+{{ toYaml .Values.duckling.podLabels | indent 8 }}
+        {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.duckling.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}

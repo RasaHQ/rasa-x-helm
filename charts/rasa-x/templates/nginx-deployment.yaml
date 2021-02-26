@@ -18,6 +18,9 @@ spec:
       labels:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: nginx
+        {{- if .Values.nginx.podLabels }}
+{{ toYaml .Values.nginx.podLabels | indent 8 }}
+        {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.nginx.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}

@@ -18,6 +18,9 @@ spec:
       labels:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: event-service
+        {{- if .Values.eventService.podLabels }}
+{{ toYaml .Values.eventService.podLabels | indent 8 }}
+        {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.eventService.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
