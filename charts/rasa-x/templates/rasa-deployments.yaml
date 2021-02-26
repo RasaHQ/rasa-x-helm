@@ -20,6 +20,9 @@ spec:
       labels:
         {{- include "rasa-x.selectorLabels" $ | nindent 8 }}
         app.kubernetes.io/component: {{ .serviceName }}
+        {{- if $.Values.rasa.podLabels }}
+{{ toYaml $.Values.rasa.podLabels | indent 8 }}
+        {{- end }}
       annotations:
         checksum/rasa-config: {{ include (print $.Template.BasePath "/rasa-config-files-configmap.yaml") $ | sha256sum }}
         checksum/rasa-secret: {{ include (print $.Template.BasePath "/rasa-secret.yaml") $ | sha256sum }}
