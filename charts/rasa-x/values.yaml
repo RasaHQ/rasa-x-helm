@@ -468,13 +468,13 @@ nginx:
   # if you set false, you will need to set up some other method of routing (VirtualService/Ingress controller)
   enabled: true
   # override the default command to run in the container
-  command: []
+  command: ["/opt/bitnami/entrypoint.sh"]
   # override the default arguments to run in the container
-  args: []
+  args: ["/opt/bitnami/scripts/nginx/run.sh"]
   # name of the nginx image to use
-  name: "rasa/nginx"
+  name: "bitnami/nginx"
   # tag refers to the nginx image tag (uses `appVersion` by default)
-  tag: ""
+  tag: "1.19"
   # replicaCount of nginx containers to run
   replicaCount: 1
   # certificateSecret which nginx uses to mount the certificate files

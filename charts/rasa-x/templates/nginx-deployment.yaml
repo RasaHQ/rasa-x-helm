@@ -34,7 +34,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag | default (include "rasa-x.version" .) }}"
+        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         {{- if .Values.nginx.command }}
         command:
@@ -74,6 +74,8 @@ spec:
 {{- end }}
         - mountPath: "/opt/bitnami/nginx/conf/bitnami/terms"
           name: "agreement"
+        - name: nginx-conf
+          mountPath: /opt/bitnami
         {{ if .Values.nginx.certificateSecret }}
         - name: "certificates"
           readOnly: true
@@ -93,6 +95,18 @@ spec:
             path: "agree.txt"
           name: {{ template "rasa-x.nginx.agreement" . }}
         name: "agreement"
+      - configMap:
+          items:
+          - key: "nginx.conf"
+            path: "nginx/conf/nginx.conf"
+          - key: "rasax.nginx"
+            path: "nginx/conf/conf.d/rasax.nginx"
+          - key: "ssl.conf"
+            path: "nginx/conf/conf.d/ssl.conf"
+          - key: "entrypoint.sh"
+            path: "entrypoint.sh"
+          name: {{ template "rasa-x.nginx.conf" . }}
+        name: "nginx-conf"
       {{ if .Values.nginx.certificateSecret }}
       - name: "certificates"
         secret:

@@ -1,0 +1,16 @@
+{{- if .Values.nginx.enabled }}
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: {{ template "rasa-x.nginx.conf" . }}
+  labels:
+    {{ include "rasa-x.labels" . | nindent 4 }}
+{{- end }}
+
+data:
+  nginx.conf: {{ tpl (.Files.Get "nginx-config-files/nginx.conf") . | quote }}
+  ssl.conf: {{ tpl (.Files.Get "nginx-config-files/ssl.conf") . | quote }}
+  rasax.nginx: {{ tpl (.Files.Get "nginx-config-files/rasax.nginx") . | quote }}
+  entrypoint.sh: {{ tpl (.Files.Get "nginx-config-files/entrypoint.sh") . | quote }}
+
+

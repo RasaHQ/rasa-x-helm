@@ -136,6 +136,14 @@ Return the name of config map which stores the nginx agreement.
 {{- end -}}
 
 {{/*
+Return the name of config map which stores the nginx config.
+*/}}
+{{- define "rasa-x.nginx.conf" -}}
+"{{ .Release.Name }}-nginx-conf"
+{{- end -}}
+
+
+{{/*
 Return the port of the action container.
 */}}
 {{- define "rasa-x.custom-actions.port" -}}
