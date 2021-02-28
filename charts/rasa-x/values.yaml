@@ -101,6 +101,10 @@ rasax:
     # annotations for the service
     annotations: {}
 
+  # podLabels adds additional pod labels
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  podLabels: {}
+
 # rasa: Settings common for all Rasa containers
 rasa:
   # version is the Rasa Open Source version which should be used.
@@ -181,6 +185,10 @@ rasa:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
+
+  # podLabels adds additional pod labels
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  podLabels: {}
 
   # versions of the Rasa container which are running
   versions:
@@ -273,7 +281,7 @@ dbMigrationService:
 
   # resources which the event service is required / allowed to use
   resources: {}
-  # extraEnvs are environment variables which can be added to the eventService deployment
+  # extraEnvs are environment variables which can be added to the dbMigrationService deployment
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
@@ -309,6 +317,10 @@ dbMigrationService:
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
+
+  # podLabels adds additional pod labels
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  podLabels: {}
 
 # event-service specific settings
 eventService:
@@ -368,6 +380,10 @@ eventService:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
+
+  # podLabels adds additional pod labels
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  podLabels: {}
 
 # app (custom action server) specific settings
 app:
@@ -442,6 +458,10 @@ app:
     # annotations for the service
     annotations: {}
 
+  # podLabels adds additional pod labels
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  podLabels: {}
+
 # nginx specific settings
 nginx:
   # enabled should be `true` if you want to use nginx
@@ -508,6 +528,10 @@ nginx:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
 
+  # podLabels adds additional pod labels
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  podLabels: {}
+
 # Duckling specific settings
 duckling:
   # override the default command to run in the container
@@ -570,6 +594,10 @@ duckling:
   service:
     # annotations for the service
     annotations: {}
+
+  # podLabels adds additional pod labels
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  podLabels: {}
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
