@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          
+
       - name: Get latest Rasa X minor 🏷
         run: |
           DOCKERHUB_TAGS_URL="https://registry.hub.docker.com/v2/repositories/rasa/rasa-x/tags?page_size=10000"
@@ -50,11 +50,10 @@ jobs:
 
       - name: Check if duplicated branch exists 🔍
         run: |
-          git fetch origin
+          BRANCH_NAME=$(git branch -a | grep -m 1 "bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}" || echo "")
 
-          BRANCH_NAME=$(git branch -a | grep -q "bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}")
-
-          if [[ ${BRANCH_NAME} ]]; then
+          # Set CREATE_UPDATE_PR to false if BRANCH_NAME is not empty ("")
+          if [[ ! -z ${BRANCH_NAME} ]]; then
             echo "Found related branch ${BRANCH_NAME}."
             echo "The newest version of Rasa X (${LATEST_RASA_X_MINOR}) has already been bumped."
             echo "CREATE_UPDATE_PR=false" >> $GITHUB_ENV
