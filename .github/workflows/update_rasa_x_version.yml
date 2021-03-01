@@ -19,6 +19,8 @@ jobs:
 
       - name: Checkout rasa-x-helm github repository 🕝
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Get latest Rasa X minor 🏷
         run: |
@@ -48,10 +50,9 @@ jobs:
 
       - name: Check if duplicated branch exists 🔍
         run: |
-          git fetch origin
+          BRANCH_NAME=$(git branch -a | grep -m 1 "bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}" || echo "")
 
-          BRANCH_NAME=$(git branch | grep -m 1 "bump-rasa-x-version-to-${LATEST_RASA_X_MINOR}")
-
+          # Set CREATE_UPDATE_PR to false if BRANCH_NAME is not empty ("")
           if [[ ! -z ${BRANCH_NAME} ]]; then
             echo "Found related branch ${BRANCH_NAME}."
             echo "The newest version of Rasa X (${LATEST_RASA_X_MINOR}) has already been bumped."
