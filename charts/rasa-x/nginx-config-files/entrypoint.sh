@@ -11,6 +11,7 @@ then
 fi
 
 cp /tmp/rasax.nginx /tmp/ssl.conf /opt/bitnami/nginx/conf/conf.d
+cp /tmp/nginx.conf /opt/bitnami/nginx/conf/nginx.conf
 
 if [[ ! -e "/opt/bitnami/certs/fullchain.pem" ]] || [[ ! -e "/opt/bitnami/certs/privkey.pem" ]]
 then

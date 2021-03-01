@@ -54,13 +54,17 @@ spec:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
-        {{- if .Values.nginx.command }}
         command:
+        {{- if .Values.nginx.command }}
           {{- toYaml .Values.nginx.command | nindent 10 }}
+        {{- else }}
+           - "/opt/bitnami/entrypoint.sh"
         {{- end }}
-        {{- if .Values.nginx.args }}
         args:
+        {{- if .Values.nginx.args }}
           {{- toYaml .Values.nginx.args | nindent 10 }}
+        {{- else }}
+           - "/opt/bitnami/scripts/nginx/run.sh"
         {{- end }}
         ports:
         - name: "http"
@@ -96,7 +100,7 @@ spec:
           mountPath: "/opt/bitnami/entrypoint.sh"
           subPath: "entrypoint.sh"
         - name: "nginx-conf"
-          mountPath: "/opt/bitnami/nginx/conf/nginx.conf"
+          mountPath: "/tmp/nginx.conf"
           subPath: "nginx.conf"
         - name: "nginx-ssl-conf"
           mountPath: "/tmp/ssl.conf"
