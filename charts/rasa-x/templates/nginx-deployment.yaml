@@ -32,6 +32,24 @@ spec:
       tolerations:
 {{ toYaml .Values.nginx.tolerations | indent 6 }}
       {{- end }}
+      initContainers:
+      - name: init-config
+        image: dibi/envsubst
+        command:
+        - sh
+        - -c
+        - envsubst '${RASA_X_HOST} ${RASA_PRODUCTION_HOST}' < /workdir/rasax.nginx > /processed/rasax.nginx
+        env:
+        - name: "RASA_X_HOST"
+          value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
+        - name: "RASA_PRODUCTION_HOST"
+          value: "{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
+        volumeMounts:
+        - name: rasax-nginx-processed
+          mountPath: /processed
+        - name: rasax-nginx
+          mountPath: /workdir
+      volumes:
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag }}"
@@ -74,8 +92,20 @@ spec:
 {{- end }}
         - mountPath: "/opt/bitnami/nginx/conf/bitnami/terms"
           name: "agreement"
-        - name: nginx-conf
-          mountPath: /opt/bitnami
+        - name: "nginx-entrypoint"
+          mountPath: "/opt/bitnami/entrypoint.sh"
+          subPath: "entrypoint.sh"
+        - name: "nginx-conf"
+          mountPath: "/opt/bitnami/nginx/conf/nginx.conf"
+          subPath: "nginx.conf"
+        - name: "nginx-ssl-conf"
+          mountPath: "/tmp/ssl.conf"
+          subPath: "ssl.conf"
+        - name: "rasax-nginx-processed"
+          mountPath: "/tmp/rasax.nginx"
+          subPath: "rasax.nginx"
+        - name: "confd"
+          mountPath: "/opt/bitnami/nginx/conf/conf.d"
         {{ if .Values.nginx.certificateSecret }}
         - name: "certificates"
           readOnly: true
@@ -96,17 +126,34 @@ spec:
           name: {{ template "rasa-x.nginx.agreement" . }}
         name: "agreement"
       - configMap:
+          defaultMode: 0755
           items:
-          - key: "nginx.conf"
-            path: "nginx/conf/nginx.conf"
-          - key: "rasax.nginx"
-            path: "nginx/conf/conf.d/rasax.nginx"
-          - key: "ssl.conf"
-            path: "nginx/conf/conf.d/ssl.conf"
           - key: "entrypoint.sh"
             path: "entrypoint.sh"
           name: {{ template "rasa-x.nginx.conf" . }}
+        name: "nginx-entrypoint"
+      - configMap:
+          items:
+          - key: "nginx.conf"
+            path: "nginx.conf"
+          name: {{ template "rasa-x.nginx.conf" . }}
         name: "nginx-conf"
+      - configMap:
+          items:
+          - key: "ssl.conf"
+            path: "ssl.conf"
+          name: {{ template "rasa-x.nginx.conf" . }}
+        name: "nginx-ssl-conf"
+      - name: rasax-nginx
+        configMap:
+          items:
+          - key: "rasax.nginx"
+            path: "rasax.nginx"
+          name: {{ template "rasa-x.nginx.conf" . }}
+      - name: rasax-nginx-processed
+        emptyDir: {}
+      - name: confd
+        emptyDir: {}
       {{ if .Values.nginx.certificateSecret }}
       - name: "certificates"
         secret:
