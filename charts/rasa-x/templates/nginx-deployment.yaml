@@ -32,24 +32,6 @@ spec:
       tolerations:
 {{ toYaml .Values.nginx.tolerations | indent 6 }}
       {{- end }}
-      initContainers:
-      - name: init-config
-        image: dibi/envsubst
-        command:
-        - sh
-        - -c
-        - envsubst '${RASA_X_HOST} ${RASA_PRODUCTION_HOST}' < /workdir/rasax.nginx > /processed/rasax.nginx
-        env:
-        - name: "RASA_X_HOST"
-          value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
-        - name: "RASA_PRODUCTION_HOST"
-          value: "{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
-        volumeMounts:
-        - name: rasax-nginx-processed
-          mountPath: /processed
-        - name: rasax-nginx
-          mountPath: /workdir
-      volumes:
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag }}"
@@ -57,14 +39,14 @@ spec:
         command:
         {{- if .Values.nginx.command }}
           {{- toYaml .Values.nginx.command | nindent 10 }}
-        {{- else }}
-           - "/opt/bitnami/entrypoint.sh"
+        # {{- else }}
+        #   - /etc/entrypoint.sh
         {{- end }}
         args:
         {{- if .Values.nginx.args }}
           {{- toYaml .Values.nginx.args | nindent 10 }}
-        {{- else }}
-           - "/opt/bitnami/scripts/nginx/run.sh"
+        # {{- else }}
+        #    - /etc/scripts/nginx/run.sh"
         {{- end }}
         ports:
         - name: "http"
@@ -84,6 +66,8 @@ spec:
             - localhost:8080/nginx_status
           initialDelaySeconds: {{ .Values.nginx.readinessProbe.initialProbeDelay }}
         env:
+        - name: "NGINX_ENVSUBST_TEMPLATE_SUFFIX"
+          value: ".template"
         - name: "RASA_X_HOST"
           value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
         - name: "RASA_PRODUCTION_HOST"
@@ -94,26 +78,25 @@ spec:
 {{- if .Values.nginx.extraVolumeMounts }}
 {{ toYaml .Values.nginx.extraVolumeMounts | indent 8 }}
 {{- end }}
-        - mountPath: "/opt/bitnami/nginx/conf/bitnami/terms"
+        - mountPath: "/etc/nginx/terms/agree.txt"
           name: "agreement"
+          subPath: "agree.txt"
         - name: "nginx-entrypoint"
-          mountPath: "/opt/bitnami/entrypoint.sh"
+          mountPath: "/docker-entrypoint.d/entrypoint.sh"
           subPath: "entrypoint.sh"
         - name: "nginx-conf"
-          mountPath: "/tmp/nginx.conf"
+          mountPath: "/etc/nginx/nginx.conf"
           subPath: "nginx.conf"
         - name: "nginx-ssl-conf"
-          mountPath: "/tmp/ssl.conf"
-          subPath: "ssl.conf"
-        - name: "rasax-nginx-processed"
-          mountPath: "/tmp/rasax.nginx"
-          subPath: "rasax.nginx"
-        - name: "confd"
-          mountPath: "/opt/bitnami/nginx/conf/conf.d"
+          mountPath: "/etc/nginx/templates/ssl.conf.template"
+          subPath: "ssl.conf.template"
+        - name: "rasax-nginx"
+          mountPath: "/etc/nginx/templates/rasax.nginx.template"
+          subPath: "rasax.nginx.template"
         {{ if .Values.nginx.certificateSecret }}
         - name: "certificates"
           readOnly: true
-          mountPath: "/opt/bitnami/certs"
+          mountPath: "/etc/nginx/certs"
         {{ end }}
         {{- with .Values.nginx.resources }}
         resources:
@@ -144,20 +127,16 @@ spec:
         name: "nginx-conf"
       - configMap:
           items:
-          - key: "ssl.conf"
-            path: "ssl.conf"
+          - key: "ssl.conf.template"
+            path: "ssl.conf.template"
           name: {{ template "rasa-x.nginx.conf" . }}
         name: "nginx-ssl-conf"
       - name: rasax-nginx
         configMap:
           items:
-          - key: "rasax.nginx"
-            path: "rasax.nginx"
+          - key: "rasax.nginx.template"
+            path: "rasax.nginx.template"
           name: {{ template "rasa-x.nginx.conf" . }}
-      - name: rasax-nginx-processed
-        emptyDir: {}
-      - name: confd
-        emptyDir: {}
       {{ if .Values.nginx.certificateSecret }}
       - name: "certificates"
         secret:

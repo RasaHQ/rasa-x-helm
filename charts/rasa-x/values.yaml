@@ -472,10 +472,10 @@ nginx:
   # override the default arguments to run in the container
   args: []
   # name of the nginx image to use
-  name: "bitnami/nginx"
+  name: "nginx"
   # tag refers to the nginx image tag (uses `appVersion` by default)
   tag: "1.19"
-  # custom config map containing customized nginx.conf, ssl.conf, rasax.nginx, entrypoint.sh
+  # custom config map containing  nginx.conf, ssl.conf.template, rasax.nginx.template, entrypoint.sh
   customConfConfigMap: ""
   # replicaCount of nginx containers to run
   replicaCount: 1

@@ -8,7 +8,7 @@ upstream docker-rasax-api {
 
 server {
   listen            8080;
-  include           /opt/bitnami/nginx/conf/conf.d/ssl.conf;
+  include           /etc/nginx/conf.d/ssl.conf;
 
   keepalive_timeout   30;
   client_max_body_size 800M;
