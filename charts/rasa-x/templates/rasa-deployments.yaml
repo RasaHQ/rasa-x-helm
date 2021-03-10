@@ -140,7 +140,11 @@ spec:
         - name: "RASA_ENVIRONMENT"
           value: "{{ .rasaEnvironment }}"
         - name: "RASA_MODEL_SERVER"
+          {{- if $.Values.rasax.service.port }}
+          value: {{ $.Values.rasax.scheme }}://{{ include "rasa-x.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.rasax.service.port }}/api/projects/default/models/tags/{{ .modelTag }}
+          {{- else }}
           value: {{ $.Values.rasax.scheme }}://{{ include "rasa-x.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.rasax.port }}/api/projects/default/models/tags/{{ .modelTag }}
+          {{- end }}
         - name: "RASA_DUCKLING_HTTP_URL"
           value: {{ $.Values.duckling.scheme }}://{{ include "duckling.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.duckling.port }}
         {{- include "rasa.extra.envs" $ | nindent 8 }}

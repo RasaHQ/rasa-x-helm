@@ -7,7 +7,11 @@ metadata:
 data:
   rasa-credentials: |
     rasa:
+      {{- if .Values.rasax.service.port }}
+      url: {{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.service.port }}/api
+      {{- else }}
       url: {{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}/api
+      {{- end }}
     {{- with .Values.rasa.additionalChannelCredentials }}
     {{ toYaml . | nindent 4 }}
     {{- end }}
