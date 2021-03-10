@@ -52,6 +52,11 @@ spec:
         ports:
           - name: "http"
             containerPort: {{ default 5002 .Values.rasax.port }}
+            {{- if .Values.rasax.service.port }}
+            containerPort: {{ .Values.rasax.service.port }}
+            {{- else }}
+            containerPort: {{ default 5002 .Values.rasax.port }}
+            {{- end }}
             protocol: "TCP"
         livenessProbe:
           httpGet:
@@ -81,11 +86,19 @@ spec:
           value: "false"
         {{- end }}
         - name: "SELF_PORT"
+          {{- if .Values.rasax.service.port }}
+          value: {{ .Values.rasax.service.port | quote }}
+          {{- else }}
           value: {{ .Values.rasax.port | quote }}
+          {{- end }}
         - name: "LOCAL_MODE" # This variable doesn't do anything anymore in Rasa X 0.28 and later
           value: "false"
         - name: "RASA_X_HOST"
+          {{- if .Values.rasax.service.port }}
+          value: {{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.service.port }}
+          {{- else }}
           value: {{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}
+          {{- end }}
         - name: "RASA_MODEL_DIR"
           value: "/app/models"
         - name: "RUN_EVENT_CONSUMER_AS_SEPARATE_SERVICE"

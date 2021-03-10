@@ -5,13 +5,22 @@ kind: "Service"
 metadata:
   name: {{ include "rasa-x.fullname" $ }}-{{ .serviceName }}
   labels:
-    {{ include "rasa-x.labels" $ | nindent 4 }}
+    {{- include "rasa-x.labels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ .serviceName }}
 {{- with .service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
 {{- end }}
 spec:
+{{- if eq .serviceName "rasa-production" }}
+  type: {{ default "ClusterIP" .type }}
+{{- end }}
+{{- if and (eq .serviceName "rasa-production") .nodePort }}
+  nodePort: {{ .nodePort }}
+{{ end }}
+{{- if and (eq .serviceName "rasa-production") .loadBalancerIP }}
+  loadBalancerIP: {{ .loadBalancerIP | quote }}
+{{- end }}
   ports:
   - port: {{ $.Values.rasa.port }}
     targetPort: {{ $.Values.rasa.port }}

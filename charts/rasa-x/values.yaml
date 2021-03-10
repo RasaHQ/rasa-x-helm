@@ -12,8 +12,12 @@ rasax:
   name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
   # tag refers to the Rasa X image tag (uses `appVersion` by default)
   tag: ""
-  # port on which Rasa X runs
-  port: 5002
+  # service
+  service:
+    # port on which Rasa X runs
+    port: 5002
+    # service type
+    type: ClusterIP
   # scheme by which Rasa X is accessible
   scheme: http
   # passwordSalt Rasa X uses to salt the user passwords
@@ -200,6 +204,8 @@ rasa:
       serviceName: "rasa-production"
       # service specifies settings for exposing rasa production to other services
       service:
+        # type
+        type: ClusterIP
         # annotations for the service
         annotations: {}
       # modelTag of the model Rasa should pull from the the model server
