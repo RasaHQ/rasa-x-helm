@@ -642,12 +642,24 @@ postgresql:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
+# Kafka specific settings
+kafka:
+  # security protocol
+  security_protocol: SASL_PLAINTEXT
+  # kafka topic
+  topic: my_topic
+  # kafka host
+  url: localhost
+  # SASL credentials
+  sasl_username: username
+  sasl_password: password
+
 # RabbitMQ specific settings (https://hub.helm.sh/charts/bitnami/rabbitmq/6.19.2)
 rabbitmq:
   # Install should be `true` if the rabbitmq subchart should be used
-  install: true
+  install: false
   # Enabled should be `true` if any version of rabbit is used
-  enabled: true
+  enabled: false
   # rabbitmq settings of the subchart
   rabbitmq:
     # username which is used for the authentication
