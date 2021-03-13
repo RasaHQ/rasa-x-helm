@@ -69,6 +69,9 @@ recommend to set at least these values:
 | `duckling.command`                     | Override the default command to run in the container.                                      | `[]`               |
 | `duckling.args`                        | Override the default arguments to run in the container.                                    | `[]`               |
 | `global.progressDeadlineSeconds`       | Specifies the number of seconds you want to wait for your Deployment to progress before the system reports back that the Deployment has failed progressing. | `600` |
+| `networkPolicy.enabled`                | Enable NetworkPolicy                                                                       | `false`               |
+| `networkPolicy.allowExternal`          | Don't require client label for connections                                                 | `true`               |
+| `networkPolicy.explicitNamespacesSelector` | A Kubernetes LabelSelector to explicitly select namespaces from which ingress traffic could be allowed | `{}`               |
 
 ## Where to get help
 
