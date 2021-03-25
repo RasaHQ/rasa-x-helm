@@ -487,6 +487,8 @@ nginx:
     annotations: {}
     # type of the service (https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types)
     type: LoadBalancer
+    # loadBalancerSourceRange for AWS deployments (https://kubernetes.io/docs/concepts/services-networking/service/#aws-nlb-support)
+    loadBalancerSourceRanges: []
     # port is the port which the nginx service exposes for HTTP connections
     port: 8000
     # nodePort can be used with a service of type `NodePort` to expose the service on a certain port of the node (https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)

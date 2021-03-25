@@ -23,6 +23,9 @@ spec:
   externalIPs: {{ .Values.nginx.service.externalIPs | toYaml | nindent 2 }}
     {{- end }}
   type: {{ .Values.nginx.service.type }}
+    {{- if .Values.nginx.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges: {{ .Values.nginx.service.loadBalancerSourceRanges | toYaml | nindent 2 }}
+    {{- end }}
   selector:
     {{- include "rasa-x.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: nginx
