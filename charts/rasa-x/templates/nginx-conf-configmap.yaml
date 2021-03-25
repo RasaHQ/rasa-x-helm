@@ -11,6 +11,3 @@ data:
   nginx.conf: {{ tpl (.Files.Get "nginx-config-files/nginx.conf") . | quote }}
   ssl.conf.template: {{ tpl (.Files.Get "nginx-config-files/ssl.conf.template") . | quote }}
   rasax.nginx.template: {{ tpl (.Files.Get "nginx-config-files/rasax.nginx.template") . | quote }}
-  entrypoint.sh: {{ tpl (.Files.Get "nginx-config-files/entrypoint.sh") . | quote }}
-
-

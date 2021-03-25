@@ -39,8 +39,6 @@ spec:
         command:
         {{- if .Values.nginx.command }}
           {{- toYaml .Values.nginx.command | nindent 10 }}
-        # {{- else }}
-        #   - /etc/entrypoint.sh
         {{- end }}
         args:
         {{- if .Values.nginx.args }}
@@ -81,9 +79,6 @@ spec:
         - mountPath: "/etc/nginx/terms/agree.txt"
           name: "agreement"
           subPath: "agree.txt"
-        - name: "nginx-entrypoint"
-          mountPath: "/docker-entrypoint.d/entrypoint.sh"
-          subPath: "entrypoint.sh"
         - name: "nginx-conf"
           mountPath: "/etc/nginx/nginx.conf"
           subPath: "nginx.conf"
@@ -112,13 +107,6 @@ spec:
             path: "agree.txt"
           name: {{ template "rasa-x.nginx.agreement" . }}
         name: "agreement"
-      - configMap:
-          defaultMode: 0755
-          items:
-          - key: "entrypoint.sh"
-            path: "entrypoint.sh"
-          name: {{ template "rasa-x.nginx.conf" . }}
-        name: "nginx-entrypoint"
       - configMap:
           items:
           - key: "nginx.conf"
