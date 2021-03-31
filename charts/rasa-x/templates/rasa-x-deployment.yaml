@@ -51,7 +51,6 @@ spec:
         {{- end }}
         ports:
           - name: "http"
-            containerPort: {{ default 5002 .Values.rasax.port }}
             {{- if .Values.rasax.service.port }}
             containerPort: {{ .Values.rasax.service.port }}
             {{- else }}
@@ -95,9 +94,9 @@ spec:
           value: "false"
         - name: "RASA_X_HOST"
           {{- if .Values.rasax.service.port }}
-          value: {{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.service.port }}
+          value: "{{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.service.port }}"
           {{- else }}
-          value: {{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}
+          value: "{{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
           {{- end }}
         - name: "RASA_MODEL_DIR"
           value: "/app/models"
