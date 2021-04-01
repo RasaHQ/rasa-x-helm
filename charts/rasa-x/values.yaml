@@ -678,7 +678,7 @@ redis:
   install: true
   # cluster settings for redis (Rasa does currently not support redis sentinels)
   cluster:
-    # enabled should be `true` in case a redis cluster should be set up and `false` for a single instance
+    # set up a single Redis instance, as `redis-py` does not support clusters (https://github.com/andymccurdy/redis-py#cluster-mode)
     enabled: false
   # redisPort: port which should be used to expose redis to the other components
   redisPort: 6379
