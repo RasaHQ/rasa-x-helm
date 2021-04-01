@@ -720,6 +720,11 @@ ingress:
   #    hosts:
   #      - rasa-x.example.com
 
+networkPolicy:
+  # Enable creation of NetworkPolicy resources. When set to true, explicit ingress & egress
+  # network policies will be generated for the required inter-pod connections
+  enabled: false
+
 # images: Settings for the images
 images:
   # pullPolicy to use when deploying images
