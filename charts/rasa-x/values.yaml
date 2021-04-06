@@ -475,7 +475,7 @@ nginx:
   name: "nginx"
   # tag refers to the nginx image tag (uses `appVersion` by default)
   tag: "1.19"
-  # custom config map containing  nginx.conf, ssl.conf.template, rasax.nginx.template
+  # custom config map containing  nginx.conf, rasax.nginx.template
   customConfConfigMap: ""
   # replicaCount of nginx containers to run
   replicaCount: 1

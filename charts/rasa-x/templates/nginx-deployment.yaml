@@ -82,9 +82,6 @@ spec:
         - name: "nginx-conf"
           mountPath: "/etc/nginx/nginx.conf"
           subPath: "nginx.conf"
-        - name: "nginx-ssl-conf"
-          mountPath: "/etc/nginx/templates/ssl.conf.template"
-          subPath: "ssl.conf.template"
         - name: "rasax-nginx"
           mountPath: "/etc/nginx/templates/rasax.nginx.template"
           subPath: "rasax.nginx.template"
@@ -113,12 +110,6 @@ spec:
             path: "nginx.conf"
           name: {{ template "rasa-x.nginx.conf" . }}
         name: "nginx-conf"
-      - configMap:
-          items:
-          - key: "ssl.conf.template"
-            path: "ssl.conf.template"
-          name: {{ template "rasa-x.nginx.conf" . }}
-        name: "nginx-ssl-conf"
       - name: rasax-nginx
         configMap:
           items:
