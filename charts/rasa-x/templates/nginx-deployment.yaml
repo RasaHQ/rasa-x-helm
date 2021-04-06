@@ -50,16 +50,26 @@ spec:
           protocol: "TCP"
         livenessProbe:
           exec:
+          {{- if .Values.nginx.livenessProbe.command }}
             command:
-            - curl
-            - localhost:8080/nginx_status
+            {{- toYaml .Values.nginx.livenessProbe.command | nindent 12 }}
+          {{- else -}}
+            command:
+              - curl
+              - localhost:8080/nginx_status
+          {{- end }}
           initialDelaySeconds: {{ .Values.nginx.livenessProbe.initialProbeDelay }}
           failureThreshold: 10
         readinessProbe:
           exec:
+          {{- if .Values.nginx.readinessProbe.command }}
             command:
-            - curl
-            - localhost:8080/nginx_status
+            {{- toYaml .Values.nginx.readinessProbe.command | nindent 12 }}
+          {{- else -}}
+            command:
+              - curl
+              - localhost:8080/nginx_status
+          {{- end }}
           initialDelaySeconds: {{ .Values.nginx.readinessProbe.initialProbeDelay }}
         env:
         - name: "NGINX_ENVSUBST_TEMPLATE_SUFFIX"
