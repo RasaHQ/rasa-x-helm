@@ -43,8 +43,6 @@ spec:
         args:
         {{- if .Values.nginx.args }}
           {{- toYaml .Values.nginx.args | nindent 10 }}
-        # {{- else }}
-        #    - /etc/scripts/nginx/run.sh"
         {{- end }}
         ports:
         - name: "http"
