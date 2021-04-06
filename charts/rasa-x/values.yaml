@@ -494,11 +494,15 @@ nginx:
     # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
     externalIPs: []
   livenessProbe:
-    # initialProbeDelay for the `readinessProbe`
+    # command for the `livenessProbe`
+    command: []
+    # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
-    # initialProbeDelay for the `livenessProbe`
+    # command for the `readinessProbe`
+    command: []
+    # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
 
   # tolerations can be used to control the pod to node assignment
