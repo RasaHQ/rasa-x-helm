@@ -53,7 +53,7 @@ spec:
           {{- if .Values.nginx.livenessProbe.command }}
             command:
             {{- toYaml .Values.nginx.livenessProbe.command | nindent 12 }}
-          {{- else -}}
+          {{- else }}
             command:
               - curl
               - localhost:8080/nginx_status
@@ -65,7 +65,7 @@ spec:
           {{- if .Values.nginx.readinessProbe.command }}
             command:
             {{- toYaml .Values.nginx.readinessProbe.command | nindent 12 }}
-          {{- else -}}
+          {{- else }}
             command:
               - curl
               - localhost:8080/nginx_status
