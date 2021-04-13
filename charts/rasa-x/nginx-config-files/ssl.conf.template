@@ -1,0 +1,7 @@
+# This is an example SSL configuration
+# Uncomment and adapt for your deployment as needed
+# listen                  8443 ssl;
+
+# # server_name           example.com;
+# ssl_certificate         /etc/nginx/certs/fullchain.pem;
+# ssl_certificate_key     /etc/nginx/certs/privkey.pem;
