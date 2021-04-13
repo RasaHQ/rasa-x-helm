@@ -8,6 +8,7 @@ upstream docker-rasax-api {
 
 server {
   listen            8080;
+#  include           /etc/nginx/conf.d/ssl.conf; # uncomment if using ssl; see ssl.conf.template for example configuration
 
   keepalive_timeout   30;
   client_max_body_size 800M;
