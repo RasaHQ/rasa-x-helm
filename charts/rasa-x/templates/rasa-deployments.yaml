@@ -29,9 +29,9 @@ spec:
     spec:
       automountServiceAccountToken: {{ $.Values.rasa.automountServiceAccountToken }}
       {{ include "rasa-x.spec" $ }}
-      {{- if $.Values.rasa.nodeSelector }}
+      {{- if .nodeSelector }}
       nodeSelector:
-{{ toYaml $.Values.rasa.nodeSelector | indent 8 }}
+{{ toYaml .nodeSelector | indent 8 }}
       {{- end }}
       {{- if $.Values.rasa.tolerations }}
       tolerations:
