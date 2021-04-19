@@ -316,6 +316,44 @@ spec:
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
+  name: egress-from-db-migration-service-to-postgresql
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: db-migration-service
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app: postgresql
+      ports:
+      - protocol: TCP
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-db-migration-service-to-postgresql
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app: postgresql
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: db-migration-service
+      ports:
+      - protocol: TCP
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
   name: egress-from-rasa-worker-to-postgresql
 spec:
   policyTypes:
