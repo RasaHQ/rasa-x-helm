@@ -34,14 +34,14 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag | default (include "rasa-x.version" .) }}"
+        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
-        {{- if .Values.nginx.command }}
         command:
+        {{- if .Values.nginx.command }}
           {{- toYaml .Values.nginx.command | nindent 10 }}
         {{- end }}
-        {{- if .Values.nginx.args }}
         args:
+        {{- if .Values.nginx.args }}
           {{- toYaml .Values.nginx.args | nindent 10 }}
         {{- end }}
         ports:
@@ -72,6 +72,8 @@ spec:
           {{- end }}
           initialDelaySeconds: {{ .Values.nginx.readinessProbe.initialProbeDelay }}
         env:
+        - name: "NGINX_ENVSUBST_TEMPLATE_SUFFIX"
+          value: ".template"
         - name: "RASA_X_HOST"
           value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
         - name: "RASA_PRODUCTION_HOST"
@@ -82,12 +84,22 @@ spec:
 {{- if .Values.nginx.extraVolumeMounts }}
 {{ toYaml .Values.nginx.extraVolumeMounts | indent 8 }}
 {{- end }}
-        - mountPath: "/opt/bitnami/nginx/conf/bitnami/terms"
+        - mountPath: "/etc/nginx/terms/agree.txt"
           name: "agreement"
+          subPath: "agree.txt"
+        - name: "nginx-conf"
+          mountPath: "/etc/nginx/nginx.conf"
+          subPath: "nginx.conf"
+        - name: "nginx-ssl-conf"
+          mountPath: "/etc/nginx/templates/ssl.conf.template"
+          subPath: "ssl.conf.template"
+        - name: "rasax-nginx"
+          mountPath: "/etc/nginx/templates/rasax.nginx.template"
+          subPath: "rasax.nginx.template"
         {{ if .Values.nginx.certificateSecret }}
         - name: "certificates"
           readOnly: true
-          mountPath: "/opt/bitnami/certs"
+          mountPath: "/etc/nginx/certs"
         {{ end }}
         {{- with .Values.nginx.resources }}
         resources:
@@ -103,6 +115,24 @@ spec:
             path: "agree.txt"
           name: {{ template "rasa-x.nginx.agreement" . }}
         name: "agreement"
+      - configMap:
+          items:
+          - key: "nginx.conf"
+            path: "nginx.conf"
+          name: {{ template "rasa-x.nginx.conf" . }}
+        name: "nginx-conf"
+      - configMap:
+          items:
+          - key: "ssl.conf.template"
+            path: "ssl.conf.template"
+          name: {{ template "rasa-x.nginx.conf" . }}
+        name: "nginx-ssl-conf"
+      - name: rasax-nginx
+        configMap:
+          items:
+          - key: "rasax.nginx.template"
+            path: "rasax.nginx.template"
+          name: {{ template "rasa-x.nginx.conf" . }}
       {{ if .Values.nginx.certificateSecret }}
       - name: "certificates"
         secret:

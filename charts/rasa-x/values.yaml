@@ -475,9 +475,11 @@ nginx:
   # override the default arguments to run in the container
   args: []
   # name of the nginx image to use
-  name: "rasa/nginx"
+  name: "nginx"
   # tag refers to the nginx image tag (uses `appVersion` by default)
-  tag: ""
+  tag: "1.19"
+  # custom config map containing nginx.conf, ssl.conf.template, rasax.nginx.template
+  customConfConfigMap: ""
   # replicaCount of nginx containers to run
   replicaCount: 1
   # certificateSecret which nginx uses to mount the certificate files
