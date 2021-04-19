@@ -176,11 +176,6 @@ rasa:
     # - key: "nvidia.com/gpu"
     #   operator: "Exists"
 
-  # nodeSelector to specify which node the pods should run on
-  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-  nodeSelector: {}
-    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
-
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
@@ -194,6 +189,10 @@ rasa:
   versions:
     # rasaProduction is the container which serves the production environment
     rasaProduction:
+      # nodeSelector to specify which node the pods should run on
+      # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+      nodeSelector: {}
+        # "beta.kubernetes.io/instance-type": "g3.8xlarge"
       # replicaCount of the Rasa Production container
       replicaCount: 1
       # serviceName with which the Rasa production deployment is exposed to other containers
@@ -221,6 +220,10 @@ rasa:
       #   emptyDir: {}
     # rasaWorker is the container which does computational heavy tasks such as training
     rasaWorker:
+      # nodeSelector to specify which node the pods should run on
+      # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+      nodeSelector: {}
+        # "beta.kubernetes.io/instance-type": "g3.8xlarge"
       # replicaCount of the Rasa worker container
       replicaCount: 1
       # serviceName with which the Rasa worker deployment is exposed to other containers
@@ -394,7 +397,7 @@ app:
   # name of the custom action server image to use
   name: "rasa/rasa-x-demo"
   # tag refers to the custom action server image tag
-  tag: ""
+  tag: "0.38.0"
   # replicaCount of the custom action server container
   replicaCount: 1
   # port on which the custom action server runs
