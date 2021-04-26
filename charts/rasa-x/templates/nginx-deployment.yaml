@@ -78,8 +78,10 @@ spec:
           value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
         - name: "RASA_PRODUCTION_HOST"
           value: "{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
+        {{- if .Values.app.install }}
         - name: "CUSTOM_ACTION_HOST"
           value: "{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}"
+        {{- end }}
         volumeMounts:
 {{- if .Values.nginx.extraVolumeMounts }}
 {{ toYaml .Values.nginx.extraVolumeMounts | indent 8 }}
