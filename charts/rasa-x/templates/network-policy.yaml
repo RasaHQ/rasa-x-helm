@@ -3,57 +3,168 @@
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
+  name: allow-dns-access
+  namespace: {{ .Namespace }}
+spec:
+  podSelector:
+    matchLabels: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: UDP
+      port: 53
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
   name: egress-from-rasa-x-to-rasa-production
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-rasa-x
+      app.kubernetes.io/component: rasa-x
   egress:
     - to:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
         port: {{ .Values.rasa.port }}
+{{- if .Values.networkPolicy.podCIDR -}}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-egress-from-kubelet-to-rasa-x
+  namespace: {{ .Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: rasa-x
+  egress:
+    - to:
+    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+  ingress:
+    - from:
+    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+      ports:
+      - protocol: TCP
+        port: {{ .Values.rasax.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-egress-from-kubelet-to-rasa-worker
+  namespace: {{ .Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: rasa-worker
+  egress:
+    - to:
+    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+  ingress:
+    - from:
+    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+      ports:
+      - protocol: TCP
+        port: {{ .Values.rasa.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-egress-from-kubelet-to-rasa-production
+  namespace: {{ .Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: rasa-production
+  egress:
+    - to:
+    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+  ingress:
+    - from:
+    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+      ports:
+      - protocol: TCP
+        port: {{ .Values.rasa.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-egress-from-kubelet-to-event-service
+  namespace: {{ .Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: event-service
+  egress:
+    - to:
+    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+  ingress:
+    - from:
+    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+      ports:
+      - protocol: TCP
+        port: {{ default 5673 .Values.eventService.port }}
+{{ end }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-rasa-production
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
   podSelector:
    matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
+      app.kubernetes.io/component: {{ $.Values.rasa.versions.rasaProduction.serviceName }}
   ingress:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-rasa-x
+              app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
         port: {{ .Values.rasa.port }}
-
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-rasa-x
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
   egress:
     - to:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-rasa-x
+              app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
         port: {{ .Values.rasax.port }}
@@ -63,17 +174,18 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-rasa-x
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
   podSelector:
    matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-rasa-x
+      app.kubernetes.io/component: rasa-x
   ingress:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
         port: {{ .Values.rasax.port }}
@@ -83,17 +195,18 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-worker-to-rasa-x
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
   egress:
     - to:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-rasa-x
+              app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
         port: {{ .Values.rasax.port }}
@@ -103,17 +216,18 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-worker-to-rasa-x
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
   podSelector:
    matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-rasa-x
+      app.kubernetes.io/component: rasa-x
   ingress:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
       ports:
       - protocol: TCP
         port: {{ .Values.rasax.port }}
@@ -123,12 +237,33 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-redis
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app: redis
+      ports:
+      - protocol: TCP
+        port: {{ default 6379 .Values.redis.redisPort }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-x-to-redis
+  namespace: {{ .Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: rasa-x
   egress:
     - to:
       - podSelector:
@@ -143,6 +278,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-redis
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -153,22 +289,42 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
         port: {{ default 6379 .Values.redis.redisPort }}
-
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-rasa-x-to-redis
+  namespace: {{ .Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app: redis
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: rasa-x
+      ports:
+      - protocol: TCP
+        port: {{ default 6379 .Values.redis.redisPort }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-app
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
   egress:
     - to:
       - podSelector:
@@ -183,6 +339,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-app
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -193,7 +350,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
         port: {{ default 5055 .Values.app.port -}}
@@ -202,17 +359,18 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-rasa-worker
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-rasa-x
+      app.kubernetes.io/component: rasa-x
   egress:
     - to:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
       ports:
       - protocol: TCP
         port: {{ .Values.rasa.port }}
@@ -221,17 +379,18 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-rasa-worker
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
   podSelector:
    matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
   ingress:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-rasa-x
+              app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
         port: {{ .Values.rasa.port }}
@@ -240,12 +399,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-event-service
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-rasa-x
+      app.kubernetes.io/component: rasa-x
   egress:
     - to:
       - podSelector:
@@ -259,6 +419,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-event-service
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -269,7 +430,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-rasa-x
+              app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
         port: {{ default 5673 .Values.eventService.port }}
@@ -279,6 +440,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-event-service-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -298,6 +460,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-event-service-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -317,6 +480,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-db-migration-service-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -336,6 +500,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-db-migration-service-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -355,12 +520,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-worker-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
   egress:
     - to:
       - podSelector:
@@ -374,6 +540,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-worker-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -384,7 +551,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
       ports:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
@@ -393,12 +560,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
   egress:
     - to:
       - podSelector:
@@ -412,6 +580,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -422,7 +591,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
@@ -431,12 +600,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-rasa-x
+      app.kubernetes.io/component: rasa-x
   egress:
     - to:
       - podSelector:
@@ -450,6 +620,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-postgresql
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -460,7 +631,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-rasa-x
+              app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
@@ -471,6 +642,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-event-service-to-rabbitmq
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -490,6 +662,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-event-service-to-rabbitmq
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -509,12 +682,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-worker-to-rabbitmq
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
   egress:
     - to:
       - podSelector:
@@ -528,6 +702,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-worker-to-rabbitmq
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -538,7 +713,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
@@ -547,12 +722,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-rabbitmq
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
   egress:
     - to:
       - podSelector:
@@ -566,6 +742,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-rabbitmq
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -576,7 +753,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
@@ -585,12 +762,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-rabbitmq
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-rasa-x
+      app.kubernetes.io/component: rasa-x
   egress:
     - to:
       - podSelector:
@@ -604,6 +782,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-rabbitmq
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -614,7 +793,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-rasa-x
+              app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
@@ -625,12 +804,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-duckling
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
   podSelector:
     matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
   egress:
     - to:
       - podSelector:
@@ -644,6 +824,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-duckling
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -654,7 +835,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
         port: {{ .Values.duckling.port }}
@@ -664,7 +845,22 @@ spec:
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
+  name: ingress-egress-nginx-to-kubernetes-services
+  namespace: {{ .Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: nginx
+  egress:
+    - {}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
   name: egress-from-nginx-to-rasa-production
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -675,7 +871,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
         port: {{ .Values.rasa.port }}
@@ -684,12 +880,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-nginx-to-rasa-production
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
   podSelector:
    matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
   ingress:
     - from:
       - podSelector:
@@ -703,6 +900,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-nginx-to-rasa-x
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -713,7 +911,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app.kubernetes.io/component: {{ $fullName }}-rasa-x
+              app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
         port: {{ .Values.rasax.port }}
@@ -722,12 +920,13 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-nginx-to-rasa-x
+  namespace: {{ .Namespace }}
 spec:
   policyTypes:
     - Ingress
   podSelector:
    matchLabels:
-      app.kubernetes.io/component: {{ $fullName }}-rasa-x
+      app.kubernetes.io/component: rasa-x
   ingress:
     - from:
       - podSelector:
