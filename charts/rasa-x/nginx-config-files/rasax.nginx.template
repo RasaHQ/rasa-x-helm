@@ -65,6 +65,14 @@ server {
     proxy_pass http://docker-rasax-api/api/ws;
   }
 
+  location /my_base_path/webhooks/ {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host $host;
+    proxy_pass http://docker-stack/webhooks/;
+  }
+
   location /my_base_path/core/ {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $remote_addr;
