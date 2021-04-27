@@ -38,7 +38,7 @@ spec:
       ports:
       - protocol: TCP
         port: {{ .Values.rasa.port }}
-{{- if .Values.networkPolicy.podCIDR -}}
+{{- if .Values.networkPolicy.nodeCIDR -}}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -54,10 +54,10 @@ spec:
       app.kubernetes.io/component: rasa-x
   egress:
     - to:
-    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+    {{- toYaml .Values.networkPolicy.nodeCIDR | nindent 6 }}
   ingress:
     - from:
-    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+    {{- toYaml .Values.networkPolicy.nodeCIDR | nindent 6 }}
       ports:
       - protocol: TCP
         port: {{ .Values.rasax.port }}
@@ -76,10 +76,10 @@ spec:
       app.kubernetes.io/component: rasa-worker
   egress:
     - to:
-    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+    {{- toYaml .Values.networkPolicy.nodeCIDR | nindent 6 }}
   ingress:
     - from:
-    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+    {{- toYaml .Values.networkPolicy.nodeCIDR | nindent 6 }}
       ports:
       - protocol: TCP
         port: {{ .Values.rasa.port }}
@@ -98,10 +98,10 @@ spec:
       app.kubernetes.io/component: rasa-production
   egress:
     - to:
-    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+    {{- toYaml .Values.networkPolicy.nodeCIDR | nindent 6 }}
   ingress:
     - from:
-    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+    {{- toYaml .Values.networkPolicy.nodeCIDR | nindent 6 }}
       ports:
       - protocol: TCP
         port: {{ .Values.rasa.port }}
@@ -120,10 +120,10 @@ spec:
       app.kubernetes.io/component: event-service
   egress:
     - to:
-    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+    {{- toYaml .Values.networkPolicy.nodeCIDR | nindent 6 }}
   ingress:
     - from:
-    {{- toYaml .Values.networkPolicy.podCIDR | nindent 6 }}
+    {{- toYaml .Values.networkPolicy.nodeCIDR | nindent 6 }}
       ports:
       - protocol: TCP
         port: {{ default 5673 .Values.eventService.port }}

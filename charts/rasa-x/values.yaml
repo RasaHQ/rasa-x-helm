@@ -726,7 +726,7 @@ networkPolicy:
   enabled: false
 
   # Allow for traffic from a given CIDR - it's required in order to make kubelet able to run live and readiness probes
-  podCIDR: {}
+  nodeCIDR: {}
   #  - ipBlock:
   #      cidr: 0.0.0.0/0
 
