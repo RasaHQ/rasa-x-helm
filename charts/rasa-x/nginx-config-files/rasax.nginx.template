@@ -65,6 +65,14 @@ server {
     proxy_pass http://docker-rasax-api/api/ws;
   }
 
+  location /my_base_path/ {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Host www.my_dns.com/my_base_path/;
+    proxy_pass http://docker-rasax-api/;
+  }
+
   location / {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $remote_addr;
