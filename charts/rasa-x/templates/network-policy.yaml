@@ -4,7 +4,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: allow-dns-access
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   podSelector:
     matchLabels: {}
@@ -23,7 +23,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-rasa-production
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -44,7 +44,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-egress-from-kubelet-to-rasa-x
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -66,7 +66,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-egress-from-kubelet-to-rasa-worker
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -88,7 +88,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-egress-from-kubelet-to-rasa-production
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -110,7 +110,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-egress-from-kubelet-to-event-service
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -133,7 +133,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-rasa-production
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -153,7 +153,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-rasa-x
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -174,7 +174,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-rasa-x
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -195,7 +195,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-worker-to-rasa-x
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -216,7 +216,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-worker-to-rasa-x
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -237,7 +237,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-redis
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -257,7 +257,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-redis
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -278,7 +278,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-redis
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -298,7 +298,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-redis
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -318,7 +318,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-app
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -339,7 +339,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-app
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -359,7 +359,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-rasa-worker
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -379,7 +379,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-rasa-worker
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -399,7 +399,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-event-service
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -419,7 +419,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-event-service
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -440,7 +440,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-event-service-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -460,7 +460,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-event-service-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -480,7 +480,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-db-migration-service-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -500,7 +500,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-db-migration-service-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -520,7 +520,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-worker-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -540,7 +540,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-worker-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -560,7 +560,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -580,7 +580,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -600,7 +600,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -620,7 +620,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-postgresql
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -642,7 +642,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-event-service-to-rabbitmq
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -662,7 +662,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-event-service-to-rabbitmq
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -682,7 +682,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-worker-to-rabbitmq
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -702,7 +702,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-worker-to-rabbitmq
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -722,7 +722,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-rabbitmq
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -742,7 +742,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-rabbitmq
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -762,7 +762,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-x-to-rabbitmq
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -782,7 +782,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-x-to-rabbitmq
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -804,7 +804,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-rasa-production-to-duckling
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -824,7 +824,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-rasa-production-to-duckling
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -846,7 +846,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-egress-nginx-to-kubernetes-services
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -860,7 +860,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-nginx-to-rasa-production
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -880,7 +880,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-nginx-to-rasa-production
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
@@ -900,7 +900,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: egress-from-nginx-to-rasa-x
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Egress
@@ -920,7 +920,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
   name: ingress-from-nginx-to-rasa-x
-  namespace: {{ .Namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   policyTypes:
     - Ingress
