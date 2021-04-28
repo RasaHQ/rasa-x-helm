@@ -332,7 +332,7 @@ spec:
               app.kubernetes.io/component: app
       ports:
       - protocol: TCP
-        port: {{ default 5055 .Values.app.port -}}
+        port: {{ default 5055 .Values.app.port }}
 
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
@@ -353,7 +353,7 @@ spec:
               app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
-        port: {{ default 5055 .Values.app.port -}}
+        port: {{ default 5055 .Values.app.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -454,7 +454,7 @@ spec:
               app: postgresql
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -494,7 +494,7 @@ spec:
               app: postgresql
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
