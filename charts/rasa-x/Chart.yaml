@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "1.8.8"
+version: "1.9.0"
 
 appVersion: "0.39.0"
 
