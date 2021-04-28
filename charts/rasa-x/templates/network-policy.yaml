@@ -474,7 +474,7 @@ spec:
               app.kubernetes.io/component: event-service
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -514,7 +514,7 @@ spec:
               app.kubernetes.io/component: db-migration-service
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -534,7 +534,7 @@ spec:
               app: postgresql
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -554,7 +554,7 @@ spec:
               app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -574,7 +574,7 @@ spec:
               app: postgresql
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -594,7 +594,7 @@ spec:
               app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -614,7 +614,7 @@ spec:
               app: postgresql
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -634,7 +634,7 @@ spec:
               app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
-        port: {{ coalesce .Values.global.postgresql.servicePort 5432 -}}
+        port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 {{- end -}}
 {{- if .Values.rabbitmq.install -}}
 ---
