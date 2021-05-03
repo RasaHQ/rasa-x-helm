@@ -390,6 +390,11 @@ eventService:
 
 # app (custom action server) specific settings
 app:
+  # default is to install action server from image.
+  install: true
+  # if install is set to false, the url to the existing action server can be configured by setting existingUrl.
+  # #existingUrl: http://myactionserver:5055/webhook
+  #
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
