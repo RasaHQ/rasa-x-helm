@@ -53,13 +53,13 @@ rasax:
     existingClaim: ""
   # livenessProbe checks whether rasa x needs to be restarted
   livenessProbe:
-    # initialProbeDelay for the `readinessProbe`
+    # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
+    # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
-    # initialProbeDelay for the `livenessProbe`
+    # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
@@ -144,9 +144,9 @@ rasa:
   # Jaeger Sidecar
   jaegerSidecar: "false"
   livenessProbe:
-    # initialProbeDelay for the `readinessProbe`
+    # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
+    # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # useLoginDatabase will use the Rasa X database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
@@ -310,13 +310,13 @@ dbMigrationService:
     annotations: {}
 
   livenessProbe:
-    # initialProbeDelay for the `readinessProbe`
+    # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
+    # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
-    # initialProbeDelay for the `livenessProbe`
+    # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
@@ -370,15 +370,16 @@ eventService:
   # - name: tmpdir
   #   emptyDir: {}
 
-  readinessProbe:
-    # initialProbeDelay for the `readinessProbe`
-    initialProbeDelay: 10
-    scheme: "HTTP"
+  # livenessProbe checks whether the event service needs to be restarted
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     scheme: "HTTP"
-
+  # readinessProbe checks whether the event service can receive traffic
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    scheme: "HTTP"
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
@@ -454,18 +455,24 @@ app:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: true
 
-  readinessProbe:
-    # initialProbeDelay for the `readinessProbe`
-    initialProbeDelay: 10
-    scheme: "HTTP"
-  livenessProbe:
-    # initialProbeDelay for the `livenessProbe`
-    initialProbeDelay: 10
-    scheme: "HTTP"
+  # service specifies settings for exposing app to other services
   service:
     # annotations for the service
     annotations: {}
 
+  # livenessProbe checks whether app needs to be restarted
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `livenessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether app can receive traffic
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+    
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
@@ -589,7 +596,7 @@ duckling:
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
+    # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # additional volumeMounts to the main container
   extraVolumeMounts: []
