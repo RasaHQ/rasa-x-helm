@@ -47,7 +47,7 @@ data:
       {{- end }}
     {{- end }}
     action_endpoint:
-      url: "{{ .Values.app.scheme }}://{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"
+      url: {{ if .Values.app.existingUrl }}"{{ .Values.app.existingUrl }}"{{ else }}"{{ .Values.app.scheme }}://{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"{{ end }}
       token:  ""
     {{- if $.Values.redis.install }}
     lock_store:
