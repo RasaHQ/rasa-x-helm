@@ -6,6 +6,7 @@ on:
     - 'main'
     - '[0-9]+.[0-9]+.x'
     - 'bump-rasa-x-version*'
+    - 'test-nginx'
   pull_request:
     types:
       - opened
@@ -171,3 +172,15 @@ jobs:
           echo "Access token is empty: ${TOKEN}" && exit 1
         fi
         echo "Access token: ${TOKEN}"
+
+    - name: Validate that logging in works ✅
+      run: |
+        TOKEN=$(curl --fail --data '{"username": "me", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://${HOST}/api/auth" | jq -r '.access_token')
+        if [[ -z "${TOKEN}" ]]; then
+          echo "Access token is empty: ${TOKEN}" && exit 1
+        fi
+        echo "Access token: ${TOKEN}"
+
+    - name: Check whether ingress forwarding works
+      run: |
+        curl -s http://${HOST}/core/ | tee /tmp/output_status.txt | grep "Hello from Rasa"
