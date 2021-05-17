@@ -9,7 +9,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-rasa-open-source
+  name: {{ $fullName }}-rasa-open-source-api
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
   annotations:
@@ -45,20 +45,6 @@ spec:
               number: {{ $.Values.rasa.port }}
         path: /core/(.*)
         pathType: Prefix
-      - backend:
-          service:
-            name: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
-            port:
-              number: {{ $.Values.rasa.port }}
-        path: /webhooks/
-        pathType: Prefix
-      - backend:
-          service:
-            name: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
-            port:
-              number: {{ $.Values.rasa.port }}
-        path: /socket.io
-        pathType: Prefix
     {{- end }}
 {{- else -}}
     {{- range .Values.ingress.hosts }}
@@ -69,14 +55,6 @@ spec:
           serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
           servicePort: {{ $.Values.rasa.port }}
         path: /core/(.*)
-      - backend:
-          serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
-          servicePort: {{ $.Values.rasa.port }}
-        path: /webhooks/
-      - backend:
-          serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
-          servicePort: {{ $.Values.rasa.port }}
-        path: /socket.io
     {{- end }}
 {{- end }}
 {{- end }}
