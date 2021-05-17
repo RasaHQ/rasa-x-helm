@@ -179,9 +179,9 @@ jobs:
 
     - name: Check whether socktio forwarding works
       run: |
-        curl -s http://${HOST}/socket.io/ | tee /tmp/output_status.txt | grep "The client is"
+        curl -s http://${HOST}/socket.io/ | tee /tmp/output_status.txt | grep -a "pingTimeout"
 
-    - name: Check whether socktio forwarding works
+    - name: Check whether webhooks forwarding works
       run: |
         curl -s http://${HOST}/webhooks/rest/ | tee /tmp/output_status.txt | grep '{"status":"ok"}'
 
