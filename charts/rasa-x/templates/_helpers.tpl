@@ -164,6 +164,15 @@ Return the port of the action container.
 {{- end -}}
 
 {{/*
+Include duckling extra env vars.
+*/}}
+{{- define "duckling.extra.envs" -}}
+  {{- if .Values.duckling.extraEnvs -}}
+{{ toYaml .Values.duckling.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Include rasa extra env vars.
 */}}
 {{- define "rasa.extra.envs" -}}

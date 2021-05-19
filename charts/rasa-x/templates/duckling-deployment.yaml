@@ -45,7 +45,7 @@ spec:
           {{- toYaml .Values.duckling.args | nindent 10 }}
         {{- end }}
         env:
-          {{- toYaml .Values.duckling.extraEnvs | nindent 10 }}
+        {{- include "duckling.extra.envs" $ | nindent 8 }}
         ports:
         - name: "http"
           containerPort: {{ default 8000 .Values.duckling.port }}
