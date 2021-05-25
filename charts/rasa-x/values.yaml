@@ -573,7 +573,7 @@ duckling:
   port: 8000
   # scheme by which duckling is accessible
   scheme: http
-
+  extraEnvs: []
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
