@@ -1,0 +1,70 @@
+{{- if and .Values.ingress.enabled (not .Values.nginx.enabled) -}}
+{{- $fullName := include "rasa-x.fullname" . -}}
+{{- if semverCompare ">=1.19" .Capabilities.KubeVersion.Version -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14" .Capabilities.KubeVersion.Version -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-rasa-open-source-channels
+  labels:
+    {{- include "rasa-x.labels" . | nindent 4 }}
+  annotations:
+  {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.ingress.annotationsRasa }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+{{- if .Values.ingress.tls }}
+  tls:
+  {{- range .Values.ingress.tls }}
+    - hosts:
+      {{- range .hosts }}
+        - {{ . | quote }}
+      {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
+{{- end }}
+  rules:
+
+{{- if semverCompare ">=1.19" .Capabilities.KubeVersion.Version -}}
+    {{- range .Values.ingress.hosts }}
+  - host: {{ .host | quote }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
+            port:
+              number: {{ $.Values.rasa.port }}
+        path: /webhooks/
+        pathType: Prefix
+      - backend:
+          service:
+            name: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
+            port:
+              number: {{ $.Values.rasa.port }}
+        path: /socket.io
+        pathType: Prefix
+    {{- end }}
+{{- else -}}
+    {{- range .Values.ingress.hosts }}
+  - host: {{ .host | quote }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
+          servicePort: {{ $.Values.rasa.port }}
+        path: /webhooks/
+      - backend:
+          serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
+          servicePort: {{ $.Values.rasa.port }}
+        path: /socket.io
+    {{- end }}
+{{- end }}
+{{- end }}

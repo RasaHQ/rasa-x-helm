@@ -53,13 +53,13 @@ rasax:
     existingClaim: ""
   # livenessProbe checks whether rasa x needs to be restarted
   livenessProbe:
-    # initialProbeDelay for the `readinessProbe`
+    # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
+    # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
-    # initialProbeDelay for the `livenessProbe`
+    # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
@@ -144,9 +144,9 @@ rasa:
   # Jaeger Sidecar
   jaegerSidecar: "false"
   livenessProbe:
-    # initialProbeDelay for the `readinessProbe`
+    # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
+    # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # useLoginDatabase will use the Rasa X database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
@@ -176,11 +176,6 @@ rasa:
     # - key: "nvidia.com/gpu"
     #   operator: "Exists"
 
-  # nodeSelector to specify which node the pods should run on
-  # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-  nodeSelector: {}
-    # "beta.kubernetes.io/instance-type": "g3.8xlarge"
-
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
@@ -194,6 +189,10 @@ rasa:
   versions:
     # rasaProduction is the container which serves the production environment
     rasaProduction:
+      # nodeSelector to specify which node the pods should run on
+      # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+      nodeSelector: {}
+        # "beta.kubernetes.io/instance-type": "g3.8xlarge"
       # replicaCount of the Rasa Production container
       replicaCount: 1
       # serviceName with which the Rasa production deployment is exposed to other containers
@@ -221,6 +220,10 @@ rasa:
       #   emptyDir: {}
     # rasaWorker is the container which does computational heavy tasks such as training
     rasaWorker:
+      # nodeSelector to specify which node the pods should run on
+      # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+      nodeSelector: {}
+        # "beta.kubernetes.io/instance-type": "g3.8xlarge"
       # replicaCount of the Rasa worker container
       replicaCount: 1
       # serviceName with which the Rasa worker deployment is exposed to other containers
@@ -307,13 +310,13 @@ dbMigrationService:
     annotations: {}
 
   livenessProbe:
-    # initialProbeDelay for the `readinessProbe`
+    # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
+    # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
-    # initialProbeDelay for the `livenessProbe`
+    # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
@@ -367,15 +370,16 @@ eventService:
   # - name: tmpdir
   #   emptyDir: {}
 
-  readinessProbe:
-    # initialProbeDelay for the `readinessProbe`
-    initialProbeDelay: 10
-    scheme: "HTTP"
+  # livenessProbe checks whether the event service needs to be restarted
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     scheme: "HTTP"
-
+  # readinessProbe checks whether the event service can receive traffic
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    scheme: "HTTP"
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
@@ -387,6 +391,11 @@ eventService:
 
 # app (custom action server) specific settings
 app:
+  # default is to install action server from image.
+  install: true
+  # if install is set to false, the url to the existing action server can be configured by setting existingUrl.
+  # #existingUrl: http://myactionserver:5055/webhook
+  #
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
@@ -394,7 +403,7 @@ app:
   # name of the custom action server image to use
   name: "rasa/rasa-x-demo"
   # tag refers to the custom action server image tag
-  tag: ""
+  tag: "0.38.0"
   # replicaCount of the custom action server container
   replicaCount: 1
   # port on which the custom action server runs
@@ -446,18 +455,24 @@ app:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: true
 
-  readinessProbe:
-    # initialProbeDelay for the `readinessProbe`
-    initialProbeDelay: 10
-    scheme: "HTTP"
-  livenessProbe:
-    # initialProbeDelay for the `livenessProbe`
-    initialProbeDelay: 10
-    scheme: "HTTP"
+  # service specifies settings for exposing app to other services
   service:
     # annotations for the service
     annotations: {}
 
+  # livenessProbe checks whether app needs to be restarted
+  livenessProbe:
+    # initialProbeDelay for the `livenessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `livenessProbe`
+    scheme: "HTTP"
+  # readinessProbe checks whether app can receive traffic
+  readinessProbe:
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
+    scheme: "HTTP"
+    
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
@@ -472,9 +487,11 @@ nginx:
   # override the default arguments to run in the container
   args: []
   # name of the nginx image to use
-  name: "rasa/nginx"
+  name: "nginx"
   # tag refers to the nginx image tag (uses `appVersion` by default)
-  tag: ""
+  tag: "1.19"
+  # custom config map containing nginx.conf, ssl.conf.template, rasax.nginx.template
+  customConfConfigMap: ""
   # replicaCount of nginx containers to run
   replicaCount: 1
   # certificateSecret which nginx uses to mount the certificate files
@@ -494,11 +511,15 @@ nginx:
     # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
     externalIPs: []
   livenessProbe:
-    # initialProbeDelay for the `readinessProbe`
+    # command for the `livenessProbe`
+    command: []
+    # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
-    # initialProbeDelay for the `livenessProbe`
+    # command for the `readinessProbe`
+    command: []
+    # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
 
   # tolerations can be used to control the pod to node assignment
@@ -552,7 +573,7 @@ duckling:
   port: 8000
   # scheme by which duckling is accessible
   scheme: http
-
+  extraEnvs: []
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -575,7 +596,7 @@ duckling:
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-    # scheme to be used by the `readinessProbe`
+    # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # additional volumeMounts to the main container
   extraVolumeMounts: []

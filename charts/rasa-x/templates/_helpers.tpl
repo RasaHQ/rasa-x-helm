@@ -135,11 +135,41 @@ Return the name of config map which stores the nginx agreement.
 "{{ .Release.Name }}-agreement"
 {{- end -}}
 
+
+{{/*
+Return the name of the standard config map which stores the nginx config.
+*/}}
+{{- define "rasa-x.nginx.standard-conf" -}}
+"{{ .Release.Name }}-nginx-standard-conf"
+{{- end -}}
+
+
+{{/*
+Return the name of the config map which stores the nginx config.
+*/}}
+{{- define "rasa-x.nginx.conf" -}}
+  {{- if .Values.nginx.customConfConfigMap -}}
+    {{- .Values.nginx.customConfConfigMap -}}
+  {{- else -}}
+   {{- template "rasa-x.nginx.standard-conf" . -}}
+  {{- end -}}
+{{- end -}}
+
+
 {{/*
 Return the port of the action container.
 */}}
 {{- define "rasa-x.custom-actions.port" -}}
 {{- default 5055 .Values.app.port -}}
+{{- end -}}
+
+{{/*
+Include duckling extra env vars.
+*/}}
+{{- define "duckling.extra.envs" -}}
+  {{- if .Values.duckling.extraEnvs -}}
+{{ toYaml .Values.duckling.extraEnvs }}
+  {{- end -}}
 {{- end -}}
 
 {{/*

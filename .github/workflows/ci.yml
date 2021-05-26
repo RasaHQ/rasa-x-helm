@@ -151,6 +151,12 @@ jobs:
           sleep 5
         done
 
+        until [[ $(curl -s http://${HOST}/api/health | tee /tmp/output_health.txt | jq -r .production.status) -eq 200 ]]
+        do
+          cat /tmp/output_health.txt || true
+          sleep 5
+        done
+
     - name: Log pod status for debugging 🖥
       if: failure()
       run: |
