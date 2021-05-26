@@ -182,11 +182,11 @@ Include rasax extra env vars.
 {{- end -}}
 
 {{/*
-Include additional queues
+Include additional rabbit queues
 */}}
-{{- define "rasa.additionalQueues" -}}
-  {{- if .Values.rasa.additionalQueues -}}
-{{ toYaml .Values.rasa.additionalQueues }}
+{{- define "rasa.additionalRabbitQueues" -}}
+  {{- if .Values.rasa.additionalRabbitQueues -}}
+{{ toYaml .Values.rasa.additionalRabbitQueues }}
   {{- end -}}
 {{- end -}}
 
