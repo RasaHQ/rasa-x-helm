@@ -109,7 +109,7 @@ rasax:
 rasa:
   # version is the Rasa Open Source version which should be used.
   # Used to ensure backward compatibility with older Rasa Open Source versions.
-  version: "2.2.7"  # Please update the default value in the Readme when updating this
+  version: "2.4.3"  # Please update the default value in the Readme when updating this
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
@@ -740,6 +740,16 @@ ingress:
   #  - secretName: rasa-x-tls
   #    hosts:
   #      - rasa-x.example.com
+
+networkPolicy:
+  # Enable creation of NetworkPolicy resources. When set to true, explicit ingress & egress
+  # network policies will be generated for the required inter-pod connections
+  enabled: false
+
+  # Allow for traffic from a given CIDR - it's required in order to make kubelet able to run live and readiness probes
+  nodeCIDR: {}
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
 
 # images: Settings for the images
 images:
