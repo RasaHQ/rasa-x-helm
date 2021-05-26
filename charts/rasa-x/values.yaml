@@ -665,7 +665,7 @@ postgresql:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
-# RabbitMQ specific settings (https://hub.helm.sh/charts/bitnami/rabbitmq/7.8.0)
+# RabbitMQ specific settings (https://hub.helm.sh/charts/bitnami/rabbitmq/6.19.2)
 rabbitmq:
   # Install should be `true` if the rabbitmq subchart should be used
   install: true
