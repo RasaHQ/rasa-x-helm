@@ -37,10 +37,12 @@ data:
       {{ if or (regexMatch ".*(a|rc)[0-9]+" .Values.rasa.version) (regexMatch "2.*[0-9]+-full" .Values.rasa.version) -}}
       queues:
       - ${RABBITMQ_QUEUE}
+      {{- include  "rasa.additionalRabbitQueues" $ | nindent 6 }}
       {{- else -}}
       {{ if semverCompare ">= 1.9.0" .Values.rasa.version -}}
       queues:
       - ${RABBITMQ_QUEUE}
+      {{- include  "rasa.additionalRabbitQueues" $ | nindent 6 }}
       {{- else -}}
       queue: ${RABBITMQ_QUEUE}
       {{- end }}

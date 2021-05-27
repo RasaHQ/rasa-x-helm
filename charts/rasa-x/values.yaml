@@ -128,6 +128,8 @@ rasa:
   token: "rasaToken"
   # rabbitQueue it should use to dispatch events to Rasa X
   rabbitQueue: "rasa_production_events"
+  # Optional additional rabbit queues for e.g. connecting to an analytics stack
+  additionalRabbitQueues: []
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
   additionalChannelCredentials: {}
