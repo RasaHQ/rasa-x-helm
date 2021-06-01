@@ -1,7 +1,3 @@
-upstream docker-stack {
-  server ${RASA_PRODUCTION_HOST} max_fails=0;
-}
-
 upstream docker-rasax-api {
   server ${RASA_X_HOST} max_fails=0;
 }
@@ -22,7 +18,7 @@ server {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Host $host;
-    proxy_pass http://docker-stack/;
+    proxy_pass {{ include "rasa-bot.production.url" .}};
   }
 
   # avoid users having to change how they configure
@@ -32,7 +28,7 @@ server {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Host $host;
-    proxy_pass http://docker-stack/webhooks/;
+    proxy_pass {{ include "rasa-bot.production.url" .}}/webhooks/;
   }
 
   location /socket.io {
@@ -43,7 +39,7 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "Upgrade";
-    proxy_pass http://docker-stack/socket.io;
+    proxy_pass {{ include "rasa-bot.production.url" .}}/socket.io;
   }
 
   location /api/ws {

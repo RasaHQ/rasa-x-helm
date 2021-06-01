@@ -1,4 +1,5 @@
 {{- range .Values.rasa.versions }}
+{{- if .enabled }}
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
@@ -159,5 +160,5 @@ spec:
 {{- end }}
 # this is needed to make it clear that these are two resources
 ---
-
+{{- end }}
 {{- end }}

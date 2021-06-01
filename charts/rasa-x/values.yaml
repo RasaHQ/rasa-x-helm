@@ -109,7 +109,7 @@ rasax:
 rasa:
   # version is the Rasa Open Source version which should be used.
   # Used to ensure backward compatibility with older Rasa Open Source versions.
-  version: "2.2.7"  # Please update the default value in the Readme when updating this
+  version: "2.4.0"  # Please update the default value in the Readme when updating this
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
@@ -189,6 +189,12 @@ rasa:
   versions:
     # rasaProduction is the container which serves the production environment
     rasaProduction:
+      enabled: false
+
+      external:
+        enabled: true
+
+        host: "http://rasa-bot"
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
       nodeSelector: {}
@@ -220,6 +226,7 @@ rasa:
       #   emptyDir: {}
     # rasaWorker is the container which does computational heavy tasks such as training
     rasaWorker:
+      enabled: true
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
       nodeSelector: {}
@@ -392,7 +399,7 @@ eventService:
 # app (custom action server) specific settings
 app:
   # default is to install action server from image.
-  install: true
+  install: false
   # if install is set to false, the url to the existing action server can be configured by setting existingUrl.
   # #existingUrl: http://myactionserver:5055/webhook
   #
@@ -472,7 +479,7 @@ app:
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
-    
+
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
