@@ -53,7 +53,6 @@ func TestParameters_RasaX(t *testing.T) {
 	require.Contains(t, renderedDeploymentWithOptions.Spec.Template.Labels, "test_label")
 }
 
-
 func TestParameters_RasaX_Service(t *testing.T) {
 	t.Parallel()
 
@@ -93,5 +92,5 @@ func TestParameters_RasaX_Service(t *testing.T) {
 	require.Contains(t, renderedServiceWithoutOptions.Spec.Type, "ClusterIP")
 
 	require.Equal(t, renderedServiceWithOptions.Spec.Ports[0].Port, int32(123))
-	require.Equal(t, renderedServiceWithoutOptions.Spec.Ports[0].Port, int32(0))
+	require.Equal(t, renderedServiceWithoutOptions.Spec.Ports[0].Port, int32(5002))
 }
