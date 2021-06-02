@@ -565,6 +565,9 @@ duckling:
   args: []
   # Enable or disable duckling
   enabled: true
+  # if you are using an existing Duckling server configure the URL here
+  # #existingUrl: http://myducklingserver:5055
+  #  
   # name of the Duckling image to use
   name: "rasa/duckling"
   # tag refers to the duckling image tag
