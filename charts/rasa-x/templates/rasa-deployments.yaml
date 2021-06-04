@@ -139,8 +139,10 @@ spec:
           value: "{{ .rasaEnvironment }}"
         - name: "RASA_MODEL_SERVER"
           value: {{ $.Values.rasax.scheme }}://{{ include "rasa-x.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.rasax.port }}/api/projects/default/models/tags/{{ .modelTag }}
+        {{- if $.Values.duckling.enabled }}
         - name: "RASA_DUCKLING_HTTP_URL"
-          value: {{ if $.Values.duckling.existingUrl }}"{{ $.Values.duckling.existingUrl }}"{{ else }}"{{ $.Values.duckling.scheme }}://{{ include "duckling.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.duckling.port }}"{{ end }}
+          value: {{ $.Values.duckling.scheme }}://{{ include "duckling.host" $ }}.{{ $.Release.Namespace }}.svc:{{ $.Values.duckling.port }}
+        {{- end }}
         {{- include "rasa.extra.envs" $ | nindent 8 }}
         volumeMounts:
         # Mount the temporary directory for the Rasa global configuration
