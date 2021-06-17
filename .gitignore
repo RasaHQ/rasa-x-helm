@@ -176,3 +176,4 @@ $RECYCLE.BIN/
 *.lnk
 # End of https://www.gitignore.io/api/helm,linux,macos,pycharm,windows,visualstudiocode
 ./values
+charts/rasa-x/index.yaml

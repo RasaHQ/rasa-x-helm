@@ -52,6 +52,9 @@ recommend to set at least these values:
 | `rasa.command`                         | Override the default command to run in the container.                                      | `[]`               |
 | `rasa.args`                            | Override the default arguments to run in the container.                                    | `[]`               |
 | `rasa.extraArgs`                       | Additional rasa arguments.                                                                 | `[]`               |
+| `rasax.service.type`                   | rasa-x Service Type                                                                        | `ClusterIP`        |
+| `rasax.service.nodePort`               | rasa-x Service nodePort                                                                    | nil                |
+| `rasax.service.loadBalancerIP`         | rasa-x Service loadBalancerIP                                                              | nil                |
 | `rabbitmq.rabbitmq.password`           | Password for RabbitMq.                                                                     | `test`             |
 | `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                      | `password`         |
 | `global.redis.password`                | Password for redis.                                                                        | `password`         |

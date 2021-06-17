@@ -10,11 +10,22 @@ metadata:
     {{- toYaml . | nindent 4 }}
 {{- end }}
 spec:
+  type: {{ default "ClusterIP" .Values.rasax.service.type }}
+  {{- if .Values.rasax.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.rasax.service.loadBalancerIP | quote }}
+  {{- end }}
   ports:
+  {{- if .Values.rasax.service.port }}
+  - port: {{ .Values.rasax.service.port }}
+  {{- else }}
   - port: {{ .Values.rasax.port }}
+  {{- end }}
     targetPort: http
     protocol: "TCP"
     name: "http"
+    {{- if .Values.rasax.service.nodePort }}
+    nodePort: {{ .Values.rasax.service.nodePort }}
+    {{- end }}
   selector:
     {{- include "rasa-x.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: rasa-x
