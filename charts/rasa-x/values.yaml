@@ -720,9 +720,9 @@ redis:
 # ingress settings
 ingress:
   # enabled should be `true` if you want to use this ingress.
-  # Note that if `nginx.enabled` is `true` the `rasa/nginx` image is used as reverse proxy.
+  # Note that if `nginx.enabled` is `true` the `nginx` image is used as reverse proxy.
   # In order to use nginx ingress you have to set `nginx.enabled=false`.
-  enabled: true
+  enabled: false
   # annotations for the ingress - annotations are applied for the rasa and rasax ingresses
   annotations: {}
     # kubernetes.io/ingress.class: nginx
