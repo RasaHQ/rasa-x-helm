@@ -68,7 +68,7 @@ spec:
           initialDelaySeconds: {{ .Values.rasax.readinessProbe.initialProbeDelay }}
           failureThreshold: 10
         env:
-        {{- if eq "true" (include "is_enterprise" .) }}
+        {{- if or (eq "true" (include "is_enterprise" .)) .Values.rasax.disableTelemetry }}
         - name: "RASA_TELEMETRY_ENABLED"
           value: "false"
         {{ end }}

@@ -110,6 +110,8 @@ rasa:
   # version is the Rasa Open Source version which should be used.
   # Used to ensure backward compatibility with older Rasa Open Source versions.
   version: "2.4.3"  # Please update the default value in the Readme when updating this
+  # disableTelemetry permanently disables telemetry
+  disableTelemetry: false
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
