@@ -55,11 +55,11 @@ recommend to set at least these values:
 | `rabbitmq.rabbitmq.password`           | Password for RabbitMq.                                                                     | `test`             |
 | `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                      | `password`         |
 | `global.redis.password`                | Password for redis.                                                                        | `password`         |
-| `rasax.tag`                            | Version of Rasa X which you want to use.                                                   | `0.29.1`           |
-| `rasa.version`                         | Version of Rasa Open Source which you want to use.                                         | `2.0.3`            |
+| `rasax.tag`                            | Version of Rasa X which you want to use.                                                   | `0.40.1`           |
+| `rasa.version`                         | Version of Rasa Open Source which you want to use.                                         | `2.4.3`            |
 | `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty.         | ``                 |
 | `app.name`                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
-| `app.tag`                              | Tag of your action server image.                                                           | `0.29.1`           |
+| `app.tag`                              | Tag of your action server image.                                                           | `0.38.0`           |
 | `app.command`                          | Override the default command to run in the container.                                      | `[]`               |
 | `app.args`                             | Override the default arguments to run in the container.                                    | `[]`               |
 | `eventService.command`                 | Override the default command to run in the container.                                      | `[]`               |
@@ -69,6 +69,7 @@ recommend to set at least these values:
 | `duckling.command`                     | Override the default command to run in the container.                                      | `[]`               |
 | `duckling.args`                        | Override the default arguments to run in the container.                                    | `[]`               |
 | `global.progressDeadlineSeconds`       | Specifies the number of seconds you want to wait for your Deployment to progress before the system reports back that the Deployment has failed progressing. | `600` |
+| `networkPolicy.enabled`                | If enabled, will generate NetworkPolicy configs for all combinations of internal ingress/egress | `false`               |
 
 ## Where to get help
 
@@ -122,6 +123,40 @@ where `type` is the category of the change, `description` is a short sentence to
 - ...
 
 For more information, please see [here](https://github.com/lob/generate-changelog#usage).
+
+## To 2.0.0
+
+The rasa-x-helm chart in version 2.0.0 supports using an external Rasa OSS deployment.
+
+### Enabling an external Rasa OSS deployment
+
+The rasa-x-helm chart >= 2.0.0 supports an option to use an external Rasa OSS deployment.
+Below you can find an example of configuration that uses the external deployment.
+
+The following configuration disable Rasa production deployment.
+
+```yaml
+  # versions of the Rasa container which are running
+  versions:
+    # rasaProduction is the container which serves the production environment
+    rasaProduction:
+
+      # enable rasa-production deployment
+      # You can disable the rasa-production deployment to use external Rasa OSS deployment instead.
+      enabled: false
+
+      # Define if external Rasa OSS should be used.
+      external:
+        # enable external Rasa OSS
+        enabled: true
+
+        # URL address of external Rasa OSS deployment
+        url: "https://rasa-bot.external.deployment.domain.com"
+```
+
+Now you can apply your changes by using the `helm upgrade` command.
+
+You can use the rasa-bot helm chart to deploy Rasa OSS. Visit the rasa-bot chart docs to learn more.
 
 ## License
 

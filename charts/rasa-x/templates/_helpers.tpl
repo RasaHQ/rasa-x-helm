@@ -164,6 +164,15 @@ Return the port of the action container.
 {{- end -}}
 
 {{/*
+Include duckling extra env vars.
+*/}}
+{{- define "duckling.extra.envs" -}}
+  {{- if .Values.duckling.extraEnvs -}}
+{{ toYaml .Values.duckling.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Include rasa extra env vars.
 */}}
 {{- define "rasa.extra.envs" -}}
@@ -178,6 +187,15 @@ Include rasax extra env vars.
 {{- define "rasax.extra.envs" -}}
   {{- if .Values.rasax.extraEnvs -}}
 {{ toYaml .Values.rasax.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
+Include additional rabbit queues
+*/}}
+{{- define "rasa.additionalRabbitQueues" -}}
+  {{- if .Values.rasa.additionalRabbitQueues -}}
+{{ toYaml .Values.rasa.additionalRabbitQueues }}
   {{- end -}}
 {{- end -}}
 
@@ -315,4 +333,15 @@ Return the rasa x image name value as a default if the dbMigrationService.name v
 */}}
 {{- define "dbMigrationService-name" -}}
 {{ .Values.dbMigrationService.name | default .Values.rasax.name }}
+{{- end -}}
+
+{{/*
+Return the appropriate apiVersion for networkpolicy.
+*/}}
+{{- define "networkPolicy.apiVersion" -}}
+{{- if semverCompare ">=1.4-0, <1.7-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- print "extensions/v1beta1" -}}
+{{- else -}}
+{{- print "networking.k8s.io/v1" -}}
+{{- end -}}
 {{- end -}}

@@ -128,6 +128,8 @@ rasa:
   token: "rasaToken"
   # rabbitQueue it should use to dispatch events to Rasa X
   rabbitQueue: "rasa_production_events"
+  # Optional additional rabbit queues for e.g. connecting to an analytics stack
+  additionalRabbitQueues: []
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
   additionalChannelCredentials: {}
@@ -189,12 +191,19 @@ rasa:
   versions:
     # rasaProduction is the container which serves the production environment
     rasaProduction:
-      enabled: false
 
+      # enable rasa-production deployment
+      # You can disable the rasa-production deployment in order to use external Rasa OSS deployment instead.
+      enabled: true
+
+      # Define if external Rasa OSS should be used.
       external:
+        # enable external Rasa OSS
         enabled: true
 
+        # host of external Rasa OSS deployment
         host: "http://rasa-bot"
+
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
       nodeSelector: {}
@@ -580,7 +589,7 @@ duckling:
   port: 8000
   # scheme by which duckling is accessible
   scheme: http
-
+  extraEnvs: []
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -747,6 +756,16 @@ ingress:
   #  - secretName: rasa-x-tls
   #    hosts:
   #      - rasa-x.example.com
+
+networkPolicy:
+  # Enable creation of NetworkPolicy resources. When set to true, explicit ingress & egress
+  # network policies will be generated for the required inter-pod connections
+  enabled: false
+
+  # Allow for traffic from a given CIDR - it's required in order to make kubelet able to run live and readiness probes
+  nodeCIDR: {}
+  #  - ipBlock:
+  #      cidr: 0.0.0.0/0
 
 # images: Settings for the images
 images:
