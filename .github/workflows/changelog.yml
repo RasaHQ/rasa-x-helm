@@ -27,7 +27,7 @@ jobs:
       if: startsWith(steps.changelog.outputs.changelog, '####')
       run: |
         # Get release id
-        RELEASE_ID=$(curl -s -H "Authorization: token ${{ secrets.RASABOT_GITHUB_TOKEN }}" \
+        RELEASE_ID=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           "https://api.github.com/repos/${{ github.repository }}/releases/latest" | jq '.id')
 
@@ -35,7 +35,7 @@ jobs:
         RELEASE_BODY="${RELEASE_BODY//$'\n'/'\n'}"
 
         # Update release body
-        curl -X PATCH -s -H "Authorization: token ${{ secrets.RASABOT_GITHUB_TOKEN }}" \
+        curl -X PATCH -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           "https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}" \
           -d "{\"body\":\"$RELEASE_BODY\"}"
