@@ -133,7 +133,7 @@ The rasa-x-helm chart in version 2.0.0 supports using an external Rasa OSS deplo
 The rasa-x-helm chart >= 2.0.0 supports an option to use an external Rasa OSS deployment.
 Below you can find an example of configuration that uses the external deployment.
 
-The following configuration disable Rasa production deployment.
+The following configuration disables the `rasa-production` deployment and uses an external deployment instead.
 
 ```yaml
   # versions of the Rasa container which are running
@@ -141,7 +141,7 @@ The following configuration disable Rasa production deployment.
     # rasaProduction is the container which serves the production environment
     rasaProduction:
 
-      # enable rasa-production deployment
+      # enable the rasa-production deployment
       # You can disable the rasa-production deployment to use external Rasa OSS deployment instead.
       enabled: false
 
@@ -156,9 +156,9 @@ The following configuration disable Rasa production deployment.
 
 Now you can apply your changes by using the `helm upgrade` command.
 
-You can use the rasa-bot helm chart to deploy Rasa OSS. Visit the rasa-bot chart docs to learn more.
+You can use the rasa-bot helm chart to deploy Rasa OSS. Visit [the rasa-bot chart docs](LINK) to learn more.
 
 ## License
 
 Licensed under the Apache License, Version 2.0.
-Copyright 2020 Rasa Technologies GmbH. [Copy of the license](LICENSE.txt).
+Copyright 2021 Rasa Technologies GmbH. [Copy of the license](LICENSE.txt).
