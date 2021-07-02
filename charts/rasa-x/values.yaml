@@ -199,7 +199,7 @@ rasa:
       # Define if external Rasa OSS should be used.
       external:
         # enable external Rasa OSS
-        enabled: true
+        enabled: false
 
         # host of external Rasa OSS deployment
         host: "http://rasa-bot"
