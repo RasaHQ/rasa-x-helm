@@ -2,6 +2,7 @@
 
 [![Join the chat on our Rasa Community Forum](https://img.shields.io/badge/forum-join%20discussions-brightgreen.svg)](https://forum.rasa.com/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/orgs/RasaHQ/projects/23)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/rasa-x)](https://artifacthub.io/packages/search?repo=rasa-x)
 
 [Rasa X](https://rasa.com/docs/rasa-x/) is a toolset that helps you leverage
 conversations to improve your [Rasa](https://rasa.com/docs/rasa) assistant.
