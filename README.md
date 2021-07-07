@@ -125,7 +125,43 @@ where `type` is the category of the change, `description` is a short sentence to
 
 For more information, please see [here](https://github.com/lob/generate-changelog#usage).
 
+## To 2.0.0
+
+The rasa-x-helm chart in version 2.0.0 supports using an external Rasa OSS deployment.
+
+### Enabling an external Rasa OSS deployment
+
+The rasa-x-helm chart >= 2.0.0 supports an option to use an external Rasa OSS deployment.
+Below you can find an example of configuration that uses the external deployment.
+
+The following configuration disables the `rasa-production` deployment and uses an external deployment instead.
+
+```yaml
+  # versions of the Rasa container which are running
+  versions:
+    # rasaProduction is the container which serves the production environment
+    rasaProduction:
+
+      # enable the rasa-production deployment
+      # You can disable the rasa-production deployment to use external Rasa OSS deployment instead.
+      enabled: false
+
+      # Define if external Rasa OSS should be used.
+      external:
+        # enable external Rasa OSS
+        enabled: true
+
+        # URL address of external Rasa OSS deployment
+        url: "https://rasa-bot.external.deployment.domain.com"
+```
+
+Now you can apply your changes by using the `helm upgrade` command.
+
+> **_NOTE:_** Any Rasa Open Source server can stream events to Rasa X/Enterprise using an [event broker](https://rasa.com/docs/rasa/event-brokers). Both Rasa and Rasa X/Enterprise will need to refer to the same event broker.
+
+You can use the rasa-bot helm chart to deploy Rasa OSS. Visit [the rasa chart docs](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa) to learn more.
+
 ## License
 
 Licensed under the Apache License, Version 2.0.
-Copyright 2020 Rasa Technologies GmbH. [Copy of the license](LICENSE.txt).
+Copyright 2021 Rasa Technologies GmbH. [Copy of the license](LICENSE.txt).

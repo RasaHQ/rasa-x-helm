@@ -1,9 +1,9 @@
 ---
 apiVersion: v2
 
-version: "1.16.0"
+version: "2.0.0"
 
-appVersion: "0.40.1"
+appVersion: "0.41.1"
 
 name: rasa-x
 description: Rasa X Helm chart for Kubernetes / Openshift
@@ -37,3 +37,13 @@ dependencies:
   version: ~6.19.2
   repository: https://charts.bitnami.com/bitnami
   condition: rabbitmq.install
+
+annotations:
+  # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
+  artifacthub.io/changes: |
+    - kind: added
+      description: Support for an external Rasa OSS deployment
+    - kind: changed
+      description: Bump Rasa OSS version to 2.7.1
+    - kind: changed
+      description: Bump Rasa X version to 0.41.1
