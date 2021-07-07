@@ -109,7 +109,7 @@ rasax:
 rasa:
   # version is the Rasa Open Source version which should be used.
   # Used to ensure backward compatibility with older Rasa Open Source versions.
-  version: "2.4.0"  # Please update the default value in the Readme when updating this
+  version: "2.7.1"  # Please update the default value in the Readme when updating this
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container
@@ -192,14 +192,14 @@ rasa:
     # rasaProduction is the container which serves the production environment
     rasaProduction:
 
-      # enable rasa-production deployment
+      # enable the rasa-production deployment
       # You can disable the rasa-production deployment in order to use external Rasa OSS deployment instead.
       enabled: true
 
       # Define if external Rasa OSS should be used.
       external:
         # enable external Rasa OSS
-        enabled: true
+        enabled: false
 
         # host of external Rasa OSS deployment
         host: "http://rasa-bot"
@@ -235,6 +235,7 @@ rasa:
       #   emptyDir: {}
     # rasaWorker is the container which does computational heavy tasks such as training
     rasaWorker:
+      # enable the rasa-worker deployment
       enabled: true
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
