@@ -164,4 +164,4 @@ You can use the rasa-bot helm chart to deploy Rasa OSS. Visit [the rasa chart do
 ## License
 
 Licensed under the Apache License, Version 2.0.
-Copyright 2021 Rasa Technologies GmbH. [Copy of the license](LICENSE.txt).
+Copyright 2021 Rasa Technologies GmbH. [Copy of the license](LICENSE).
