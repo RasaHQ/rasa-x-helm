@@ -270,7 +270,46 @@ spec:
       ports:
       - protocol: TCP
         port: {{ default 6379 .Values.redis.redisPort }}
-
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-event-service-to-redis
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: event-service
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app: redis
+      ports:
+      - protocol: TCP
+        port: {{ default 6379 .Values.redis.redisPort }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-event-service-to-redis
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+    matchLabels:
+      app: redis
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/component: event-service
+      ports:
+      - protocol: TCP
+        port: {{ default 6379 .Values.redis.redisPort }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -634,7 +673,25 @@ spec:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 {{- end -}}
-{{- if .Values.rabbitmq.install -}}
+{{- if .Values.rabbitmq.install }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rabbitmq-to-k8s-api
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app: rabbitmq
+  egress:
+  - ports:
+      - protocol: TCP
+        port: 8443
+      - protocol: TCP
+        port: 443
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -665,7 +722,7 @@ spec:
   policyTypes:
     - Ingress
   podSelector:
-   matchLabels:
+    matchLabels:
       app: rabbitmq
   ingress:
     - from:
@@ -755,6 +812,22 @@ spec:
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-x-to-https
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: rasa-x
+  egress:
+    - ports:
+      - protocol: TCP
+        port: 443
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
