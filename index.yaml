@@ -4,6 +4,43 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: added
+          description: Add network policies for Kubernetes API (the rabbitmq_peer_discovery_k8s plugin) and redis
+    apiVersion: v2
+    appVersion: 0.41.1
+    created: "2021-07-12T15:12:13.731800277Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.6.4
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.12
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~6.19.2
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 71c9bc9cfeb3d0853d61fc1f175029a66d70682cf2e0fddf3dfcf7a09dcf2a93
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-2.0.1/rasa-x-2.0.1.tgz
+    version: 2.0.1
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
           description: Support for an external Rasa OSS deployment
         - kind: changed
           description: Bump Rasa OSS version to 2.7.1
@@ -2738,4 +2775,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2021-07-07T09:17:09.583223854Z"
+generated: "2021-07-12T15:12:13.732697201Z"
