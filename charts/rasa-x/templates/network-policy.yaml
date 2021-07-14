@@ -816,22 +816,6 @@ spec:
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
-  name: egress-from-rasa-x-to-https
-  namespace: {{ .Release.Namespace }}
-spec:
-  policyTypes:
-    - Egress
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/component: rasa-x
-  egress:
-    - ports:
-      - protocol: TCP
-        port: 443
----
-apiVersion: {{ template "networkPolicy.apiVersion" . }}
-kind: NetworkPolicy
-metadata:
   name: egress-from-rasa-x-to-rabbitmq
   namespace: {{ .Release.Namespace }}
 spec:
@@ -1006,5 +990,21 @@ spec:
       ports:
       - protocol: TCP
         port: {{ .Values.rasax.port }}
-{{- end -}}
+{{- end }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-x-to-https
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: rasa-x
+  egress:
+    - ports:
+      - protocol: TCP
+        port: 443
 {{- end }}
