@@ -3,7 +3,7 @@ apiVersion: v2
 
 version: "2.0.2"
 
-appVersion: "0.41.1"
+appVersion: "0.42.0"
 
 name: rasa-x
 description: Rasa X Helm chart for Kubernetes / Openshift
