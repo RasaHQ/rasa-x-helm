@@ -42,6 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: fixed
-      description: Move the egress-from-rasa-x-to-https network policy out of if condition
-    - kind: fixed
       description: added @ char to the not allowed chars for the rabbit password in helm chart values
