@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.0.2"
+version: "2.0.3"
 
 appVersion: "0.41.1"
 
@@ -43,3 +43,5 @@ annotations:
   artifacthub.io/changes: |
     - kind: fixed
       description: Move the egress-from-rasa-x-to-https network policy out of if condition
+    - kind: fixed
+      description: added @ char to the not allowed chars for the rabbit password in helm chart values
