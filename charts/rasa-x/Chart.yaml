@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.0.2"
+version: "2.2.0"
 
 appVersion: "0.42.0"
 
@@ -41,5 +41,7 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: fixed
-      description: Move the egress-from-rasa-x-to-https network policy out of if condition
+    - kind: added
+      description: Bump the app version to 0.42.0
+    - kind: added
+      description: Bump the Rasa OSS version to 2.8.1
