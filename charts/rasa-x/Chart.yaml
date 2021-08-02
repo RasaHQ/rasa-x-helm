@@ -1,9 +1,9 @@
 ---
 apiVersion: v2
 
-version: "2.1.0"
+version: "2.2.0"
 
-appVersion: "0.41.2"
+appVersion: "0.42.0"
 
 name: rasa-x
 description: Rasa X Helm chart for Kubernetes / Openshift
@@ -42,4 +42,6 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: added
-      description: Bump the app version to 0.41.2
+      description: Bump the app version to 0.42.0
+    - kind: added
+      description: Bump the Rasa OSS version to 2.8.1
