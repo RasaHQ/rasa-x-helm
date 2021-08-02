@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.2.0"
+version: "2.3.0"
 
 appVersion: "0.42.0"
 
@@ -42,6 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: added
-      description: Bump the app version to 0.42.0
-    - kind: added
-      description: Bump the Rasa OSS version to 2.8.1
+      description: Add an option to define hostNetwork and DNS policy for the rasa-x deployment

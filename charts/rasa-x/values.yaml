@@ -105,6 +105,13 @@ rasax:
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
 
+  # hostNetwork controls whether the pod may use the node network namespace
+  hostNetwork: false
+
+  # dnsPolicy specifies Pod's DNS policy
+  # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  dnsPolicy: ""
+
 # rasa: Settings common for all Rasa containers
 rasa:
   # version is the Rasa Open Source version which should be used.
