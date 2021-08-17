@@ -8,5 +8,8 @@ dependencies:
 - name: rabbitmq
   repository: https://charts.bitnami.com/bitnami
   version: 6.19.2
-digest: sha256:1f80702e13e30d2de7801b5f80cf1622dfebded992151f2d07dfe6678c109650
-generated: "2021-06-28T12:31:27.53084+02:00"
+- name: kafka
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.0.1
+digest: sha256:144d684d45427bbacdef14939252c962f958cf2ee721c33a26856028129b877b
+generated: "2021-08-17T01:41:30.465063577-03:00"

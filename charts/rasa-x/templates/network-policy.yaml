@@ -673,6 +673,187 @@ spec:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
 {{- end -}}
+{{- if .Values.kafka.install }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-kafka-to-k8s-api
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app: kafka
+  egress:
+  - ports:
+      - protocol: TCP
+        port: 8443
+      - protocol: TCP
+        port: 443
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-event-service-to-kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: event-service
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app: kafka
+      ports:
+      - protocol: TCP
+        port: {{ default 9092 .Values.kafka.service.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-event-service-to-kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+    matchLabels:
+      app: kafka
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: event-service
+      ports:
+      - protocol: TCP
+        port: {{ default 9092 .Values.kafka.service.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-worker-to-kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app: kafka
+      ports:
+      - protocol: TCP
+        port: {{ default 9092 .Values.kafka.service.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-rasa-worker-to-kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app: kafka
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
+      ports:
+      - protocol: TCP
+        port: {{ default 9092 .Values.kafka.service.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-production-to-kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app: kafka
+      ports:
+      - protocol: TCP
+        port: {{ default 9092 .Values.kafka.service.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-rasa-production-to-kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app: kafka
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
+      ports:
+      - protocol: TCP
+        port: {{ default 9092 .Values.kafka.service.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-x-to-kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: rasa-x
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app: kafka
+      ports:
+      - protocol: TCP
+        port: {{ default 9092 .Values.kafka.service.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-rasa-x-to-kafka
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app: kafka
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: rasa-x
+      ports:
+      - protocol: TCP
+        port: {{ default 9092 .Values.kafka.service.port }}
+{{- end -}}
+
 {{- if .Values.rabbitmq.install }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}

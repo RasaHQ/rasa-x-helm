@@ -652,7 +652,7 @@ duckling:
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
 # to see which values are required in the secret in case you want to provide your own.
 # If no secret is provided, a secret will be generated.
-rasaSecret: ""
+rasaSecret: "envs"
 
 # debugMode enables / disables the debug mode for Rasa and Rasa X
 debugMode: false
@@ -692,9 +692,9 @@ postgresql:
 # RabbitMQ specific settings (https://hub.helm.sh/charts/bitnami/rabbitmq/6.19.2)
 rabbitmq:
   # Install should be `true` if the rabbitmq subchart should be used
-  install: true
-  # Enabled should be `true` if any version of rabbit is used
-  enabled: true
+  install: false
+  # Enabled should be `true` if any version of rabbit is used, if set to false, kafka configurations are used
+  enabled: false
   # rabbitmq settings of the subchart
   rabbitmq:
     # username which is used for the authentication
@@ -716,6 +716,15 @@ rabbitmq:
   #   enabled: true
   #   fsGroup: 1001
   #   runAsUser: 1001
+
+
+# Kafka specific settings
+kafka:
+  install: true
+  url: 'rasa-x-test2-kafka-0.rasa-x-test2-kafka-headless.default.svc.cluster.local:9092'
+  topic: 'oi'
+  service:
+      port: 9092
 
 # redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
 redis:

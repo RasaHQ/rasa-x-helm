@@ -135,6 +135,32 @@ spec:
               key: {{ template "rasa-x.rabbitmq.password.key" $ }}
         - name: "RABBITMQ_QUEUE"
           value: "{{ $.Values.rasa.rabbitQueue }}"
+        {{- else}} 
+        - name: "KAFKA_URL"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: {{ template "rasa-x.kafka.url" $ }}
+        - name: "KAFKA_TOPIC"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: {{ template "rasa-x.kafka.topic" $ }}
+        - name: "KAFKA_SECURITY_PROTOCOL"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: {{ template "rasa-x.kafka.securityProtocol" $ }}
+        - name: "KAFKA_SASL_USERNAME"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: {{ template "rasa-x.kafka.saslUsername" $ }}
+        - name: "KAFKA_SASL_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.secret" $ }}
+              key: {{ template "rasa-x.kafka.saslPassword" $ }}
         {{- end }}
         - name: "RASA_ENVIRONMENT"
           value: "{{ .rasaEnvironment }}"
