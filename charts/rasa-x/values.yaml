@@ -725,7 +725,7 @@ rabbitmq:
 # existingUrl, topic, security_protocol, sasl_username, sasl_password 
 # but you need to add this env to "rasa" key in the extraEnvs if dont exist
 kafka: 
-  # Install should be `true` if the redis subchart should be used
+  # Install should be `true` if the kafka subchart should be used
   install: false
   # existingHost is the host which is used when an external kafka instance is provided (`install: false`)
   existingUrl: ""
