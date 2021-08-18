@@ -65,7 +65,7 @@ rasax:
   # resources which Rasa X is required / allowed to use
   resources: {}
   # extraEnvs are environment variables which can be added to the Rasa X deployment
-  extraEnvs: [] 
+  extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 
@@ -167,7 +167,7 @@ rasa:
   # cacheDatabase is the database in redis which Rasa X uses to store cached values
   cacheDatabase: "2"
   # extraEnvs are environment variables which can be added to the Rasa deployment
-  extraEnvs: []   
+  extraEnvs: []  
     # example which sets env variables in each Rasa Open Source service from a separate k8s secret
     # - name: "TWILIO_ACCOUNT_SID"
     #   valueFrom:
@@ -233,7 +233,7 @@ rasa:
       # resources which rasaProduction is required / allowed to use
       resources: {}
       # additional volumeMounts to the main container
-      extraVolumeMounts: [] 
+      extraVolumeMounts: []
       # - name: tmpdir
       #   mountPath: /var/lib/mypath
       # additional volumes to the pod
@@ -439,7 +439,7 @@ app:
   # Jaeger Sidecar
   jaegerSidecar: "false"
   # extraEnvs are environment variables which can be added to the app deployment
-  extraEnvs: [] 
+  extraEnvs: []
   #  - name: DATABASE_URL
   #    valueFrom:
   #      secretKeyRef:
