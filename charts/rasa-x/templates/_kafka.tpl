@@ -20,7 +20,7 @@ Return the kafka host.
 Return the kafka topic.
 */}}
 {{- define "rasa-x.kafka.topic" -}}
-{{- default (include "kafka.fullname" .) .Values.kafka.topic -}}
+{{- default "kafka-topic" .Values.kafka.topic -}}
 {{- end -}}
 
 

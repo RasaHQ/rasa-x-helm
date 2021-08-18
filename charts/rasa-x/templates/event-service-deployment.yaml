@@ -84,32 +84,6 @@ spec:
             secretKeyRef:
               name: {{ template "rasa-x.rabbitmq.password.secret" . }}
               key: {{ template "rasa-x.rabbitmq.password.key" . }}
-        {{- else}} 
-        - name: "KAFKA_URL"
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "rasa-x.secret" $ }}
-              key: {{ template "rasa-x.kafka.url" $ }}
-        - name: "KAFKA_TOPIC"
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "rasa-x.secret" $ }}
-              key: {{ template "rasa-x.kafka.topic" $ }}
-        - name: "KAFKA_SECURITY_PROTOCOL"
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "rasa-x.secret" $ }}
-              key: {{ template "rasa-x.kafka.securityProtocol" $ }}
-        - name: "KAFKA_SASL_USERNAME"
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "rasa-x.secret" $ }}
-              key: {{ template "rasa-x.kafka.saslUsername" $ }}
-        - name: "KAFKA_SASL_PASSWORD"
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "rasa-x.secret" $ }}
-              key: {{ template "rasa-x.kafka.saslPassword" $ }}
         {{ end }}
         {{- if $.Values.redis.install }}
         - name: "REDIS_PASSWORD"

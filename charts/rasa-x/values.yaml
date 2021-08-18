@@ -50,7 +50,6 @@ rasax:
     finalizers:
     - kubernetes.io/pvc-protection
     # existingClaim which should be used instead of a new one
-    existingClaim: ""
   # livenessProbe checks whether rasa x needs to be restarted
   livenessProbe:
     # initialProbeDelay for the `livenessProbe`
@@ -66,7 +65,7 @@ rasax:
   # resources which Rasa X is required / allowed to use
   resources: {}
   # extraEnvs are environment variables which can be added to the Rasa X deployment
-  extraEnvs: []
+  extraEnvs: [] 
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 
@@ -168,7 +167,7 @@ rasa:
   # cacheDatabase is the database in redis which Rasa X uses to store cached values
   cacheDatabase: "2"
   # extraEnvs are environment variables which can be added to the Rasa deployment
-  extraEnvs: []
+  extraEnvs: []   
     # example which sets env variables in each Rasa Open Source service from a separate k8s secret
     # - name: "TWILIO_ACCOUNT_SID"
     #   valueFrom:
@@ -234,10 +233,9 @@ rasa:
       # resources which rasaProduction is required / allowed to use
       resources: {}
       # additional volumeMounts to the main container
-      extraVolumeMounts: []
+      extraVolumeMounts: [] 
       # - name: tmpdir
       #   mountPath: /var/lib/mypath
-
       # additional volumes to the pod
       extraVolumes: []
       # - name: tmpdir
@@ -441,7 +439,7 @@ app:
   # Jaeger Sidecar
   jaegerSidecar: "false"
   # extraEnvs are environment variables which can be added to the app deployment
-  extraEnvs: []
+  extraEnvs: [] 
   #  - name: DATABASE_URL
   #    valueFrom:
   #      secretKeyRef:
@@ -599,6 +597,8 @@ duckling:
   port: 8000
   # scheme by which duckling is accessible
   scheme: http
+
+  # extraEnvs are environment variables which can be added to the duckling deployment
   extraEnvs: []
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -652,10 +652,10 @@ duckling:
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
 # to see which values are required in the secret in case you want to provide your own.
 # If no secret is provided, a secret will be generated.
-rasaSecret: "envs"
+rasaSecret: ""
 
 # debugMode enables / disables the debug mode for Rasa and Rasa X
-debugMode: false
+debugMode: true
 
 # separateEventService value determines whether the eventService will be run as a separate service.
 # If set to 'false', Rasa X will run an event service as a subprocess (not recommended
@@ -718,13 +718,29 @@ rabbitmq:
   #   runAsUser: 1001
 
 
-# Kafka specific settings
-kafka:
-  install: true
-  url: 'rasa-x-test2-kafka-0.rasa-x-test2-kafka-headless.default.svc.cluster.local:9092'
-  topic: 'oi'
-  service:
-      port: 9092
+# redis specific settings (https://artifacthub.io/packages/helm/bitnami/kafka/14.0.1)
+# kafka is only used if rabbitmq enable is set to false
+#
+# you can use the env secret with the ${ENV_NAME} without quotes, for this keys: 
+# existingUrl, topic, security_protocol, sasl_username, sasl_password 
+# but you need to add this env to "rasa" key in the extraEnvs if dont exist
+kafka: 
+  # Install should be `true` if the redis subchart should be used
+  install: false
+  # existingHost is the host which is used when an external kafka instance is provided (`install: false`)
+  existingUrl: ${PICPAY_BROKER}
+  # topic is the topic to be written in kafka
+  topic: ""
+  # type for secutiry protocol of the kafka, defaults to PLAINTEXT
+  security_protocol: ""
+  # SASL username to be used default to username
+  sasl_username: ""
+  # SASL password to be used default to password
+  sasl_password: ""
+  #Number of replica of kafka pods
+  replicaCount: 2
+  #you can use any value from kafka helm there too
+  
 
 # redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
 redis:
