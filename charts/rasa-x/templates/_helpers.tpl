@@ -345,3 +345,16 @@ Return the appropriate apiVersion for networkpolicy.
 {{- print "networking.k8s.io/v1" -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Return DNS policy depends on host network configuration
+*/}}
+{{- define "rasa-x.dnsPolicy" -}}
+{{- if and .Values.rasax.hostNetwork (empty .Values.rasax.dnsPolicy) -}}
+{{- print "ClusterFirstWithHostNet" -}}
+{{- else if and (not .Values.rasax.hostNetwork) (empty .Values.rasax.dnsPolicy) -}}
+{{- print "ClusterFirst" -}}
+{{- else if .Values.rasax.dnsPolicy -}}
+{{- .Values.rasax.dnsPolicy -}}
+{{- end -}}
+{{- end -}}
