@@ -44,5 +44,3 @@ annotations:
   artifacthub.io/changes: |
     - kind: fixed
       description: added @ char to the not allowed chars for the rabbit password in helm chart values
-    - kind: added
-      description: Add an option to define hostNetwork and DNS policy for the rasa-x deployment
