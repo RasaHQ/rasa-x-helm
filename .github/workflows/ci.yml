@@ -139,7 +139,7 @@ jobs:
       run: |
         kubectl wait \
           --for=condition=available \
-          --timeout=10m \
+          --timeout=20m \
           -l "app.kubernetes.io/component=rasa-x" deployment
 
         # add external IP address and host name to /etc/hosts
