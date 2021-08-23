@@ -53,12 +53,14 @@ rasax:
     existingClaim: ""
   # livenessProbe checks whether rasa x needs to be restarted
   livenessProbe:
+    enabled: true
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
+    enabled: true
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
@@ -155,6 +157,7 @@ rasa:
   # Jaeger Sidecar
   jaegerSidecar: "false"
   livenessProbe:
+    enabled: true
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
@@ -336,12 +339,14 @@ dbMigrationService:
     annotations: {}
 
   livenessProbe:
+    enabled: true
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
+    enabled: true
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
@@ -398,11 +403,13 @@ eventService:
 
   # livenessProbe checks whether the event service needs to be restarted
   livenessProbe:
+    enabled: true
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     scheme: "HTTP"
   # readinessProbe checks whether the event service can receive traffic
   readinessProbe:
+    enabled: true
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     scheme: "HTTP"
@@ -488,12 +495,14 @@ app:
 
   # livenessProbe checks whether app needs to be restarted
   livenessProbe:
+    enabled: true
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
   # readinessProbe checks whether app can receive traffic
   readinessProbe:
+    enabled: true
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
@@ -537,12 +546,14 @@ nginx:
     # externalIPs can be used to expose the service to certain IPs (https://kubernetes.io/docs/concepts/services-networking/service/#external-ips)
     externalIPs: []
   livenessProbe:
+    enabled: true
     # command for the `livenessProbe`
     command: []
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
   # readinessProbe checks whether rasa x can receive traffic
   readinessProbe:
+    enabled: true
     # command for the `readinessProbe`
     command: []
     # initialProbeDelay for the `readinessProbe`
@@ -615,11 +626,13 @@ duckling:
   resources: {}
 
   readinessProbe:
+    enabled: true
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
   livenessProbe:
+    enabled: true
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`

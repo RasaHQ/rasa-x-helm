@@ -55,6 +55,7 @@ spec:
           - name: "http"
             containerPort: {{ default 5002 .Values.rasax.port }}
             protocol: "TCP"
+        {{- if or .Values.rasax.livenessProbe.enabled (not (hasKey .Values.rasax.livenessProbe "enabled")) }}
         livenessProbe:
           httpGet:
             path: "/"
@@ -62,6 +63,8 @@ spec:
             scheme: {{ default "HTTP" .Values.rasax.livenessProbe.scheme }}
           initialDelaySeconds: {{ .Values.rasax.livenessProbe.initialProbeDelay }}
           failureThreshold: 10
+        {{- end }}
+        {{- if or .Values.rasax.readinessProbe.enabled (not (hasKey .Values.rasax.readinessProbe "enabled")) }}
         readinessProbe:
           httpGet:
             path: "/"
@@ -69,6 +72,7 @@ spec:
             scheme: {{ default "HTTP" .Values.rasax.readinessProbe.scheme }}
           initialDelaySeconds: {{ .Values.rasax.readinessProbe.initialProbeDelay }}
           failureThreshold: 10
+        {{- end }}
         env:
         {{- if or (eq "true" (include "is_enterprise" .)) .Values.rasax.disableTelemetry }}
         - name: "RASA_TELEMETRY_ENABLED"
