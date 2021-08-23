@@ -52,18 +52,22 @@ spec:
           - name: "http"
             containerPort: {{ .Values.dbMigrationService.port }}
             protocol: "TCP"
+        {{- if or .Values.dbMigrationService.livenessProbe.enabled (not (hasKey .Values.dbMigrationService.livenessProbe "enabled")) }}
         livenessProbe:
           initialDelaySeconds: {{ .Values.dbMigrationService.livenessProbe.initialProbeDelay }}
           httpGet:
             path: "/health"
             port: "http"
             scheme: {{ default "HTTP" .Values.dbMigrationService.livenessProbe.scheme }}
+        {{- end }}
+        {{- if or .Values.dbMigrationService.readinessProbe.enabled (not (hasKey .Values.dbMigrationService.readinessProbe "enabled")) }}
         readinessProbe:
           initialDelaySeconds: {{ .Values.dbMigrationService.readinessProbe.initialProbeDelay }}
           httpGet:
             path: "/health"
             port: "http"
             scheme: {{ default "HTTP" .Values.dbMigrationService.readinessProbe.scheme }}
+        {{- end }}
 {{- if .Values.dbMigrationService.extraVolumeMounts }}
         volumeMounts:
 {{ toYaml .Values.dbMigrationService.extraVolumeMounts | indent 8 }}
