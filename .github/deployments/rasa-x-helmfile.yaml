@@ -25,3 +25,6 @@ releases:
             - host: rasa-x.test.com
               paths:
                 - /
+      - postgres:
+          volumePermissions:
+            enabled: true
