@@ -1,7 +1,8 @@
 ---
 apiVersion: v2
 
-version: "2.3.0"
+
+version: "2.3.1"
 
 appVersion: "0.42.0"
 
@@ -41,5 +42,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Add an option to define hostNetwork and DNS policy for the rasa-x deployment
+    - kind: fixed
+      description: added @ char to the not allowed chars for the rabbit password in helm chart values
