@@ -13,6 +13,7 @@ on:
 
 env:
   CHART: charts/rasa-x
+  INSTALL_K3S_VERSION: v1.21.4+k3s1
 
 jobs:
   lint-test:
