@@ -169,6 +169,7 @@ jobs:
       run: |
         kubectl get pods
         kubectl get svc
+        kubectl logs rasa-x-postgresql-0
         df -h
 
     - name: Validate that logging in works ✅
