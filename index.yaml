@@ -3,6 +3,43 @@ entries:
   rasa-x:
   - annotations:
       artifacthub.io/changes: |
+        - kind: added
+          description: An option to disable the rasa-worker deployment, and an option to define a subpath for Nginx.
+    apiVersion: v2
+    appVersion: 0.42.0
+    created: "2021-08-25T11:43:13.270902012Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.6.4
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.12
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~6.19.2
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 9597118c69718814a0ff6acc04f8950a22a5d6d751a85370d3a578aef56a3fa4
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-2.4.0/rasa-x-2.4.0.tgz
+    version: 2.4.0
+  - annotations:
+      artifacthub.io/changes: |
         - kind: fixed
           description: added @ char to the not allowed chars for the rabbit password in helm chart values
     apiVersion: v2
@@ -2962,4 +2999,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2021-08-24T11:28:14.124612783Z"
+generated: "2021-08-25T11:43:13.271825122Z"
