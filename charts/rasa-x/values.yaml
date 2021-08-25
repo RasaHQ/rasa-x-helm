@@ -248,7 +248,17 @@ rasa:
     # rasaWorker is the container which does computational heavy tasks such as training
     rasaWorker:
       # enable the rasa-worker deployment
+      # You can disable the rasa-worker deployment in order to use external Rasa OSS deployment instead.
       enabled: true
+
+      # Define if external Rasa OSS should be used.
+      external:
+        # enable external Rasa OSS
+        enabled: false
+
+        # host of external Rasa OSS deployment
+        host: "http://rasa-worker"
+
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
       nodeSelector: {}
@@ -517,6 +527,8 @@ nginx:
   # enabled should be `true` if you want to use nginx
   # if you set false, you will need to set up some other method of routing (VirtualService/Ingress controller)
   enabled: true
+  # subPath defines the subpath used by Rasa X (ROOT_URL), e.g /rasa-x
+  subPath: ""
   # override the default command to run in the container
   command: []
   # override the default arguments to run in the container

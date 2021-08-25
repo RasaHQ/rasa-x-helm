@@ -6,10 +6,14 @@ metadata:
     {{ include "rasa-x.labels" . | nindent 4 }}
 data:
   environments: |
+{{- if or .Values.rasa.versions.rasaProduction.enabled .Values.rasa.versions.rasaProduction.external.enabled }}
     rasa:
       production:
-        url: "{{- include "rasa-bot.production.url" .}}"
+        url: "{{- include "rasa.production.url" .}}"
         token: ${RASA_TOKEN}
+{{- end }}
+{{- if or .Values.rasa.versions.rasaWorker.enabled .Values.rasa.versions.rasaWorker.external.enabled }}
       worker:
-        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
+        url: "{{- include "rasa.worker.url" .}}"
         token: ${RASA_TOKEN}
+{{- end }}

@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: added
-      description: Add an option to define hostNetwork and DNS policy for the rasa-x deployment
+      description: An option to disable the rasa-worker deployment, and an option to define a subpath for Nginx.

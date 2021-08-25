@@ -15,6 +15,8 @@ spec:
       app.kubernetes.io/component: nginx
   template:
     metadata:
+      annotations:
+        checksum/nginx-config: {{ include (print $.Template.BasePath "/nginx-conf-configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: nginx
@@ -78,6 +80,8 @@ spec:
         env:
         - name: "NGINX_ENVSUBST_TEMPLATE_SUFFIX"
           value: ".template"
+        - name: "RASA_PRODUCTION_URL"
+          value: "{{ include "rasa.production.url" .}}"
         - name: "RASA_X_HOST"
           value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
         volumeMounts:
