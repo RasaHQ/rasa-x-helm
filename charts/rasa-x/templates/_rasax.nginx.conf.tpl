@@ -1,3 +1,4 @@
+{{- define "rasax.nginx.template" -}}
 upstream docker-rasax-api {
   server ${RASA_X_HOST} max_fails=0;
 }
@@ -9,29 +10,30 @@ server {
   keepalive_timeout   30;
   client_max_body_size 800M;
 
-  location /robots.txt {
+  location {{ trimSuffix "/" .Values.nginx.subPath }}/robots.txt {
     return 200 "User-agent: *\nDisallow: /\n";
   }
 
-  location /core/ {
+{{- if or .Values.rasa.versions.rasaProduction.enabled .Values.rasa.versions.rasaProduction.external.enabled }}
+  location {{ trimSuffix "/" .Values.nginx.subPath }}/core/ {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Host $host;
-    proxy_pass {{ include "rasa-bot.production.url" .}};
+    proxy_pass {{ include "rasa.production.url" .}};
   }
 
   # avoid users having to change how they configure
   # their credentials URLs between Rasa and Rasa X
-  location /webhooks/ {
+  location {{ trimSuffix "/" .Values.nginx.subPath }}/webhooks/ {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Host $host;
-    proxy_pass {{ include "rasa-bot.production.url" .}}/webhooks/;
+    proxy_pass {{ include "rasa.production.url" .}}/webhooks/;
   }
 
-  location /socket.io {
+  location {{ trimSuffix "/" .Values.nginx.subPath }}/socket.io {
     proxy_http_version 1.1;
     proxy_buffering off;
     proxy_set_header X-Real-IP $remote_addr;
@@ -39,10 +41,12 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "Upgrade";
-    proxy_pass {{ include "rasa-bot.production.url" .}}/socket.io;
+    proxy_pass {{ include "rasa.production.url" .}}/socket.io;
   }
 
-  location /api/ws {
+{{- end }}
+
+  location {{ trimSuffix "/" .Values.nginx.subPath }}/api/ws {
     # following https://www.serverlab.ca/tutorials/linux/web-servers-linux/how-to-configure-nginx-for-websockets/
     # This directive converts the incoming connection to HTTP 1.1, which is
     # required to support WebSockets. The older HTTP 1.0 spec does not provide support
@@ -61,7 +65,7 @@ server {
     proxy_pass http://docker-rasax-api/api/ws;
   }
 
-  location / {
+  location {{ trimSuffix "/" .Values.nginx.subPath }}/ {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header X-Forwarded-Proto $scheme;
@@ -71,7 +75,7 @@ server {
 
   # pass chat message to production service if environment query parameter
   # is set to `production`, or that parameter isn't set
-  location /api/chat$ {
+  location {{ trimSuffix "/" .Values.nginx.subPath }}/api/chat$ {
     if ($arg_environment = "") {
         rewrite ^ /core/webhooks/rasa/webhook last;
     }
@@ -81,7 +85,7 @@ server {
     proxy_pass http://docker-rasax-api/api/chat;
   }
 
-  location /nginx_status {
+  location {{ trimSuffix "/" .Values.nginx.subPath }}/nginx_status {
     stub_status on;
 
     access_log off;
@@ -89,3 +93,4 @@ server {
     deny all;
   }
 }
+{{- end -}}
