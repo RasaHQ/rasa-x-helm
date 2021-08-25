@@ -653,6 +653,8 @@ kafka:
   # SASL credentials
   sasl_username: username
   sasl_password: password
+  # client id
+  client_id: None
 
 # RabbitMQ specific settings (https://hub.helm.sh/charts/bitnami/rabbitmq/6.19.2)
 rabbitmq:
