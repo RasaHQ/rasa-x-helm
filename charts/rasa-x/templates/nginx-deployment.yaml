@@ -50,6 +50,7 @@ spec:
         - name: "http"
           containerPort: 8080
           protocol: "TCP"
+        {{- if or .Values.nginx.livenessProbe.enabled (not (hasKey .Values.nginx.livenessProbe "enabled")) }}
         livenessProbe:
           exec:
           {{- if .Values.nginx.livenessProbe.command }}
@@ -62,6 +63,8 @@ spec:
           {{- end }}
           initialDelaySeconds: {{ .Values.nginx.livenessProbe.initialProbeDelay }}
           failureThreshold: 10
+        {{- end }}
+        {{- if or .Values.nginx.readinessProbe.enabled (not (hasKey .Values.nginx.readinessProbe "enabled")) }}
         readinessProbe:
           exec:
           {{- if .Values.nginx.readinessProbe.command }}
@@ -73,6 +76,7 @@ spec:
               - localhost:8080/nginx_status
           {{- end }}
           initialDelaySeconds: {{ .Values.nginx.readinessProbe.initialProbeDelay }}
+        {{- end }}
         env:
         - name: "NGINX_ENVSUBST_TEMPLATE_SUFFIX"
           value: ".template"
