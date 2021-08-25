@@ -34,6 +34,7 @@ data:
       url: "{{ .Values.kafka.url }}"
       sasl_username: "{{ .Values.kafka.sasl_username }}"
       sasl_password: "{{ .Values.kafka.sasl_password }}"
+      client_id: "{{ .Values.kafka.client_id }}"
     action_endpoint:
       url: "{{ .Values.app.scheme }}://{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"
       token:  ""
