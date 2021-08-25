@@ -76,6 +76,8 @@ spec:
         env:
         - name: "NGINX_ENVSUBST_TEMPLATE_SUFFIX"
           value: ".template"
+        - name: "RASA_PRODUCTION_URL"
+          value: "{{ include "rasa.production.url" .}}"
         - name: "RASA_X_HOST"
           value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
         volumeMounts:

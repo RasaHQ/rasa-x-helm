@@ -13,8 +13,6 @@
 {{- define "rasa.worker.url" -}}
 {{- if and (not .Values.rasa.versions.rasaWorker.enabled) .Values.rasa.versions.rasaWorker.external.enabled (not (empty .Values.rasa.versions.rasaWorker.external.url)) (not ((index .Values "rasa-bot").subchart)) }}
 {{- print .Values.rasa.versions.rasaWorker.external.url }}
-{{- else if and (not .Values.rasa.versions.rasaWorker.enabled) (index .Values "rasa-bot").subchart }}
-{{- printf "%s://%s-%s.%s.svc:%d" (index .Values "rasa-bot").applicationSettings.scheme (include "rasa-x.fullname" .) "rasa-bot" .Release.Namespace ((index .Values "rasa-bot").applicationSettings.port | int) }}
 {{- else }}
 {{- printf "%s://%s-%s.%s.svc:%d" .Values.rasa.scheme (include "rasa-x.fullname" .) .Values.rasa.versions.rasaWorker.serviceName .Release.Namespace (.Values.rasa.port | int) }}
 {{- end }}
