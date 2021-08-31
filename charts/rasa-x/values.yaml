@@ -728,6 +728,8 @@ rabbitmq:
     password: "password"
     # existingPasswordSecret which should be used for the password instead of putting it in the values file
     existingPasswordSecret: ""
+  # replicaCount Number of RabbitMQ replicas to deploy
+  replicaCount: 1
   # service specifies settings for exposing rabbit to other services
   service:
     # port on which rabbitmq is exposed to Rasa
@@ -741,6 +743,7 @@ rabbitmq:
   #   enabled: true
   #   fsGroup: 1001
   #   runAsUser: 1001
+
 
 # redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
 redis:
