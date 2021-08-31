@@ -744,7 +744,6 @@ rabbitmq:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
-
 # redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
 redis:
   # Install should be `true` if the redis subchart should be used
