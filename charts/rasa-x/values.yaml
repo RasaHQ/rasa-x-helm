@@ -749,19 +749,26 @@ kafka:
   enabled: false
   endpointConfiguration:
     # see https://rasa.com/docs/rasa/event-brokers#kafka-event-broker
-    partition_by_sender: False
-    # kafka topic
-    topic: topic
+    # kafka topics to subscribe to
+    topic: rasa_core_events
     # kafka host
-    url: localhost
+    url: null
+    # whether messages are partitioned by sender_id or not
+    partition_by_sender: False
+    # whether intent IDs are converted from integers to strings
+    convert_intent_id_to_string: False
+    # A name for this client. 
+    client_id: null
     # security protocol, one of SASL_PLAINTEXT, SSL, PLAINTEXT and SASL_SSL.
     # see https://rasa.com/docs/rasa/event-brokers#authentication-and-authorization
     security_protocol: PLAINTEXT
-    # PLAINTEXT settings
-    client_id: kafka-python-rasa
     # required settings for SASL & SASL_SSL protocols
+    # Username for plain authentication.
     sasl_username: null
+    # Password for plain authentication.
     sasl_password: null
+    # Valid values are: PLAIN, GSSAPI, OAUTHBEARER, SCRAM-SHA-256, SCRAM-SHA-512
+    sasl_mechanism: PLAIN
     # required settings for SSL & SASL_SSL protocols
     # .pem CA root cert
     ssl_cafile: null
@@ -770,7 +777,8 @@ kafka:
     # .pem TLS key 
     ssl_keyfile: null
     # whether clients should verify if the broker's hostname matches the certificate
-    ssl_check_hostname: True
+    ssl_check_hostname: False
+
 
 
 # redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
