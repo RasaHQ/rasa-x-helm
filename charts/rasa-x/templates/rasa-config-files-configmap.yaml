@@ -48,6 +48,10 @@ data:
       {{- end }}
       {{- end }}
     {{- end }}
+    {{- if $.Values.kafka.enabled }}
+    event_broker:
+      {{- include  "kafka.endpointConfiugration" $ | nindent 6 }}
+    {{- end }}
     action_endpoint:
       url: {{ if .Values.app.existingUrl }}"{{ .Values.app.existingUrl }}"{{ else }}"{{ .Values.app.scheme }}://{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"{{ end }}
       token:  ""

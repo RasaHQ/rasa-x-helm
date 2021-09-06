@@ -742,6 +742,37 @@ rabbitmq:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
+# Kafka specific settings
+kafka:
+  # Enabled should be `true` if a separate kafka instance is used as the event broker
+  # Note that this does NOT install kafka, it only configures endpoint settingsfor it
+  enabled: false
+  endpointConfiguration:
+    # see https://rasa.com/docs/rasa/event-brokers#kafka-event-broker
+    partition_by_sender: False
+    # kafka topic
+    topic: topic
+    # kafka host
+    url: localhost
+    # security protocol, one of SASL_PLAINTEXT, SSL, PLAINTEXT and SASL_SSL.
+    # see https://rasa.com/docs/rasa/event-brokers#authentication-and-authorization
+    security_protocol: PLAINTEXT
+    # PLAINTEXT settings
+    client_id: kafka-python-rasa
+    # required settings for SASL & SASL_SSL protocols
+    sasl_username: null
+    sasl_password: null
+    # required settings for SSL & SASL_SSL protocols
+    # .pem CA root cert
+    ssl_cafile: null
+    # .pem TLS cert
+    ssl_certfile: null
+    # .pem TLS key 
+    ssl_keyfile: null
+    # whether clients should verify if the broker's hostname matches the certificate
+    ssl_check_hostname: True
+
+
 # redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
 redis:
   # Install should be `true` if the redis subchart should be used
