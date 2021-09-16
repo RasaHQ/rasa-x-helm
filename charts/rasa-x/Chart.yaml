@@ -47,3 +47,5 @@ annotations:
       description: Use PostgreSQL 12.8.0 as default
     - kind: changed
       description: The rasa production deployment is disabled by default
+    - kind: changed
+      description: Ingress is disabled by default

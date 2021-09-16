@@ -43,6 +43,15 @@ The rasa-x-helm chart in version 3.0.0 introduces the following breaking changes
 
   PostgreSQL deployment for < 3.0.0 version of chart used PostgreSQL 11. In [this document](./docs/postgresql_migrate_from_11_12.md) you can find guide on how to migrate from PostgreSQL 11 to 12.
 
+* Ingress is disabled by default.
+
+  ```yaml
+  ingress:
+    enabled: false
+  ```
+
+* Default username for Rasa X is `admin`.
+
 * The Rasa production deployment is disabled by default and will be removed in the future.
 
   ```yaml
