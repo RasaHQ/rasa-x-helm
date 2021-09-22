@@ -43,7 +43,7 @@ kubectl -n tczekajlo-test exec <release-name>-postgresql-0 -- /bin/bash -c 'PGPA
 
 ## Restore backup
 
-1. Upgrade the chart repository.
+1. Update the chart repository.
 
 ```text
 helm repo update
@@ -54,6 +54,10 @@ helm repo update
 ```yaml
 # values.yaml
 postgresql:
+  image:
+    # tag of PostgreSQL Image
+    tag: "12.8.0"
+
   extraEnv:
     - name: PGDATA
       value: /bitnami/postgresql/data_12
@@ -72,8 +76,10 @@ postgresql:
 Apply the values:
 
 ```yaml
-helm -n <your-namespace> upgrade -f values.yaml <release-name> rasa-x/rasa-x
+helm -n <your-namespace> upgrade -f values.yaml <release-name> --version <helm-chart-version> rasa-x/rasa-x
 ```
+
+Helm chart version can be checked by executing the `helm -n <namespace> list`.
 
 3. Restore the backup
 

@@ -64,6 +64,8 @@ The rasa-x-helm chart in version 3.0.0 introduces the following breaking changes
 
   It's recommended to use tha rasa helm chart to deploy Rasa OSS. Visit [the rasa chart docs](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa) to learn more.
 
+  Before you upgrade the helm chart check [the migration guide](./docs/from_2_to_3_migration_guide.md).
+
 ## To 2.0.0
 
 The rasa-x-helm chart in version 2.0.0 supports using an external Rasa OSS deployment.
