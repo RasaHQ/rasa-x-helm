@@ -6,8 +6,8 @@ metadata:
     {{ include "rasa-x.labels" . | nindent 4 }}
 data:
   environments: |
-{{- if or .Values.rasa.versions.rasaProduction.enabled .Values.rasa.versions.rasaProduction.external.enabled }}
     rasa:
+{{- if or .Values.rasa.versions.rasaProduction.enabled .Values.rasa.versions.rasaProduction.external.enabled }}
       production:
         url: "{{- include "rasa.production.url" .}}"
         token: ${RASA_TOKEN}
