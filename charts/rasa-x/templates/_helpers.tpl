@@ -358,3 +358,26 @@ Return DNS policy depends on host network configuration
 {{- .Values.rasax.dnsPolicy -}}
 {{- end -}}
 {{- end -}}
+
+
+{{/*
+Return 'true' if the production environment is used.
+*/}}
+{{- define "rasa-x.production.env.used" -}}
+{{- if or .Values.rasa.versions.rasaProduction.enabled .Values.rasa.versions.rasaProduction.external.enabled  -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return 'true' if the worker environment is used.
+*/}}
+{{- define "rasa-x.worker.env.used" -}}
+{{- if or .Values.rasa.versions.rasaWorker.enabled .Values.rasa.versions.rasaWorker.external.enabled  -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false" -}}
+{{- end -}}
+{{- end -}}
