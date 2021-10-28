@@ -51,25 +51,5 @@ annotations:
     - kind: security
       description: Bump the Rasa OSS version to 2.8.12. This breaks backward compatibility of previously trained models. It is not possible to load models trained with previous versions of Rasa Open Source. Please re-train your assistant before trying to use this version.
       links:
-        - name: Release notes 2.8.12
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.12
-        - name: Release notes 2.8.11
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.11
-        - name: Release notes 2.8.10
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.10
-        - name: Release notes 2.8.9. BREAKING CHANGES
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.9
-        - name: Release notes 2.8.8
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.8
-        - name: Release notes 2.8.7
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.7
-        - name: Release notes 2.8.6
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.6
-        - name: Release notes 2.8.5
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.5
-        - name: Release notes 2.8.4
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.4
-        - name: Release notes 2.8.3
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.3
-        - name: Release notes 2.8.2
-          url: https://github.com/RasaHQ/rasa/releases/tag/2.8.2
+        - name: Release notes
+          url: https://rasa.com/docs/rasa/changelog/
