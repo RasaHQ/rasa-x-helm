@@ -471,7 +471,7 @@ spec:
       ports:
       - protocol: TCP
         port: {{ default 5673 .Values.eventService.port }}
-{{- if .Values.postgresql.install -}}
+{{ if .Values.postgresql.install -}}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -852,8 +852,8 @@ spec:
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
-{{- end -}}
-{{- if .Values.duckling.enabled -}}
+{{ end -}}
+{{ if .Values.duckling.enabled -}}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -894,22 +894,8 @@ spec:
       ports:
       - protocol: TCP
         port: {{ .Values.duckling.port }}
-{{- end -}}
-{{- if .Values.nginx.enabled -}}
----
-apiVersion: {{ template "networkPolicy.apiVersion" . }}
-kind: NetworkPolicy
-metadata:
-  name: ingress-egress-nginx-to-kubernetes-services
-  namespace: {{ .Release.Namespace }}
-spec:
-  policyTypes:
-    - Egress
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/component: nginx
-  egress:
-    - {}
+{{ end -}}
+{{ if .Values.nginx.enabled -}}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
