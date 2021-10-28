@@ -43,3 +43,5 @@ annotations:
   artifacthub.io/changes: |
     - kind: fixed
       description: Fix template formatting for network policies.
+    - kind: removed
+      description: Remove useless network policy - ingress-egress-nginx-to-kubernetes-services.
