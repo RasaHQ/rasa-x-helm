@@ -297,6 +297,8 @@ dbMigrationService:
   initContainer:
     # image is the Docker image which is used by the init container
     image: alpine:3.12.3
+    # command overrides the default command to run in the init container
+    command: []
   # command overrides the default command to run in the container
   command: []
   # args overrides the default arguments to run in the container
