@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.4.2"
+version: "2.4.4"
 
 appVersion: "0.42.0"
 
@@ -41,5 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: fixed
-      description: Set an empty map for the 'rasa' key if environments are not defined.
+    - kind: added
+      description: Allow to override the default command for dbMigrationService.initContainer
