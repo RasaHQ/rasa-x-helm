@@ -4,6 +4,45 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: fixed
+          description: Fix template formatting for network policies.
+        - kind: removed
+          description: Remove useless network policy - ingress-egress-nginx-to-kubernetes-services.
+    apiVersion: v2
+    appVersion: 0.42.0
+    created: "2021-10-28T13:45:08.872239053Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.6.4
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.12
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~6.19.2
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: d959d02f54dfd21835e9bd8255f7febaf69dba3c3bc81dca2b6b586d2a245227
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-2.4.3/rasa-x-2.4.3.tgz
+    version: 2.4.3
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
           description: Set an empty map for the 'rasa' key if environments are not defined.
     apiVersion: v2
     appVersion: 0.42.0
@@ -3073,4 +3112,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2021-10-04T14:52:46.339307722Z"
+generated: "2021-10-28T13:45:08.87338546Z"
