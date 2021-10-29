@@ -312,6 +312,9 @@ initContainers:
 - name: init-db
   image: {{ .Values.dbMigrationService.initContainer.image }}
   command:
+  {{- if .Values.dbMigrationService.initContainer.command }}
+  {{- toYaml .Values.dbMigrationService.initContainer.command | nindent 2 }}
+  {{ else }}
   - 'sh'
   - '-c'
   - "apk update --no-cache && \
@@ -325,6 +328,7 @@ initContainers:
     sleep 5; \
     done; \
     echo The database migration status: completed...100%"
+{{- end }}
 {{- end -}}
 {{- end -}}
 
