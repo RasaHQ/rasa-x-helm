@@ -3,6 +3,53 @@ entries:
   rasa-x:
   - annotations:
       artifacthub.io/changes: |
+        - kind: security
+          description: Bump the app version to 0.42.4
+          links:
+            - name: CVE-2021-42556
+              url: https://github.com/RasaHQ/rasa-x-security-advisories/security/advisories/GHSA-vp2h-j6px-56rc
+            - name: Release notes
+              url: https://rasa.com/docs/rasa-x/changelog/rasa-x-changelog#0424---2021-10-21
+        - kind: security
+          description: Bump the Rasa OSS version to 2.8.12. This breaks backward compatibility of previously trained models. It is not possible to load models trained with previous versions of Rasa Open Source. Please re-train your assistant before trying to use this version.
+          links:
+            - name: Release notes
+              url: https://rasa.com/docs/rasa/changelog/
+    apiVersion: v2
+    appVersion: 0.42.4
+    created: "2021-11-01T13:04:39.451006397Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.6.4
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.12
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~6.19.2
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 9d0070882b8f22ee5a3de9606bad693849aa55b1c30afed5df07ae2888042414
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-2.6.0/rasa-x-2.6.0.tgz
+    version: 2.6.0
+  - annotations:
+      artifacthub.io/changes: |
         - kind: added
           description: Allow to override the default command for dbMigrationService.initContainer
     apiVersion: v2
@@ -3149,4 +3196,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2021-10-29T09:31:18.297400101Z"
+generated: "2021-11-01T13:04:39.451944615Z"
