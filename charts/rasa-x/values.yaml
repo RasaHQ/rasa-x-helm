@@ -154,6 +154,11 @@ rasa:
     # telemetry:
     #   type: jaeger
     #   service_name: rasa
+  trackerStore:
+    # optional dictionary to be added as a query string to the connection URL
+    query: {}
+    #  driver: my-driver
+    #  sslmode: require
   # Jaeger Sidecar
   jaegerSidecar: "false"
   livenessProbe:
