@@ -24,6 +24,10 @@ data:
       username: {{ template "rasa-x.psql.username" . }}
       password: ${DB_PASSWORD}
       db: ${DB_DATABASE}
+    {{- if .Values.rasa.trackerStore.query }}
+      query:
+    {{- toYaml .Values.rasa.trackerStore.query | nindent 8 }}
+    {{- end }}
       {{- if .Values.rasa.useLoginDatabase }}
       login_db: {{ template "rasa-x.psql.database" . }}
       {{- end }}

@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.6.0"
+version: "2.7.0"
 
 appVersion: "0.42.4"
 
@@ -41,15 +41,8 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: security
-      description: Bump the app version to 0.42.4
+    - kind: added
+      description: Add support for the query field to configmap for rasa tracker store configuration
       links:
-        - name: CVE-2021-42556
-          url: https://github.com/RasaHQ/rasa-x-security-advisories/security/advisories/GHSA-vp2h-j6px-56rc
-        - name: Release notes
-          url: https://rasa.com/docs/rasa-x/changelog/rasa-x-changelog#0424---2021-10-21
-    - kind: security
-      description: Bump the Rasa OSS version to 2.8.12. This breaks backward compatibility of previously trained models. It is not possible to load models trained with previous versions of Rasa Open Source. Please re-train your assistant before trying to use this version.
-      links:
-        - name: Release notes
-          url: https://rasa.com/docs/rasa/changelog/
+        - name: GitHub PR
+          url: https://github.com/RasaHQ/rasa-x-helm/pull/243
