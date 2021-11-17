@@ -678,6 +678,38 @@ spec:
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
+  name: ingress-egress-from-rabbitmq-to-rabbitmq-clustering
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: rabbitmq
+  ingress:
+    - ports:
+        - port: 4369  # EPMD
+        - port: {{ default 5672 .Values.rabbitmq.service.port }}
+        - port: {{ .Values.rabbitmq.service.tlsPort }}
+        - port: {{ .Values.rabbitmq.service.distPort }}
+        - port: {{ .Values.rabbitmq.service.managerPort }}
+      from:
+        - podSelector:
+            matchLabels:
+              app: rabbitmq
+  egress:
+    - ports:
+        - port: 4369  # EPMD
+        - port: {{ default 5672 .Values.rabbitmq.service.port }}
+        - port: {{ .Values.rabbitmq.service.tlsPort }}
+        - port: {{ .Values.rabbitmq.service.distPort }}
+        - port: {{ .Values.rabbitmq.service.managerPort }}
+      to:
+        - podSelector:
+            matchLabels:
+              app: rabbitmq
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
   name: egress-from-rabbitmq-to-k8s-api
   namespace: {{ .Release.Namespace }}
 spec:

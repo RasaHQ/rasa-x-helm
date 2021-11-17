@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.7.0"
+version: "2.8.0"
 
 appVersion: "0.42.4"
 
@@ -42,7 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: added
-      description: Add support for the query field to configmap for rasa tracker store configuration
-      links:
-        - name: GitHub PR
-          url: https://github.com/RasaHQ/rasa-x-helm/pull/243
+      description: Add a network policy for rabbitmq clustering

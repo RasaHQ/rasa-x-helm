@@ -7,6 +7,7 @@ releases:
   - name: ingress-nginx
     namespace: default
     chart: ingress-nginx/ingress-nginx
+    version: "4.0.6"
     values:
     - rbac:
         create: true
