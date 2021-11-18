@@ -304,6 +304,8 @@ dbMigrationService:
     image: alpine:3.12.3
     # command overrides the default command to run in the init container
     command: []
+    # resources which initContainer is required / allowed to use
+    resources: {}
   # command overrides the default command to run in the container
   command: []
   # args overrides the default arguments to run in the container
