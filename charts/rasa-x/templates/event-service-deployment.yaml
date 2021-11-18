@@ -57,18 +57,22 @@ spec:
           - name: "http"
             containerPort: {{ default 5673 .Values.eventService.port }}
             protocol: "TCP"
+        {{- if or .Values.eventService.livenessProbe.enabled (not (hasKey .Values.eventService.livenessProbe "enabled")) }}
         livenessProbe:
           initialDelaySeconds: {{ .Values.eventService.livenessProbe.initialProbeDelay }}
           httpGet:
             path: "/health"
             port: "http"
             scheme: {{ default "HTTP" .Values.eventService.livenessProbe.scheme }}
+        {{ end }}
+        {{- if or .Values.eventService.readinessProbe.enabled (not (hasKey .Values.eventService.readinessProbe "enabled")) }}
         readinessProbe:
           initialDelaySeconds: {{ .Values.eventService.readinessProbe.initialProbeDelay }}
           httpGet:
             path: "/health"
             port: "http"
             scheme: {{ default "HTTP" .Values.eventService.readinessProbe.scheme }}
+        {{ end }}
         env:
         {{- if eq "true" (include "is_enterprise" .) }}
         - name: "RASA_TELEMETRY_ENABLED"

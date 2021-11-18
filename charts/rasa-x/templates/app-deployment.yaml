@@ -1,3 +1,4 @@
+{{- if .Values.app.install -}}
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
@@ -49,18 +50,22 @@ spec:
         - name: "http"
           containerPort: {{ template "rasa-x.custom-actions.port" . }}
           protocol: "TCP"
+        {{- if or .Values.app.livenessProbe.enabled (not (hasKey .Values.app.livenessProbe "enabled")) }}
         livenessProbe:
           initialDelaySeconds: {{ .Values.app.livenessProbe.initialProbeDelay }}
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
             scheme: {{ default "HTTP" .Values.app.livenessProbe.scheme }}
+        {{- end }}
+        {{- if or .Values.app.livenessProbe.enabled (not (hasKey .Values.app.livenessProbe "enabled")) }}
         readinessProbe:
           initialDelaySeconds: {{ .Values.app.readinessProbe.initialProbeDelay }}
           httpGet:
             path: "{{ .Values.app.endpoints.healthCheckUrl }}"
             port: "http"
             scheme: {{ default "HTTP" .Values.app.readinessProbe.scheme }}
+        {{- end }}
         {{- with .Values.app.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
@@ -77,4 +82,5 @@ spec:
 {{- if .Values.app.extraVolumes }}
       volumes:
 {{ toYaml .Values.app.extraVolumes | indent 6 }}
+{{- end }}
 {{- end }}

@@ -1,12 +1,12 @@
 # helmfile for Rasa X deployment
 repositories:
-- name: rasa-x
-  url: https://rasahq.github.io/rasa-x-helm
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
 
 releases:
   - name: rasa-x
     namespace: default
-    chart: rasa-x/rasa-x
+    chart: ../../charts/rasa-x
     values:
       - rasax:
           disableTelemetry: true
@@ -17,6 +17,7 @@ releases:
       - nginx:
           enabled: false
       - ingress:
+          enabled: true
           annotations:
             kubernetes.io/ingress.class: nginx
             nginx.ingress.kubernetes.io/enable-cors: "true"
@@ -24,3 +25,6 @@ releases:
             - host: rasa-x.test.com
               paths:
                 - /
+      - postgres:
+          volumePermissions:
+            enabled: true

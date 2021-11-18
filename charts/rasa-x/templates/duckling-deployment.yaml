@@ -44,23 +44,28 @@ spec:
         args:
           {{- toYaml .Values.duckling.args | nindent 10 }}
         {{- end }}
+        env:
+        {{- include "duckling.extra.envs" $ | nindent 8 }}
         ports:
         - name: "http"
           containerPort: {{ default 8000 .Values.duckling.port }}
           protocol: "TCP"
+        {{- if or .Values.duckling.livenessProbe.enabled (not (hasKey .Values.duckling.livenessProbe "enabled")) }}
         livenessProbe:
           httpGet:
             path: "/"
             port: "http"
             scheme: {{ default "HTTP" .Values.duckling.livenessProbe.scheme }}
           initialDelaySeconds: {{ default 10 .Values.duckling.livenessProbe.initialProbeDelay }}
-
+        {{- end }}
+        {{- if or .Values.duckling.readinessProbe.enabled (not (hasKey .Values.duckling.readinessProbe "enabled")) }}
         readinessProbe:
           httpGet:
             path: "/"
             port: "http"
             scheme: {{ default "HTTP" .Values.duckling.readinessProbe.scheme }}
           initialDelaySeconds: {{ default 10 .Values.duckling.readinessProbe.initialProbeDelay }}
+        {{- end }}
         {{- with .Values.duckling.resources }}
         resources:
           {{- toYaml . | nindent 10 }}

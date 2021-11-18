@@ -6,10 +6,18 @@ metadata:
     {{ include "rasa-x.labels" . | nindent 4 }}
 data:
   environments: |
+{{- if or (eq (include "rasa-x.production.env.used" .) "true") (eq (include "rasa-x.worker.env.used" .) "true") }}
     rasa:
+{{- else }}
+    rasa: {}
+{{- end }}
+{{- if eq (include "rasa-x.production.env.used" .) "true" }}
       production:
-        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
+        url: "{{- include "rasa.production.url" .}}"
         token: ${RASA_TOKEN}
+{{- end }}
+{{- if eq (include "rasa-x.worker.env.used" .) "true"  }}
       worker:
-        url: "{{ .Values.rasa.scheme }}://{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaWorker.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
+        url: "{{- include "rasa.worker.url" .}}"
         token: ${RASA_TOKEN}
+{{- end }}

@@ -135,11 +135,41 @@ Return the name of config map which stores the nginx agreement.
 "{{ .Release.Name }}-agreement"
 {{- end -}}
 
+
+{{/*
+Return the name of the standard config map which stores the nginx config.
+*/}}
+{{- define "rasa-x.nginx.standard-conf" -}}
+"{{ .Release.Name }}-nginx-standard-conf"
+{{- end -}}
+
+
+{{/*
+Return the name of the config map which stores the nginx config.
+*/}}
+{{- define "rasa-x.nginx.conf" -}}
+  {{- if .Values.nginx.customConfConfigMap -}}
+    {{- .Values.nginx.customConfConfigMap -}}
+  {{- else -}}
+   {{- template "rasa-x.nginx.standard-conf" . -}}
+  {{- end -}}
+{{- end -}}
+
+
 {{/*
 Return the port of the action container.
 */}}
 {{- define "rasa-x.custom-actions.port" -}}
 {{- default 5055 .Values.app.port -}}
+{{- end -}}
+
+{{/*
+Include duckling extra env vars.
+*/}}
+{{- define "duckling.extra.envs" -}}
+  {{- if .Values.duckling.extraEnvs -}}
+{{ toYaml .Values.duckling.extraEnvs }}
+  {{- end -}}
 {{- end -}}
 
 {{/*
@@ -157,6 +187,15 @@ Include rasax extra env vars.
 {{- define "rasax.extra.envs" -}}
   {{- if .Values.rasax.extraEnvs -}}
 {{ toYaml .Values.rasax.extraEnvs }}
+  {{- end -}}
+{{- end -}}
+
+{{/*
+Include additional rabbit queues
+*/}}
+{{- define "rasa.additionalRabbitQueues" -}}
+  {{- if .Values.rasa.additionalRabbitQueues -}}
+{{ toYaml .Values.rasa.additionalRabbitQueues }}
   {{- end -}}
 {{- end -}}
 
@@ -273,6 +312,9 @@ initContainers:
 - name: init-db
   image: {{ .Values.dbMigrationService.initContainer.image }}
   command:
+  {{- if .Values.dbMigrationService.initContainer.command }}
+  {{- toYaml .Values.dbMigrationService.initContainer.command | nindent 2 }}
+  {{ else }}
   - 'sh'
   - '-c'
   - "apk update --no-cache && \
@@ -286,6 +328,7 @@ initContainers:
     sleep 5; \
     done; \
     echo The database migration status: completed...100%"
+{{- end }}
 {{- end -}}
 {{- end -}}
 
@@ -294,4 +337,51 @@ Return the rasa x image name value as a default if the dbMigrationService.name v
 */}}
 {{- define "dbMigrationService-name" -}}
 {{ .Values.dbMigrationService.name | default .Values.rasax.name }}
+{{- end -}}
+
+{{/*
+Return the appropriate apiVersion for networkpolicy.
+*/}}
+{{- define "networkPolicy.apiVersion" -}}
+{{- if semverCompare ">=1.4-0, <1.7-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- print "extensions/v1beta1" -}}
+{{- else -}}
+{{- print "networking.k8s.io/v1" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return DNS policy depends on host network configuration
+*/}}
+{{- define "rasa-x.dnsPolicy" -}}
+{{- if and .Values.rasax.hostNetwork (empty .Values.rasax.dnsPolicy) -}}
+{{- print "ClusterFirstWithHostNet" -}}
+{{- else if and (not .Values.rasax.hostNetwork) (empty .Values.rasax.dnsPolicy) -}}
+{{- print "ClusterFirst" -}}
+{{- else if .Values.rasax.dnsPolicy -}}
+{{- .Values.rasax.dnsPolicy -}}
+{{- end -}}
+{{- end -}}
+
+
+{{/*
+Return 'true' if the production environment is used.
+*/}}
+{{- define "rasa-x.production.env.used" -}}
+{{- if or .Values.rasa.versions.rasaProduction.enabled .Values.rasa.versions.rasaProduction.external.enabled  -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return 'true' if the worker environment is used.
+*/}}
+{{- define "rasa-x.worker.env.used" -}}
+{{- if or .Values.rasa.versions.rasaWorker.enabled .Values.rasa.versions.rasaWorker.external.enabled  -}}
+{{- print "true" -}}
+{{- else -}}
+{{- print "false" -}}
+{{- end -}}
 {{- end -}}

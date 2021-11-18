@@ -1,15 +1,15 @@
 ---
 apiVersion: v2
 
-version: "1.8.1"
+version: "2.8.0"
 
-appVersion: "0.35.0"
+appVersion: "0.42.4"
 
 name: rasa-x
 description: Rasa X Helm chart for Kubernetes / Openshift
 home: https://github.com/RasaHQ/rasa-x-helm
 
-icon: "https://rasa.com/static/rasa-logo-square-ef3444fc36faec97ae8bd7bfb568996d.svg"
+icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU"
 
 keywords:
 - "Rasa"
@@ -37,3 +37,9 @@ dependencies:
   version: ~6.19.2
   repository: https://charts.bitnami.com/bitnami
   condition: rabbitmq.install
+
+annotations:
+  # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
+  artifacthub.io/changes: |
+    - kind: added
+      description: Add a network policy for rabbitmq clustering

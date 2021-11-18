@@ -13,6 +13,7 @@ on:
 
 env:
   CHART: charts/rasa-x
+  INSTALL_K3S_VERSION: v1.21.4+k3s1
 
 jobs:
   lint-test:
@@ -68,6 +69,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
+      
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
 
     - name: Setup k3s
       run: |
@@ -139,7 +147,7 @@ jobs:
       run: |
         kubectl wait \
           --for=condition=available \
-          --timeout=10m \
+          --timeout=20m \
           -l "app.kubernetes.io/component=rasa-x" deployment
 
         # add external IP address and host name to /etc/hosts
@@ -151,11 +159,18 @@ jobs:
           sleep 5
         done
 
+        until [[ $(curl -s http://${HOST}/api/health | tee /tmp/output_health.txt | jq -r .production.status) -eq 200 ]]
+        do
+          cat /tmp/output_health.txt || true
+          sleep 5
+        done
+
     - name: Log pod status for debugging 🖥
       if: failure()
       run: |
         kubectl get pods
         kubectl get svc
+        kubectl logs rasa-x-postgresql-0
         df -h
 
     - name: Validate that logging in works ✅

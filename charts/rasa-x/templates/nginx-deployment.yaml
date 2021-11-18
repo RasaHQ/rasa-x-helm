@@ -15,6 +15,8 @@ spec:
       app.kubernetes.io/component: nginx
   template:
     metadata:
+      annotations:
+        checksum/nginx-config: {{ include (print $.Template.BasePath "/nginx-conf-configmap.yaml") $ | sha256sum }}
       labels:
         {{- include "rasa-x.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: nginx
@@ -34,50 +36,74 @@ spec:
       {{- end }}
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag | default (include "rasa-x.version" .) }}"
+        image: "{{ .Values.nginx.name }}:{{ .Values.nginx.tag }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
-        {{- if .Values.nginx.command }}
         command:
+        {{- if .Values.nginx.command }}
           {{- toYaml .Values.nginx.command | nindent 10 }}
         {{- end }}
-        {{- if .Values.nginx.args }}
         args:
+        {{- if .Values.nginx.args }}
           {{- toYaml .Values.nginx.args | nindent 10 }}
         {{- end }}
         ports:
         - name: "http"
           containerPort: 8080
           protocol: "TCP"
+        {{- if or .Values.nginx.livenessProbe.enabled (not (hasKey .Values.nginx.livenessProbe "enabled")) }}
         livenessProbe:
           exec:
+          {{- if .Values.nginx.livenessProbe.command }}
             command:
-            - curl
-            - localhost:8080/nginx_status
+            {{- toYaml .Values.nginx.livenessProbe.command | nindent 12 }}
+          {{- else }}
+            command:
+              - curl
+              - localhost:8080/nginx_status
+          {{- end }}
           initialDelaySeconds: {{ .Values.nginx.livenessProbe.initialProbeDelay }}
           failureThreshold: 10
+        {{- end }}
+        {{- if or .Values.nginx.readinessProbe.enabled (not (hasKey .Values.nginx.readinessProbe "enabled")) }}
         readinessProbe:
           exec:
+          {{- if .Values.nginx.readinessProbe.command }}
             command:
-            - curl
-            - localhost:8080/nginx_status
+            {{- toYaml .Values.nginx.readinessProbe.command | nindent 12 }}
+          {{- else }}
+            command:
+              - curl
+              - localhost:8080/nginx_status
+          {{- end }}
           initialDelaySeconds: {{ .Values.nginx.readinessProbe.initialProbeDelay }}
+        {{- end }}
         env:
+        - name: "NGINX_ENVSUBST_TEMPLATE_SUFFIX"
+          value: ".template"
+        - name: "RASA_PRODUCTION_URL"
+          value: "{{ include "rasa.production.url" .}}"
         - name: "RASA_X_HOST"
           value: "{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}"
-        - name: "RASA_PRODUCTION_HOST"
-          value: "{{ include "rasa-x.fullname" . }}-{{ .Values.rasa.versions.rasaProduction.serviceName }}.{{ .Release.Namespace }}.svc:{{ .Values.rasa.port }}"
-        - name: "CUSTOM_ACTION_HOST"
-          value: "{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}"
         volumeMounts:
 {{- if .Values.nginx.extraVolumeMounts }}
 {{ toYaml .Values.nginx.extraVolumeMounts | indent 8 }}
 {{- end }}
-        - mountPath: "/opt/bitnami/nginx/conf/bitnami/terms"
+        - mountPath: "/etc/nginx/terms/agree.txt"
           name: "agreement"
+          subPath: "agree.txt"
+        - name: "nginx-conf"
+          mountPath: "/etc/nginx/nginx.conf"
+          subPath: "nginx.conf"
+        - name: "nginx-ssl-conf"
+          mountPath: "/etc/nginx/templates/ssl.conf.template"
+          subPath: "ssl.conf.template"
+        - name: "rasax-nginx"
+          mountPath: "/etc/nginx/templates/rasax.nginx.template"
+          subPath: "rasax.nginx.template"
         {{ if .Values.nginx.certificateSecret }}
         - name: "certificates"
           readOnly: true
-          mountPath: "/opt/bitnami/certs"
+          mountPath: "/etc/nginx/certs"
         {{ end }}
         {{- with .Values.nginx.resources }}
         resources:
@@ -93,6 +119,24 @@ spec:
             path: "agree.txt"
           name: {{ template "rasa-x.nginx.agreement" . }}
         name: "agreement"
+      - configMap:
+          items:
+          - key: "nginx.conf"
+            path: "nginx.conf"
+          name: {{ template "rasa-x.nginx.conf" . }}
+        name: "nginx-conf"
+      - configMap:
+          items:
+          - key: "ssl.conf.template"
+            path: "ssl.conf.template"
+          name: {{ template "rasa-x.nginx.conf" . }}
+        name: "nginx-ssl-conf"
+      - name: rasax-nginx
+        configMap:
+          items:
+          - key: "rasax.nginx.template"
+            path: "rasax.nginx.template"
+          name: {{ template "rasa-x.nginx.conf" . }}
       {{ if .Values.nginx.certificateSecret }}
       - name: "certificates"
         secret:
