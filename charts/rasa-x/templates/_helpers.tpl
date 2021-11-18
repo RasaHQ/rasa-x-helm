@@ -311,6 +311,10 @@ Return an init container for database migration.
 initContainers:
 - name: init-db
   image: {{ .Values.dbMigrationService.initContainer.image }}
+  {{- if .Values.dbMigrationService.initContainer.resources }}
+  resources:
+  {{- toYaml .Values.dbMigrationService.initContainer.resources | nindent 4 }}
+  {{- end }}
   command:
   {{- if .Values.dbMigrationService.initContainer.command }}
   {{- toYaml .Values.dbMigrationService.initContainer.command | nindent 2 }}
