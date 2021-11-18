@@ -4,6 +4,43 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: added
+          description: Add support for defining resources for the init-db container
+    apiVersion: v2
+    appVersion: 0.42.4
+    created: "2021-11-18T09:15:09.461169206Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.6.4
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.12
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~6.19.2
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 482bf6b982cc6d392dcc06ddae204abc65997d9fd1c95a0bde81604affd2b27b
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-2.9.0/rasa-x-2.9.0.tgz
+    version: 2.9.0
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
           description: Add a network policy for rabbitmq clustering
     apiVersion: v2
     appVersion: 0.42.4
@@ -3273,4 +3310,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2021-11-17T11:08:59.281828841Z"
+generated: "2021-11-18T09:15:09.462242633Z"
