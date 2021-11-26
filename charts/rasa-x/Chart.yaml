@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.9.0"
+version: "2.10.0"
 
 appVersion: "0.42.4"
 
@@ -41,5 +41,8 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Add support for defining resources for the init-db container
+    - kind: changed
+      description: Use the same image for the init-db container as for the main container
+      links:
+        - name: GitHub PR
+          url: https://github.com/RasaHQ/rasa-x-helm/pull/251
