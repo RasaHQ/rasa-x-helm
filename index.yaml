@@ -3,6 +3,46 @@ entries:
   rasa-x:
   - annotations:
       artifacthub.io/changes: |
+        - kind: changed
+          description: Use the same image for the init-db container as for the main container
+          links:
+            - name: GitHub PR
+              url: https://github.com/RasaHQ/rasa-x-helm/pull/251
+    apiVersion: v2
+    appVersion: 0.42.4
+    created: "2021-11-30T08:04:28.927700501Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.6.4
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.12
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~6.19.2
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 0e54c68de61cdfd678a67715ad31f65e8ba07276bd2d12ecab78db25bb2c189d
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-2.10.0/rasa-x-2.10.0.tgz
+    version: 2.10.0
+  - annotations:
+      artifacthub.io/changes: |
         - kind: added
           description: Add support for defining resources for the init-db container
     apiVersion: v2
@@ -3310,4 +3350,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2021-11-18T09:15:09.462242633Z"
+generated: "2021-11-30T08:04:28.928693808Z"
