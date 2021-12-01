@@ -6,13 +6,17 @@ metadata:
     {{ include "rasa-x.labels" . | nindent 4 }}
 data:
   environments: |
-{{- if or .Values.rasa.versions.rasaProduction.enabled .Values.rasa.versions.rasaProduction.external.enabled }}
+{{- if or (eq (include "rasa-x.production.env.used" .) "true") (eq (include "rasa-x.worker.env.used" .) "true") }}
     rasa:
+{{- else }}
+    rasa: {}
+{{- end }}
+{{- if eq (include "rasa-x.production.env.used" .) "true" }}
       production:
         url: "{{- include "rasa.production.url" .}}"
         token: ${RASA_TOKEN}
 {{- end }}
-{{- if or .Values.rasa.versions.rasaWorker.enabled .Values.rasa.versions.rasaWorker.external.enabled }}
+{{- if eq (include "rasa-x.worker.env.used" .) "true"  }}
       worker:
         url: "{{- include "rasa.worker.url" .}}"
         token: ${RASA_TOKEN}

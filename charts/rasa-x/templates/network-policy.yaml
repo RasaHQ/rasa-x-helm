@@ -471,7 +471,7 @@ spec:
       ports:
       - protocol: TCP
         port: {{ default 5673 .Values.eventService.port }}
-{{- if .Values.postgresql.install -}}
+{{ if .Values.postgresql.install -}}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -678,6 +678,38 @@ spec:
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
 metadata:
+  name: ingress-egress-from-rabbitmq-to-rabbitmq-clustering
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: rabbitmq
+  ingress:
+    - ports:
+        - port: 4369  # EPMD
+        - port: {{ default 5672 .Values.rabbitmq.service.port }}
+        - port: {{ .Values.rabbitmq.service.tlsPort }}
+        - port: {{ .Values.rabbitmq.service.distPort }}
+        - port: {{ .Values.rabbitmq.service.managerPort }}
+      from:
+        - podSelector:
+            matchLabels:
+              app: rabbitmq
+  egress:
+    - ports:
+        - port: 4369  # EPMD
+        - port: {{ default 5672 .Values.rabbitmq.service.port }}
+        - port: {{ .Values.rabbitmq.service.tlsPort }}
+        - port: {{ .Values.rabbitmq.service.distPort }}
+        - port: {{ .Values.rabbitmq.service.managerPort }}
+      to:
+        - podSelector:
+            matchLabels:
+              app: rabbitmq
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
   name: egress-from-rabbitmq-to-k8s-api
   namespace: {{ .Release.Namespace }}
 spec:
@@ -852,8 +884,8 @@ spec:
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
-{{- end -}}
-{{- if .Values.duckling.enabled -}}
+{{ end -}}
+{{ if .Values.duckling.enabled -}}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -894,22 +926,8 @@ spec:
       ports:
       - protocol: TCP
         port: {{ .Values.duckling.port }}
-{{- end -}}
-{{- if .Values.nginx.enabled -}}
----
-apiVersion: {{ template "networkPolicy.apiVersion" . }}
-kind: NetworkPolicy
-metadata:
-  name: ingress-egress-nginx-to-kubernetes-services
-  namespace: {{ .Release.Namespace }}
-spec:
-  policyTypes:
-    - Egress
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/component: nginx
-  egress:
-    - {}
+{{ end -}}
+{{ if .Values.nginx.enabled -}}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy

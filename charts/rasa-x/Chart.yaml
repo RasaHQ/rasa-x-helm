@@ -49,3 +49,5 @@ annotations:
       description: The rasa production deployment is disabled by default
     - kind: changed
       description: Ingress is disabled by default
+    - kind: changed
+      description: Default user is 'admin'
