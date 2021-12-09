@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.10.0"
+version: "2.11.0"
 
 appVersion: "0.42.6"
 
@@ -41,8 +41,13 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: changed
-      description: Use the same image for the init-db container as for the main container
+    - kind: security
+      description: Bump the app version to 0.42.6
       links:
-        - name: GitHub PR
-          url: https://github.com/RasaHQ/rasa-x-helm/pull/251
+        - name: Release notes
+          url: https://rasa.com/docs/rasa-x/changelog/rasa-x-changelog#0426---2021-11-23
+    - kind: security
+      description: Bump Rasa version to 2.8.15
+      links:
+        - name: Release notes
+          url: https://rasa.com/docs/rasa/changelog/
