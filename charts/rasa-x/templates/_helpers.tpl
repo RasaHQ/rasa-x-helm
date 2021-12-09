@@ -307,31 +307,25 @@ Returns the database migration service address
 Return an init container for database migration.
 */}}
 {{- define "initContainer.dbMigration" -}}
-{{ if and (eq "true" (include "db-migration-service.requiredVersion" .)) .Values.separateDBMigrationService }}
+{{ if and (eq "true" (include "db-migration-service.requiredVersion" .context )) .context.Values.separateDBMigrationService }}
 initContainers:
 - name: init-db
-  image: {{ .Values.dbMigrationService.initContainer.image }}
-  {{- if .Values.dbMigrationService.initContainer.resources }}
+  image: {{ .image }}
+  {{- if .context.Values.dbMigrationService.initContainer.resources }}
   resources:
-  {{- toYaml .Values.dbMigrationService.initContainer.resources | nindent 4 }}
+  {{- toYaml .context.Values.dbMigrationService.initContainer.resources | nindent 4 }}
   {{- end }}
   command:
-  {{- if .Values.dbMigrationService.initContainer.command }}
-  {{- toYaml .Values.dbMigrationService.initContainer.command | nindent 2 }}
+  {{- if .context.Values.dbMigrationService.initContainer.command }}
+  {{- toYaml .context.Values.dbMigrationService.initContainer.command | nindent 2 }}
   {{ else }}
-  - 'sh'
+  - '/bin/bash'
   - '-c'
-  - "apk update --no-cache && \
-    apk add jq curl && \
-    until nslookup {{ (include "db-migration-service.address" .) }} 1> /dev/null; do echo Waiting for the database migration service; sleep 2; done && \
-    until [[ \"$(curl -s http://{{ (include "db-migration-service.address" .) }}:{{ .Values.dbMigrationService.port }} | jq -r .status)\" == \"completed\" ]]; do \
-    STATUS_JSON=$(curl -s http://{{ (include "db-migration-service.address" .) }}:{{ .Values.dbMigrationService.port }}); \
-    PROGRESS_IN_PERCENT=$(echo $STATUS_JSON | jq -r .progress_in_percent); \
-    STATUS=$(echo $STATUS_JSON | jq -r .status); \
-    echo The database migration status: ${STATUS}...${PROGRESS_IN_PERCENT}%; \
-    sleep 5; \
-    done; \
-    echo The database migration status: completed...100%"
+  - 'until [[ "$(curl -s http://{{ (include "db-migration-service.address" .context) }}:{{ .context.Values.dbMigrationService.port }} | grep -c completed)" == "1" ]]; do
+    STATUS=$(curl -s http://{{ (include "db-migration-service.address" .context) }}:{{ .context.Values.dbMigrationService.port }});
+    if [[ -n "$STATUS" ]];then echo $STATUS; fi;
+    sleep 5;
+    done;'
 {{- end }}
 {{- end -}}
 {{- end -}}
