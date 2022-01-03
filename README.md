@@ -56,11 +56,11 @@ recommend to set at least these values:
 | `rabbitmq.rabbitmq.password`           | Password for RabbitMq.                                                                     | `test`             |
 | `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                      | `password`         |
 | `global.redis.password`                | Password for redis.                                                                        | `password`         |
-| `rasax.tag`                            | Version of Rasa X which you want to use.                                                   | `0.42.6`           |
-| `rasa.version`                         | Version of Rasa Open Source which you want to use.                                         | `2.8.15`            |
+| `rasax.tag`                            | Version of Rasa X which you want to use.                                                   | `1.0.0`           |
+| `rasa.version`                         | Version of Rasa Open Source which you want to use.                                         | `2.8.19`            |
 | `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty.         | ``                 |
 | `app.name`                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
-| `app.tag`                              | Tag of your action server image.                                                           | `0.42.6`           |
+| `app.tag`                              | Tag of your action server image.                                                           | `1.0.0`           |
 | `app.command`                          | Override the default command to run in the container.                                      | `[]`               |
 | `app.args`                             | Override the default arguments to run in the container.                                    | `[]`               |
 | `eventService.command`                 | Override the default command to run in the container.                                      | `[]`               |

@@ -1,9 +1,9 @@
 ---
 apiVersion: v2
 
-version: "2.11.0"
+version: "2.12.0"
 
-appVersion: "0.42.6"
+appVersion: "1.0.0"
 
 name: rasa-x
 description: Rasa X Helm chart for Kubernetes / Openshift
@@ -42,12 +42,12 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: security
-      description: Bump the app version to 0.42.6
+      description: Bump the app version to 1.0.0
       links:
         - name: Release notes
-          url: https://rasa.com/docs/rasa-x/changelog/rasa-x-changelog#0426---2021-11-23
+          url: https://rasa.com/docs/rasa-x/changelog/rasa-x-changelog#100---2021-12-02
     - kind: security
-      description: Bump Rasa version to 2.8.15
+      description: Bump Rasa version to 2.8.19
       links:
         - name: Release notes
           url: https://rasa.com/docs/rasa/changelog/
