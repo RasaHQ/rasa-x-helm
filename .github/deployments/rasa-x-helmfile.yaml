@@ -12,6 +12,10 @@ releases:
           disableTelemetry: true
           initialUser:
             password: {{ requiredEnv "INITIAL_USER_PASSWORD" }}
+      - rasa:
+           versions:
+            rasaProduction:
+              enabled: true
       - duckling:
           enabled: false
       - nginx:
