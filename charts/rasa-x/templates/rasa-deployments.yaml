@@ -42,7 +42,7 @@ spec:
       # The rasa service depends on the rasa x server, to make sure that the database is ready
       # and the rasa x server is fully operational we use the database migration service
       # to check migration status.
-      {{- include "initContainer.dbMigration" $ |  nindent 6 }}
+      {{- include "initContainer.dbMigration" (dict "context" $ "image" (printf "%s:%s" $.Values.rasa.name (include "rasa.tag" $))) |  nindent 6 }}
       containers:
       - name: {{ $.Chart.Name }}
         image: '{{ $.Values.rasa.name }}:{{ include "rasa.tag" $ }}'

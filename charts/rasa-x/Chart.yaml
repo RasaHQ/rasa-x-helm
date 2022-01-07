@@ -1,9 +1,9 @@
 ---
 apiVersion: v2
 
-version: "2.8.0"
+version: "3.0.0"
 
-appVersion: "0.42.4"
+appVersion: "1.0.0"
 
 name: rasa-x
 description: Rasa X Helm chart for Kubernetes / Openshift
@@ -41,5 +41,13 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Add a network policy for rabbitmq clustering
+    - kind: changed
+      description: Bump Rasa X version to 1.0.0
+    - kind: changed
+      description: Use PostgreSQL 12.8.0 as default
+    - kind: changed
+      description: The rasa production deployment is disabled by default
+    - kind: changed
+      description: Ingress is disabled by default
+    - kind: changed
+      description: Default user is 'admin'

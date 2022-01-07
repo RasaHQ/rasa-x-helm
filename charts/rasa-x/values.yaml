@@ -32,7 +32,7 @@ rasax:
   # initialUser is the user which is created upon the initial start of Rasa X
   initialUser:
     # username specifies a name of this user
-    username: "me"
+    username: "admin"
     # password for this user (leave it empty to skip the user creation)
     password: ""
   ## Enable persistence using Persistent Volume Claims
@@ -115,10 +115,14 @@ rasax:
   dnsPolicy: ""
 
 # rasa: Settings common for all Rasa containers
+# deprecated: the Rasa OSS deployment is deprecated and will be removed in the feature
+# from this chart.
+# It's recommended to use the rasa helm chart instead.
+# see: https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa#quick-start
 rasa:
   # version is the Rasa Open Source version which should be used.
   # Used to ensure backward compatibility with older Rasa Open Source versions.
-  version: "2.8.12"  # Please update the default value in the Readme when updating this
+  version: "2.8.15"  # Please update the default value in the Readme when updating this
   # disableTelemetry permanently disables telemetry
   disableTelemetry: false
   # override the default command to run in the container
@@ -211,7 +215,7 @@ rasa:
 
       # enable the rasa-production deployment
       # You can disable the rasa-production deployment in order to use external Rasa OSS deployment instead.
-      enabled: true
+      enabled: false
 
       # Define if external Rasa OSS should be used.
       external:
@@ -300,10 +304,10 @@ rasa:
 dbMigrationService:
   # initContainer describes settings related to the init-db container used as a init container for deployments
   initContainer:
-    # image is the Docker image which is used by the init container
-    image: alpine:3.12.3
     # command overrides the default command to run in the init container
     command: []
+    # resources which initContainer is required / allowed to use
+    resources: {}
   # command overrides the default command to run in the container
   command: []
   # args overrides the default arguments to run in the container
@@ -709,6 +713,10 @@ postgresql:
   # existingSecretKey is the key to get the password when an external postgresql instance is provided (`install: false`)
   existingSecretKey: ""
 
+  image:
+    # tag of PostgreSQL Image
+    tag: "12.8.0"
+
   # Configure security context for the postgresql init container
   # volumePermissions:
       ## Init container Security Context
@@ -776,7 +784,7 @@ ingress:
   # enabled should be `true` if you want to use this ingress.
   # Note that if `nginx.enabled` is `true` the `nginx` image is used as reverse proxy.
   # In order to use nginx ingress you have to set `nginx.enabled=false`.
-  enabled: true
+  enabled: false
   # annotations for the ingress - annotations are applied for the rasa and rasax ingresses
   annotations: {}
     # kubernetes.io/ingress.class: nginx
