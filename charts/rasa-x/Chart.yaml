@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "3.0.0"
+version: "3.1.0"
 
 appVersion: "1.0.1"
 
@@ -42,12 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: changed
-      description: Bump Rasa X version to 1.0.0
-    - kind: changed
-      description: Use PostgreSQL 12.8.0 as default
-    - kind: changed
-      description: The rasa production deployment is disabled by default
-    - kind: changed
-      description: Ingress is disabled by default
-    - kind: changed
-      description: Default user is 'admin'
+      description: Remove robots.txt from annotation
