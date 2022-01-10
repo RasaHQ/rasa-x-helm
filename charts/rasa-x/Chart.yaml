@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "2.11.0"
+version: "3.0.0"
 
 appVersion: "1.0.1"
 
@@ -41,13 +41,13 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: security
-      description: Bump the app version to 0.42.6
-      links:
-        - name: Release notes
-          url: https://rasa.com/docs/rasa-x/changelog/rasa-x-changelog#0426---2021-11-23
-    - kind: security
-      description: Bump Rasa version to 2.8.15
-      links:
-        - name: Release notes
-          url: https://rasa.com/docs/rasa/changelog/
+    - kind: changed
+      description: Bump Rasa X version to 1.0.0
+    - kind: changed
+      description: Use PostgreSQL 12.8.0 as default
+    - kind: changed
+      description: The rasa production deployment is disabled by default
+    - kind: changed
+      description: Ingress is disabled by default
+    - kind: changed
+      description: Default user is 'admin'

@@ -35,42 +35,110 @@ helm upgrade <your release name> rasa-x/rasa-x
 helm delete <your release name>
 ```
 
+## To 3.0.0
+
+The rasa-x-helm chart in version 3.0.0 introduces the following breaking changes:
+
+* Default version for PostgreSQL is 12.8.0.
+
+  PostgreSQL deployment for < 3.0.0 version of chart used PostgreSQL 11. In [this document](./docs/postgresql_migrate_from_11_12.md) you can find guide on how to migrate from PostgreSQL 11 to 12.
+
+* Ingress is disabled by default.
+
+  ```yaml
+  ingress:
+    enabled: false
+  ```
+
+* Default username for Rasa X is `admin`.
+
+* The Rasa production deployment is disabled by default and will be removed in the future.
+
+  ```yaml
+  rasa:
+    versions:
+      rasaProduction:
+        # the rasa production deployment is disabled by default.
+        enabled: false
+  ```
+
+  It's recommended to use tha rasa helm chart to deploy Rasa OSS. Visit [the rasa chart docs](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa) to learn more.
+
+  Before you upgrade the helm chart check [the migration guide](./docs/from_2_to_3_migration_guide.md).
+
+## To 2.0.0
+
+The rasa-x-helm chart in version 2.0.0 supports using an external Rasa OSS deployment.
+
+### Enabling an external Rasa OSS deployment
+
+The rasa-x-helm chart >= 2.0.0 supports an option to use an external Rasa OSS deployment.
+Below you can find an example of configuration that uses the external deployment.
+
+The following configuration disables the `rasa-production` deployment and uses an external deployment instead.
+
+```yaml
+  # versions of the Rasa container which are running
+  versions:
+    # rasaProduction is the container which serves the production environment
+    rasaProduction:
+
+      # enable the rasa-production deployment
+      # You can disable the rasa-production deployment to use external Rasa OSS deployment instead.
+      enabled: false
+
+      # Define if external Rasa OSS should be used.
+      external:
+        # enable external Rasa OSS
+        enabled: true
+
+        # URL address of external Rasa OSS deployment
+        url: "https://rasa-bot.external.deployment.domain.com"
+```
+
+Now you can apply your changes by using the `helm upgrade` command.
+
+> **_NOTE:_** Any Rasa Open Source server can stream events to Rasa X/Enterprise using an [event broker](https://rasa.com/docs/rasa/event-brokers). Both Rasa and Rasa X/Enterprise will need to refer to the same event broker.
+
+You can use the rasa-bot helm chart to deploy Rasa OSS. Visit [the rasa chart docs](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa) to learn more.
+
 ## Configuration
 
 All configurable values are documented in `values.yaml`. For a quick installation we
 recommend to set at least these values:
 
-| Parameter                            | Description                                                                                  | Default            |
-|--------------------------------------|----------------------------------------------------------------------------------------------|--------------------|
-| `rasax.passwordSalt`                   | Password salt which Rasa X uses for the user passwords.                                    | `passwordSalt`     |
-| `rasax.token`                          | Token which the Rasa X pod uses to authenticate requests from other pods.                  | `rasaXToken`       |
-| `rasax.command`                        | Override the default command to run in the container.                                      | `[]`               |
-| `rasax.args`                           | Override the default arguments to run in the container.                                    | `[]`               |
-| `rasax.jwtSecret`                      | Secret which is used to sign JWT tokens of Rasa X users.                                   | `jwtSecret`        |
-| `rasax.initialUser.username`           | **Only for Rasa Enterprise**. A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified). | `admin`            |
+|               Parameter                |                                                                                         Description                                                                                          |      Default       |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `rasax.passwordSalt`                   | Password salt which Rasa X uses for the user passwords.                                                                                                                                      | `passwordSalt`     |
+| `rasax.token`                          | Token which the Rasa X pod uses to authenticate requests from other pods.                                                                                                                    | `rasaXToken`       |
+| `rasax.command`                        | Override the default command to run in the container.                                                                                                                                        | `[]`               |
+| `rasax.args`                           | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
+| `rasax.jwtSecret`                      | Secret which is used to sign JWT tokens of Rasa X users.                                                                                                                                     | `jwtSecret`        |
+| `rasax.initialUser.username`           | **Only for Rasa Enterprise**. A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified).                                 | `admin`            |
 | `rasax.initialUser.password`           | Password for the initial user. If you use Rasa Enterprise and leave it empty, no users will be created. If you use Rasa CE and leave it empty, the password will be generated automatically. | `""`               |
-| `rasa.token`                           | Token which the Rasa pods use to authenticate requests from other pods.                    | `rasaToken`        |
-| `rasa.command`                         | Override the default command to run in the container.                                      | `[]`               |
-| `rasa.args`                            | Override the default arguments to run in the container.                                    | `[]`               |
-| `rasa.extraArgs`                       | Additional rasa arguments.                                                                 | `[]`               |
-| `rabbitmq.rabbitmq.password`           | Password for RabbitMq.                                                                     | `test`             |
-| `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                      | `password`         |
-| `global.redis.password`                | Password for redis.                                                                        | `password`         |
-| `rasax.tag`                            | Version of Rasa X which you want to use.                                                   | `0.42.6`           |
-| `rasa.version`                         | Version of Rasa Open Source which you want to use.                                         | `2.8.15`            |
-| `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty.         | ``                 |
-| `app.name`                             | Name of your action server image.                                                          | `rasa/rasa-x-demo` |
-| `app.tag`                              | Tag of your action server image.                                                           | `0.42.6`           |
-| `app.command`                          | Override the default command to run in the container.                                      | `[]`               |
-| `app.args`                             | Override the default arguments to run in the container.                                    | `[]`               |
-| `eventService.command`                 | Override the default command to run in the container.                                      | `[]`               |
-| `eventService.args`                    | Override the default arguments to run in the container.                                    | `[]`               |
-| `nginx.command`                        | Override the default command to run in the container.                                      | `[]`               |
-| `nginx.args`                           | Override the default arguments to run in the container.                                    | `[]`               |
-| `duckling.command`                     | Override the default command to run in the container.                                      | `[]`               |
-| `duckling.args`                        | Override the default arguments to run in the container.                                    | `[]`               |
-| `global.progressDeadlineSeconds`       | Specifies the number of seconds you want to wait for your Deployment to progress before the system reports back that the Deployment has failed progressing. | `600` |
-| `networkPolicy.enabled`                | If enabled, will generate NetworkPolicy configs for all combinations of internal ingress/egress | `false`               |
+| `rasa.token`                           | Token which the Rasa pods use to authenticate requests from other pods.                                                                                                                      | `rasaToken`        |
+| `rasa.command`                         | Override the default command to run in the container.                                                                                                                                        | `[]`               |
+| `rasa.args`                            | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
+| `rasa.extraArgs`                       | Additional rasa arguments.                                                                                                                                                                   | `[]`               |
+| `rabbitmq.rabbitmq.password`           | Password for RabbitMq.                                                                                                                                                                       | `test`             |
+| `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                                                                                                                        | `password`         |
+| `global.redis.password`                | Password for redis.                                                                                                                                                                          | `password`         |
+| `rasax.tag`                            | Version of Rasa X which you want to use.                                                                                                                                                     | `1.0.0`           |
+| `rasa.version`                         | Version of Rasa Open Source which you want to use.                                                                                                                                           | `2.8.1`            |
+| `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty.                                                                                                           | ``                 |
+| `app.name`                             | Name of your action server image.                                                                                                                                                            | `rasa/rasa-x-demo` |
+| `app.tag`                              | Tag of your action server image.                                                                                                                                                             | `0.42.0`           |
+| `app.command`                          | Override the default command to run in the container.                                                                                                                                        | `[]`               |
+| `app.args`                             | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
+| `eventService.command`                 | Override the default command to run in the container.                                                                                                                                        | `[]`               |
+| `eventService.args`                    | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
+| `nginx.command`                        | Override the default command to run in the container.                                                                                                                                        | `[]`               |
+| `nginx.args`                           | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
+| `duckling.command`                     | Override the default command to run in the container.                                                                                                                                        | `[]`               |
+| `duckling.args`                        | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
+| `global.progressDeadlineSeconds`       | Specifies the number of seconds you want to wait for your Deployment to progress before the system reports back that the Deployment has failed progressing.                                  | `600`              |
+| `networkPolicy.enabled`                | If enabled, will generate NetworkPolicy configs for all combinations of internal ingress/egress                                                                                              | `false`            |
+| `postgresql.image.tag` | The PostgreSQL Image tag | `12.8.0` |
 
 ## Where to get help
 
@@ -124,42 +192,6 @@ where `type` is the category of the change, `description` is a short sentence to
 - ...
 
 For more information, please see [here](https://github.com/lob/generate-changelog#usage).
-
-## To 2.0.0
-
-The rasa-x-helm chart in version 2.0.0 supports using an external Rasa OSS deployment.
-
-### Enabling an external Rasa OSS deployment
-
-The rasa-x-helm chart >= 2.0.0 supports an option to use an external Rasa OSS deployment.
-Below you can find an example of configuration that uses the external deployment.
-
-The following configuration disables the `rasa-production` deployment and uses an external deployment instead.
-
-```yaml
-  # versions of the Rasa container which are running
-  versions:
-    # rasaProduction is the container which serves the production environment
-    rasaProduction:
-
-      # enable the rasa-production deployment
-      # You can disable the rasa-production deployment to use external Rasa OSS deployment instead.
-      enabled: false
-
-      # Define if external Rasa OSS should be used.
-      external:
-        # enable external Rasa OSS
-        enabled: true
-
-        # URL address of external Rasa OSS deployment
-        url: "https://rasa-bot.external.deployment.domain.com"
-```
-
-Now you can apply your changes by using the `helm upgrade` command.
-
-> **_NOTE:_** Any Rasa Open Source server can stream events to Rasa X/Enterprise using an [event broker](https://rasa.com/docs/rasa/event-brokers). Both Rasa and Rasa X/Enterprise will need to refer to the same event broker.
-
-You can use the rasa-bot helm chart to deploy Rasa OSS. Visit [the rasa chart docs](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa) to learn more.
 
 ## License
 
