@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: changed
-      description: Remove robots.txt from annotation
+      description: Bump Rasa X version to 1.0.1
