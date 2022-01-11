@@ -35,6 +35,21 @@ helm upgrade <your release name> rasa-x/rasa-x
 helm delete <your release name>
 ```
 
+## To 4.0.0
+
+The rasa-x-helm chart in version 4.0.0 introduces the following breaking changes:
+
+Update chart dependencies to the latest available version:
+
+* Redis - Redis chart is update to version 15, below you can find listed a summary of major changes compare to the previous version used by the rasa-x-helm chart.
+
+  - Credentials parameter are reorganized under the `auth` parameter.
+  - The `cluster.enabled` parameter is deprecated in favor of `architecture` parameter that accepts two values: `standalone` and `replication`.
+  - `securityContext.*` is deprecated in favor of `XXX.podSecurityContext` and `XXX.containerSecurityContext` (`XXX` can be replaces with `master` or `replica`).
+  - `redis.redisPort` is deprecated in favor of `master.service.port` and `replica.service.port`.
+
+A full list of changes between versions for the Bitnami Redis chart can be found [here](https://artifacthub.io/packages/helm/bitnami/redis).
+
 ## To 3.0.0
 
 The rasa-x-helm chart in version 3.0.0 introduces the following breaking changes:

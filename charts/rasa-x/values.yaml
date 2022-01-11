@@ -757,27 +757,35 @@ rabbitmq:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
-# redis specific settings (https://hub.helm.sh/charts/bitnami/redis/10.5.14)
+# redis specific settings (https://artifacthub.io/packages/helm/bitnami/redis/15.7.2)
 redis:
   # Install should be `true` if the redis subchart should be used
   install: true
-  # cluster settings for redis (Rasa does currently not support redis sentinels)
-  cluster:
-    # set up a single Redis instance, as `redis-py` does not support clusters (https://github.com/andymccurdy/redis-py#cluster-mode)
-    enabled: false
-  # redisPort: port which should be used to expose redis to the other components
-  redisPort: 6379
-  # existingSecret which should be used for the password instead of putting it in the values file
-  existingSecret: ""
-  # existingSecretPasswordKey is the key to get the password when an external redis instance is provided
-  existingSecretPasswordKey: ""
+  # architecture defines an architecture type used for Redis deployment. Allowed values: standalone or replication (Rasa does currently not support redis sentinels)
+  # set up a single Redis instance, as `redis-py` does not support clusters (https://github.com/andymccurdy/redis-py#cluster-mode)
+  architecture: "standalone"
+  master:
+    service:
+      # port defines Redis master service port
+      port: 6379
+
+    # security context for the redis pod (please see the documentation of the subchart)
+    # podSecurityContext:
+    #  enabled: false
+    #  fsGroup: 1001
+
+    # security context for the redis container(please see the documentation of the subchart)
+    #containerSecurityContext:
+    #  enabled: false
+    #  fsGroup: 1001
+
+  auth:
+    # existingSecret which should be used for the password instead of putting it in the values file
+    existingSecret: ""
+    # existingSecretPasswordKey is the key to get the password when an external redis instance is provided
+    existingSecretPasswordKey: ""
   # existingHost is the host which is used when an external redis instance is provided (`install: false`)
   existingHost: ""
-  # # security context for the redis container (please see the documentation of the subchart)
-  # securityContext:
-  #   enabled: true
-  #   fsGroup: 1001
-  #   runAsUser: 1001
 
 # ingress settings
 ingress:

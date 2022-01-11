@@ -249,7 +249,7 @@ spec:
               app: redis
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -269,7 +269,7 @@ spec:
               app: redis
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -289,7 +289,7 @@ spec:
               app: redis
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -309,7 +309,7 @@ spec:
             app.kubernetes.io/component: event-service
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -329,7 +329,7 @@ spec:
               app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -349,7 +349,7 @@ spec:
               app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
