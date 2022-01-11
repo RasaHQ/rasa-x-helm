@@ -222,8 +222,8 @@ rasa:
         # enable external Rasa OSS
         enabled: false
 
-        # host of external Rasa OSS deployment
-        host: "http://rasa-bot"
+        # url of external Rasa OSS deployment
+        url: "http://rasa:5005"
 
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
