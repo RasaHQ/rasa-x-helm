@@ -150,7 +150,7 @@ rasa:
   additionalChannelCredentials: {}
     # rest:
     # facebook:
-    #   verify: "rasa-bot"
+    #   verify: "rasa"
     #   secret: "3e34709d01ea89032asdebfe5a74518"
     #   page-access-token: "EAAbHPa7H9rEBAAuFk4Q3gPKbDedQnx4djJJ1JmQ7CAqO4iJKrQcNT0wtD"
   # input channels

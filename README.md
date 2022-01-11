@@ -93,14 +93,14 @@ The following configuration disables the `rasa-production` deployment and uses a
         enabled: true
 
         # URL address of external Rasa OSS deployment
-        url: "https://rasa-bot.external.deployment.domain.com"
+        url: "https://rasa.external.deployment.domain.com"
 ```
 
 Now you can apply your changes by using the `helm upgrade` command.
 
 > **_NOTE:_** Any Rasa Open Source server can stream events to Rasa X/Enterprise using an [event broker](https://rasa.com/docs/rasa/event-brokers). Both Rasa and Rasa X/Enterprise will need to refer to the same event broker.
 
-You can use the rasa-bot helm chart to deploy Rasa OSS. Visit [the rasa chart docs](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa) to learn more.
+You can use the rasa helm chart to deploy Rasa OSS. Visit [the rasa chart docs](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa) to learn more.
 
 ## Configuration
 
