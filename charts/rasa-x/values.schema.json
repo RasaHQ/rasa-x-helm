@@ -9,18 +9,18 @@
             "$id": "#/properties/rabbitmq",
             "type": "object",
             "required": [
-                "rabbitmq"
+                "auth"
             ],
             "properties": {
-                "rabbitmq": {
-                    "$id": "#/properties/rabbitmq/properties/rabbitmq",
+                "auth": {
+                    "$id": "#/properties/rabbitmq/properties/auth",
                     "type": "object",
                     "required": [
                         "password"
                     ],
                     "properties": {
                         "password": {
-                            "$id": "#/properties/rabbitmq/properties/rabbitmq/properties/password",
+                            "$id": "#/properties/rabbitmq/properties/auth/properties/password",
                             "type": "string",
                             "title": "The RabbitMQ password schema",
                             "description": "RabbitMQ password shouldn't contain '#' character - https://www.rabbitmq.com/passwords.html#credential-validation-limitations.",

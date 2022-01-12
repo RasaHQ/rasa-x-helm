@@ -34,7 +34,7 @@ dependencies:
   condition: redis.install
 
 - name: rabbitmq
-  version: ~6.19.2
+  version: ~8.26.0
   repository: https://charts.bitnami.com/bitnami
   condition: rabbitmq.install
 

@@ -729,14 +729,14 @@ postgresql:
   #   fsGroup: 1001
   #   runAsUser: 1001
 
-# RabbitMQ specific settings (https://hub.helm.sh/charts/bitnami/rabbitmq/6.19.2)
+# RabbitMQ specific settings (https://artifacthub.io/packages/helm/bitnami/rabbitmq/8.26.0)
 rabbitmq:
   # Install should be `true` if the rabbitmq subchart should be used
   install: true
   # Enabled should be `true` if any version of rabbit is used
   enabled: true
-  # rabbitmq settings of the subchart
-  rabbitmq:
+
+  auth:
     # username which is used for the authentication
     username: "user"
     # password which is used for the authentication
@@ -752,7 +752,7 @@ rabbitmq:
   # existingPasswordSecretKey is the key to get the password when an external rabbitmq instance is provided (`install: false`)
   existingPasswordSecretKey: ""
   # # security context for the rabbitmq container (please see the documentation of the subchart)
-  # securityContext:
+  # podSecurityContext:
   #   enabled: true
   #   fsGroup: 1001
   #   runAsUser: 1001

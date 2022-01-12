@@ -35,7 +35,7 @@ data:
     event_broker:
       type: "pika"
       url: "{{ template "rasa-x.rabbitmq.host" . }}"
-      username: "{{ .Values.rabbitmq.rabbitmq.username }}"
+      username: "{{ .Values.rabbitmq.auth.username }}"
       password: ${RABBITMQ_PASSWORD}
       port: {{ default 5672 .Values.rabbitmq.service.port }}
       {{ if or (regexMatch ".*(a|rc)[0-9]+" .Values.rasa.version) (regexMatch "2.*[0-9]+-full" .Values.rasa.version) -}}

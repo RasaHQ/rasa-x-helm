@@ -39,16 +39,24 @@ helm delete <your release name>
 
 The rasa-x-helm chart in version 4.0.0 introduces the following breaking changes:
 
-Update chart dependencies to the latest available version:
+Update chart dependencies to the latest available version, below you can find listed a summary of major changes compared to the previous version used by the rasa-x-helm chart:
 
-* Redis - Redis chart is update to version 15, below you can find listed a summary of major changes compare to the previous version used by the rasa-x-helm chart.
+* Redis - the chart for Redis is updated to version 15.
 
   - Credentials parameter are reorganized under the `auth` parameter.
   - The `cluster.enabled` parameter is deprecated in favor of `architecture` parameter that accepts two values: `standalone` and `replication`.
   - `securityContext.*` is deprecated in favor of `XXX.podSecurityContext` and `XXX.containerSecurityContext` (`XXX` can be replaces with `master` or `replica`).
   - `redis.redisPort` is deprecated in favor of `master.service.port` and `replica.service.port`.
 
-A full list of changes between versions for the Bitnami Redis chart can be found [here](https://artifacthub.io/packages/helm/bitnami/redis).
+  A full list of changes between versions for the Bitnami Redis chart can be found [here](https://artifacthub.io/packages/helm/bitnami/redis).
+
+* RabbitMQ - the chart for RabbitMQ is updated to version 8.
+
+  - `securityContext.*` is deprecated in favor of `podSecurityContext` and `containerSecurityContext`.
+  - Authentication parameters were reorganized under the `auth.*` parameter:
+    - `rabbitmq.username`, `rabbitmq.password`, and `rabbitmq.erlangCookie` are now `auth.username`, `auth.password`, and `auth.erlangCookie` respectively.
+
+  A full list of changes between versions for the Bitnami RabbitMQ chart can be found [here](https://artifacthub.io/packages/helm/bitnami/rabbitmq).
 
 ## To 3.0.0
 
@@ -135,10 +143,10 @@ recommend to set at least these values:
 | `rasa.command`                         | Override the default command to run in the container.                                                                                                                                        | `[]`               |
 | `rasa.args`                            | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
 | `rasa.extraArgs`                       | Additional rasa arguments.                                                                                                                                                                   | `[]`               |
-| `rabbitmq.rabbitmq.password`           | Password for RabbitMq.                                                                                                                                                                       | `test`             |
+| `rabbitmq.auth.password`               | Password for RabbitMQ.                                                                                                                                                                       | `test`             |
 | `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                                                                                                                        | `password`         |
 | `global.redis.password`                | Password for redis.                                                                                                                                                                          | `password`         |
-| `rasax.tag`                            | Version of Rasa X which you want to use.                                                                                                                                                     | `1.0.1`           |
+| `rasax.tag`                            | Version of Rasa X which you want to use.                                                                                                                                                     | `1.0.1`            |
 | `rasa.version`                         | Version of Rasa Open Source which you want to use.                                                                                                                                           | `2.8.1`            |
 | `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty.                                                                                                           | ``                 |
 | `app.name`                             | Name of your action server image.                                                                                                                                                            | `rasa/rasa-x-demo` |
@@ -153,7 +161,7 @@ recommend to set at least these values:
 | `duckling.args`                        | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
 | `global.progressDeadlineSeconds`       | Specifies the number of seconds you want to wait for your Deployment to progress before the system reports back that the Deployment has failed progressing.                                  | `600`              |
 | `networkPolicy.enabled`                | If enabled, will generate NetworkPolicy configs for all combinations of internal ingress/egress                                                                                              | `false`            |
-| `postgresql.image.tag` | The PostgreSQL Image tag | `12.8.0` |
+| `postgresql.image.tag`                 | The PostgreSQL Image tag                                                                                                                                                                     | `12.8.0`           |
 
 ## Where to get help
 
@@ -204,7 +212,6 @@ where `type` is the category of the change, `description` is a short sentence to
 - style
 - test
 - doc
-- ...
 
 For more information, please see [here](https://github.com/lob/generate-changelog#usage).
 
