@@ -43,3 +43,9 @@ annotations:
   artifacthub.io/changes: |
     - kind: changed
       description: Update dependency for Redis to 15.7.2 version
+    - kind: changed
+      description: Update dependency for PostgreSQL to 10.15.1 version
+    - kind: changed
+      description: Update dependency for RabbitMQ to 8.26.0 version
+    - kind: changed
+      description: Change default PostgreSQL version from 12.8.0 to 12.9.0
