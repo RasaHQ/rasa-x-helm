@@ -1,0 +1,31 @@
+# Example values for OpenShift
+securityContext:
+  fsGroup: null
+
+nginx:
+  name: "nginxinc/nginx-unprivileged"
+  tag: "1.19.10"
+
+postgresql:
+  securityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+
+redis:
+  master:
+    podSecurityContext:
+      enabled: false
+      fsGroup: ""
+    containerSecurityContext:
+      enabled: false
+      runAsUser: "auto"
+  volumePermissions:
+    securityContext:
+      runAsUser: "auto"
+
+rabbitmq:
+  podSecurityContext:
+    enabled: false
+    fsGroup: ""
+    runAsUser: "auto"
