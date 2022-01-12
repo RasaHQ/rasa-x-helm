@@ -702,7 +702,7 @@ separateEventService: "true"
 # If set to 'false', Rasa X will run a database migration service as a subprocess.
 separateDBMigrationService: true
 
-# postgresql specific settings (https://hub.helm.sh/charts/bitnami/postgresql/8.6.13)
+# postgresql specific settings (https://artifacthub.io/packages/helm/bitnami/postgresql/10.15.1)
 postgresql:
   # Install should be `true` if the postgres subchart should be used
   install: true
