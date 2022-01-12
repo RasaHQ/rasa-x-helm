@@ -58,6 +58,13 @@ Update chart dependencies to the latest available version, below you can find li
 
   A full list of changes between versions for the Bitnami RabbitMQ chart can be found [here](https://artifacthub.io/packages/helm/bitnami/rabbitmq).
 
+* RabbitMQ - the chart for PostgreSQL is updated to version 10.
+
+  - Default PostgresSQL version is updated from `12.8.0` to `12.9.0` (a dump/restore is not required for those running 12.X)
+  - The term `master` has been replaced with `primary` and `slave` with `readReplicas` throughout the chart. Role names have changed from `master` and `slave` to `primary` and `read`.
+
+  A full list of changes between versions for the Bitnami RabbitMQ chart can be found [here](https://artifacthub.io/packages/helm/bitnami/postgresql).
+
 ## To 3.0.0
 
 The rasa-x-helm chart in version 3.0.0 introduces the following breaking changes:

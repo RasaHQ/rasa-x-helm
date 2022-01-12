@@ -715,7 +715,7 @@ postgresql:
 
   image:
     # tag of PostgreSQL Image
-    tag: "12.8.0"
+    tag: "12.9.0"
 
   # Configure security context for the postgresql init container
   # volumePermissions:
@@ -723,10 +723,12 @@ postgresql:
   #   securityContext:
   #     runAsUser: 0
 
-  ## Configure security context for the rabbitmq container
+  ## Configure security context for the postgresql pod
   # securityContext:
   #   enabled: true
   #   fsGroup: 1001
+  # containerSecurityContext:
+  #   enabled: true
   #   runAsUser: 1001
 
 # RabbitMQ specific settings (https://artifacthub.io/packages/helm/bitnami/rabbitmq/8.26.0)

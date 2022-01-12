@@ -24,7 +24,7 @@ maintainers:
 
 dependencies:
 - name: postgresql
-  version: ~8.6.4
+  version: ~10.15.1
   repository: https://charts.bitnami.com/bitnami
   condition: postgresql.install
 
