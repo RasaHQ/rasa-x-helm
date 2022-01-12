@@ -3,6 +3,43 @@ entries:
   rasa-x:
   - annotations:
       artifacthub.io/changes: |
+        - kind: fixed
+          description: Change incorrect field name from `rasa.versions.rasaXXX.external.host` to `rasa.versions.rasaXXX.external.url` in the values file.
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-01-12T08:59:11.060094745Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.6.4
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.5.12
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~6.19.2
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: ba8ac94a526134f046c0dce1be88fde0b972a036255f61d8a7dfbb97812d4da1
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-3.1.2/rasa-x-3.1.2.tgz
+    version: 3.1.2
+  - annotations:
+      artifacthub.io/changes: |
         - kind: changed
           description: Bump Rasa X version to 1.0.1
     apiVersion: v2
@@ -3514,4 +3551,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2022-01-10T18:09:02.39697556Z"
+generated: "2022-01-12T08:59:11.061096945Z"
