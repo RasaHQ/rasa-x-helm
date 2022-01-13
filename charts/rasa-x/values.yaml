@@ -772,7 +772,7 @@ redis:
       port: 6379
 
     # security context for the redis pod (please see the documentation of the subchart)
-    # podSecurityContext:
+    #podSecurityContext:
     #  enabled: false
     #  fsGroup: 1001
 

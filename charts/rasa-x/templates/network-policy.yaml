@@ -16,6 +16,130 @@ spec:
       port: 53
     - protocol: TCP
       port: 53
+{{ if .Values.rasa.versions.rasaProduction.enabled -}}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-rasa-production-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app.kubernetes.io/component: db-migration-service
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
+      ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-production-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: db-migration-service
+    - ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+{{ end }}
+{{ if .Values.rasa.versions.rasaWorker.enabled -}}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-rasa-worker-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app.kubernetes.io/component: db-migration-service
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
+      ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-worker-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: db-migration-service
+    - ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+{{ end }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-event-service-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app.kubernetes.io/component: db-migration-service
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: event-service
+      ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-event-service-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: event-service
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: db-migration-service
+    - ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
