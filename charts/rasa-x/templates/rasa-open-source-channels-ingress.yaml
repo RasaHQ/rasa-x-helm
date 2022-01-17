@@ -1,4 +1,4 @@
-{{- if and .Values.ingress.enabled (not .Values.nginx.enabled) -}}
+{{- if and .Values.ingress.enabled (not .Values.nginx.enabled) .Values.rasa.versions.rasaProduction.enabled -}}
 {{- $fullName := include "rasa-x.fullname" . -}}
 {{- if semverCompare ">=1.19" .Capabilities.KubeVersion.Version -}}
 apiVersion: networking.k8s.io/v1

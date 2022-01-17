@@ -265,8 +265,8 @@ rasa:
         # enable external Rasa OSS
         enabled: false
 
-        # host of external Rasa OSS deployment
-        host: "http://rasa-worker"
+        # url of external Rasa OSS deployment
+        url: "http://rasa-worker"
 
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
