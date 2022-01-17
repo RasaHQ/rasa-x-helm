@@ -48,7 +48,7 @@ Update chart dependencies to the latest available version, below you can find li
   - `securityContext.*` is deprecated in favor of `XXX.podSecurityContext` and `XXX.containerSecurityContext` (`XXX` can be replaces with `master` or `replica`).
   - `redis.redisPort` is deprecated in favor of `master.service.port` and `replica.service.port`.
 
-  A full list of changes between versions for the Bitnami Redis chart can be found [here](https://artifacthub.io/packages/helm/bitnami/redis).
+  A full list of changes between 10.5.14 and 15.7.4 versions for the Bitnami Redis chart can be found in the [changelog](https://artifacthub.io/packages/helm/bitnami/redis#to-15-0-0).
 
 * RabbitMQ - the chart for RabbitMQ is updated to version 8.
 
@@ -56,14 +56,14 @@ Update chart dependencies to the latest available version, below you can find li
   - Authentication parameters were reorganized under the `auth.*` parameter:
     - `rabbitmq.username`, `rabbitmq.password`, and `rabbitmq.erlangCookie` are now `auth.username`, `auth.password`, and `auth.erlangCookie` respectively.
 
-  A full list of changes between versions for the Bitnami RabbitMQ chart can be found [here](https://artifacthub.io/packages/helm/bitnami/rabbitmq).
+  A full list of changes between 6.19.2 and 8.26.0 versions for the Bitnami RabbitMQ chart can be found in the [changelog](https://artifacthub.io/packages/helm/bitnami/rabbitmq#to-8-21-0).
 
-* RabbitMQ - the chart for PostgreSQL is updated to version 10.
+* PostgreSQL - the chart for PostgreSQL is updated to version 10.
 
   - Default PostgresSQL version is updated from `12.8.0` to `12.9.0` (a dump/restore is not required for those running 12.X)
   - The term `master` has been replaced with `primary` and `slave` with `readReplicas` throughout the chart. Role names have changed from `master` and `slave` to `primary` and `read`.
 
-  A full list of changes between versions for the Bitnami RabbitMQ chart can be found [here](https://artifacthub.io/packages/helm/bitnami/postgresql).
+  A full list of changes between 6.19.2 and 8.26.0 versions for the Bitnami RabbitMQ chart can be found in the [changelog](https://artifacthub.io/packages/helm/bitnami/postgresql#to-8-0-0).
 
 ## To 3.0.0
 
