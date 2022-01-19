@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.0.0"
+version: "4.1.0"
 
 appVersion: "1.0.1"
 
@@ -41,13 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: changed
-      description: Update dependency for Redis to 15.7.2 version
-    - kind: changed
-      description: Update dependency for PostgreSQL to 10.15.1 version
-    - kind: changed
-      description: Update dependency for RabbitMQ to 8.26.0 version
-    - kind: changed
-      description: Change default PostgreSQL version from 12.8.0 to 12.9.0
-    - kind: fixed
-      description: Add network policies that allow for communication between Rasa OSS, Event Service deployments and db-migration-service
+    - kind: added
+      description: Add support for ingressClassName field
