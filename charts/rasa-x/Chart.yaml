@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "3.1.3"
+version: "3.2.0"
 
 appVersion: "1.0.1"
 
@@ -41,5 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: fixed
-      description: Don't create an ingress resource for Rasa OSS if Rasa OSS deployment is disabled.
+    - kind: added
+      description: Add support for ingressClassName field
