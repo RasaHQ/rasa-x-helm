@@ -3,6 +3,43 @@ entries:
   rasa-x:
   - annotations:
       artifacthub.io/changes: |
+        - kind: added
+          description: Add support for ingressClassName field
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-01-19T14:05:36.3724404Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.15.1
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~15.7.2
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.26.0
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 54cd68c6c4911f81bf5e37d813907ec055adea1680422b2926dd852a535566d1
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-4.1.0/rasa-x-4.1.0.tgz
+    version: 4.1.0
+  - annotations:
+      artifacthub.io/changes: |
         - kind: changed
           description: Update dependency for Redis to 15.7.2 version
         - kind: changed
@@ -3633,4 +3670,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2022-01-19T13:30:47.770446224Z"
+generated: "2022-01-19T14:05:36.37367859Z"
