@@ -786,9 +786,7 @@ ingress:
   # In order to use nginx ingress you have to set `nginx.enabled=false`.
   enabled: false
   # enable and set ingressClassName field in the ingress object.
-  ingressClass:
-    enabled: false
-    name: "nginx"
+  ingressClassName: ""
   # annotations for the ingress - annotations are applied for the rasa and rasax ingresses
   annotations: {}
     # kubernetes.io/ingress.class: nginx

@@ -20,8 +20,8 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.ingressClass.enabled -}}
-  ingressClassName: {{ .Values.ingress.ingressClass.name | quote }}
+{{- if .Values.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.ingress.ingressClassName | quote }}
 {{- end }}
 {{- if .Values.ingress.tls }}
   tls:
