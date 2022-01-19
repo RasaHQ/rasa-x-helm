@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "3.1.3"
+version: "4.0.0"
 
 appVersion: "1.0.1"
 
@@ -24,22 +24,30 @@ maintainers:
 
 dependencies:
 - name: postgresql
-  version: ~8.6.4
+  version: ~10.15.1
   repository: https://charts.bitnami.com/bitnami
   condition: postgresql.install
 
 - name: redis
-  version: ~10.5.12
+  version: ~15.7.2
   repository: https://charts.bitnami.com/bitnami
   condition: redis.install
 
 - name: rabbitmq
-  version: ~6.19.2
+  version: ~8.26.0
   repository: https://charts.bitnami.com/bitnami
   condition: rabbitmq.install
 
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
+    - kind: changed
+      description: Update dependency for Redis to 15.7.2 version
+    - kind: changed
+      description: Update dependency for PostgreSQL to 10.15.1 version
+    - kind: changed
+      description: Update dependency for RabbitMQ to 8.26.0 version
+    - kind: changed
+      description: Change default PostgreSQL version from 12.8.0 to 12.9.0
     - kind: fixed
-      description: Don't create an ingress resource for Rasa OSS if Rasa OSS deployment is disabled.
+      description: Add network policies that allow for communication between Rasa OSS, Event Service deployments and db-migration-service

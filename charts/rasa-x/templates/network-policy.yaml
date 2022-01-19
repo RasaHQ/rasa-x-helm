@@ -16,6 +16,130 @@ spec:
       port: 53
     - protocol: TCP
       port: 53
+{{ if .Values.rasa.versions.rasaProduction.enabled -}}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-rasa-production-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app.kubernetes.io/component: db-migration-service
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
+      ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-production-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: db-migration-service
+    - ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+{{ end }}
+{{ if .Values.rasa.versions.rasaWorker.enabled -}}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-rasa-worker-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app.kubernetes.io/component: db-migration-service
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
+      ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-rasa-worker-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: {{ .Values.rasa.versions.rasaWorker.serviceName }}
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: db-migration-service
+    - ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+{{ end }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: ingress-from-event-service-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Ingress
+  podSelector:
+   matchLabels:
+      app.kubernetes.io/component: db-migration-service
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: event-service
+      ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
+---
+apiVersion: {{ template "networkPolicy.apiVersion" . }}
+kind: NetworkPolicy
+metadata:
+  name: egress-from-event-service-to-db-migration-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  policyTypes:
+    - Egress
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: event-service
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+              app.kubernetes.io/component: db-migration-service
+    - ports:
+      - protocol: TCP
+        port: {{ .Values.dbMigrationService.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -246,10 +370,10 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: redis
+              app.kubernetes.io/name: redis
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -266,10 +390,10 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: redis
+              app.kubernetes.io/name: redis
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -286,10 +410,10 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: redis
+              app.kubernetes.io/name: redis
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -301,7 +425,7 @@ spec:
     - Ingress
   podSelector:
     matchLabels:
-      app: redis
+      app.kubernetes.io/name: redis
   ingress:
     - from:
       - podSelector:
@@ -309,7 +433,7 @@ spec:
             app.kubernetes.io/component: event-service
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -321,7 +445,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: redis
+      app.kubernetes.io/name: redis
   ingress:
     - from:
       - podSelector:
@@ -329,7 +453,7 @@ spec:
               app.kubernetes.io/component: {{ .Values.rasa.versions.rasaProduction.serviceName }}
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -341,7 +465,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: redis
+      app.kubernetes.io/name: redis
   ingress:
     - from:
       - podSelector:
@@ -349,7 +473,7 @@ spec:
               app.kubernetes.io/component: rasa-x
       ports:
       - protocol: TCP
-        port: {{ default 6379 .Values.redis.redisPort }}
+        port: {{ default 6379 .Values.redis.master.service.port }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -488,7 +612,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: postgresql
+              app.kubernetes.io/name: postgresql
       ports:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
@@ -503,7 +627,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: postgresql
+      app.kubernetes.io/name: postgresql
   ingress:
     - from:
       - podSelector:
@@ -528,7 +652,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: postgresql
+              app.kubernetes.io/name: postgresql
       ports:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
@@ -543,7 +667,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: postgresql
+      app.kubernetes.io/name: postgresql
   ingress:
     - from:
       - podSelector:
@@ -568,7 +692,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: postgresql
+              app.kubernetes.io/name: postgresql
       ports:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
@@ -583,7 +707,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: postgresql
+      app.kubernetes.io/name: postgresql
   ingress:
     - from:
       - podSelector:
@@ -608,7 +732,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: postgresql
+              app.kubernetes.io/name: postgresql
       ports:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
@@ -623,7 +747,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: postgresql
+      app.kubernetes.io/name: postgresql
   ingress:
     - from:
       - podSelector:
@@ -648,7 +772,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: postgresql
+              app.kubernetes.io/name: postgresql
       ports:
       - protocol: TCP
         port: {{ coalesce .Values.global.postgresql.servicePort 5432 }}
@@ -663,7 +787,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: postgresql
+      app.kubernetes.io/name: postgresql
   ingress:
     - from:
       - podSelector:
@@ -683,7 +807,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: rabbitmq
+      app.kubernetes.io/name: rabbitmq
   ingress:
     - ports:
         - port: 4369  # EPMD
@@ -694,7 +818,7 @@ spec:
       from:
         - podSelector:
             matchLabels:
-              app: rabbitmq
+              app.kubernetes.io/name: rabbitmq
   egress:
     - ports:
         - port: 4369  # EPMD
@@ -705,7 +829,7 @@ spec:
       to:
         - podSelector:
             matchLabels:
-              app: rabbitmq
+              app.kubernetes.io/name: rabbitmq
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy
@@ -717,7 +841,7 @@ spec:
     - Egress
   podSelector:
     matchLabels:
-      app: rabbitmq
+      app.kubernetes.io/name: rabbitmq
   egress:
   - ports:
       - protocol: TCP
@@ -740,7 +864,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: rabbitmq
+              app.kubernetes.io/name: rabbitmq
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
@@ -755,7 +879,7 @@ spec:
     - Ingress
   podSelector:
     matchLabels:
-      app: rabbitmq
+      app.kubernetes.io/name: rabbitmq
   ingress:
     - from:
       - podSelector:
@@ -780,7 +904,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: rabbitmq
+              app.kubernetes.io/name: rabbitmq
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
@@ -795,7 +919,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: rabbitmq
+      app.kubernetes.io/name: rabbitmq
   ingress:
     - from:
       - podSelector:
@@ -820,7 +944,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: rabbitmq
+              app.kubernetes.io/name: rabbitmq
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
@@ -835,7 +959,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: rabbitmq
+      app.kubernetes.io/name: rabbitmq
   ingress:
     - from:
       - podSelector:
@@ -860,7 +984,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-              app: rabbitmq
+              app.kubernetes.io/name: rabbitmq
       ports:
       - protocol: TCP
         port: {{ default 5672 .Values.rabbitmq.service.port }}
@@ -875,7 +999,7 @@ spec:
     - Ingress
   podSelector:
    matchLabels:
-      app: rabbitmq
+      app.kubernetes.io/name: rabbitmq
   ingress:
     - from:
       - podSelector:
