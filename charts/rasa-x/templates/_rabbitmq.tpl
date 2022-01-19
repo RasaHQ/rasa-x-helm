@@ -20,7 +20,7 @@ Return the rabbitmq host.
 Return the rabbitmq password secret name.
 */}}
 {{- define "rasa-x.rabbitmq.password.secret" -}}
-{{- default (include "rabbitmq.fullname" .) .Values.rabbitmq.rabbitmq.existingPasswordSecret | quote -}}
+{{- default (include "rabbitmq.fullname" .) .Values.rabbitmq.auth.existingPasswordSecret | quote -}}
 {{- end -}}
 
 {{/*
