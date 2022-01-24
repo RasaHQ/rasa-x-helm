@@ -118,7 +118,7 @@ rasax:
 
   # hostAliases defines additional entries to the hosts file.
   # ref: https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/#adding-additional-entries-with-hostaliases
-  hostAliases: {}
+  hostAliases: []
 
   # overrideHost overrides values of the RASA_X_HOST variable defined for the deployment
   overrideHost: ""
