@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.3.0"
+version: "4.3.1"
 
 appVersion: "1.0.1"
 
@@ -41,5 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Add support for setting hostAliases for the rasa-x deployment
+    - kind: fixed
+      description: Set empty table as a default value for the rasax.hostAliases field
