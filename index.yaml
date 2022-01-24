@@ -3,6 +3,43 @@ entries:
   rasa-x:
   - annotations:
       artifacthub.io/changes: |
+        - kind: fixed
+          description: Set empty table as a default value for the rasax.hostAliases field
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-01-24T13:48:17.289146174Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.15.1
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~15.7.2
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.26.0
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 8a98874f99c3988e767052c0c2abe2017b12d2b33c1731c69b8eee06d906e3ea
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-4.3.1/rasa-x-4.3.1.tgz
+    version: 4.3.1
+  - annotations:
+      artifacthub.io/changes: |
         - kind: added
           description: Add support for setting hostAliases for the rasa-x deployment
     apiVersion: v2
@@ -3744,4 +3781,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2022-01-24T09:53:01.175956149Z"
+generated: "2022-01-24T13:48:17.299387034Z"
