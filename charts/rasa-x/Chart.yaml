@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.1.0"
+version: "4.3.0"
 
 appVersion: "1.0.1"
 
@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: added
-      description: Add support for ingressClassName field
+      description: Add support for setting hostAliases for the rasa-x deployment

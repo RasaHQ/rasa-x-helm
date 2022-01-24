@@ -114,6 +114,10 @@ rasax:
   # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
   dnsPolicy: ""
 
+  # hostAliases defines additional entries to the hosts file.
+  # ref: https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/#adding-additional-entries-with-hostaliases
+  hostAliases: {}
+
 # rasa: Settings common for all Rasa containers
 # deprecated: the Rasa OSS deployment is deprecated and will be removed in the feature
 # from this chart.
