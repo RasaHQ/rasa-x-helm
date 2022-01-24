@@ -91,7 +91,11 @@ spec:
         - name: "LOCAL_MODE" # This variable doesn't do anything anymore in Rasa X 0.28 and later
           value: "false"
         - name: "RASA_X_HOST"
+          {{- if empty .Values.rasax.overrideHost }}
           value: {{ .Values.rasax.scheme }}://{{ include "rasa-x.host" . }}.{{ .Release.Namespace }}.svc:{{ .Values.rasax.port }}
+          {{- else }}
+          value: {{ .Values.rasax.overrideHost }}
+          {{- end }}
         - name: "RASA_MODEL_DIR"
           value: "/app/models"
         - name: "RUN_EVENT_CONSUMER_AS_SEPARATE_SERVICE"

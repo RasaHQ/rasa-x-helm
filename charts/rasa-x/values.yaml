@@ -102,6 +102,8 @@ rasax:
   service:
     # annotations for the service
     annotations: {}
+    # type sets type of the service
+    type: "ClusterIP"
 
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
@@ -113,6 +115,9 @@ rasax:
   # dnsPolicy specifies Pod's DNS policy
   # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
   dnsPolicy: ""
+
+  # overrideHost overrides values of the RASA_X_HOST variable defined for the deployment
+  overrideHost: ""
 
 # rasa: Settings common for all Rasa containers
 # deprecated: the Rasa OSS deployment is deprecated and will be removed in the feature
