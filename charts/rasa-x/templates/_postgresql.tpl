@@ -64,6 +64,7 @@ postgresql-password
 Return the common database env variables.
 */}}
 {{- define "rasa-x.psql.envs" -}}
+{{- if or .Values.postgresql.install (and (not .Values.postgresql.install) .Values.postgresql.existingHost) -}}
 - name: "DB_USER"
   value: "{{ template "rasa-x.psql.username" . }}"
 - name: "DB_HOST"
@@ -77,4 +78,5 @@ Return the common database env variables.
     secretKeyRef:
       name: {{ template "rasa-x.psql.password.secret" . }}
       key: {{ template "rasa-x.psql.password.key" . }}
+{{- end -}}
 {{- end -}}
