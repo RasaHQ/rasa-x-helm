@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.3.1"
+version: "4.3.2"
 
 appVersion: "1.0.1"
 
@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: fixed
-      description: Set empty table as a default value for the rasax.hostAliases field
+      description: Don't include DB envs with credentials if the postgresql.install is set to false

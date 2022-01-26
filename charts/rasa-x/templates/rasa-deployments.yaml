@@ -100,11 +100,13 @@ spec:
         {{ end }}
         - name: "MPLCONFIGDIR"
           value: "/tmp/.matplotlib"
+        {{- if or $.Values.postgresql.install (and (not $.Values.postgresql.install) $.Values.postgresql.existingHost) }}
         - name: "DB_PASSWORD"
           valueFrom:
             secretKeyRef:
               name: {{ template "rasa-x.psql.password.secret" $ }}
               key: {{ template "rasa-x.psql.password.key" $ }}
+        {{- end }}
         - name: "DB_DATABASE"
           value: {{ .trackerDatabase }}
         - name: "RASA_X_TOKEN"
