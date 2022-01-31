@@ -30,6 +30,9 @@ metadata:
     nginx.ingress.kubernetes.io/server-snippet: |
       add_header X-Robots-Tag none;
 spec:
+{{- if .Values.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.ingress.ingressClassName | quote }}
+{{- end }}
 {{- if .Values.ingress.tls }}
   tls:
   {{- range .Values.ingress.tls }}
