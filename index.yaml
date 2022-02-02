@@ -4,6 +4,43 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: fixed
+          description: Add ingressClassName field to rasa-x ingress
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-02-02T10:57:17.32238038Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.15.1
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~15.7.2
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.26.0
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: fd46579381b010f722bcbdb9867550fbfeffd2136a21f599ab50f48856dc6678
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-4.3.3/rasa-x-4.3.3.tgz
+    version: 4.3.3
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
           description: Don't include DB envs with credentials if the postgresql.install is set to false
     apiVersion: v2
     appVersion: 1.0.1
@@ -3818,4 +3855,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2022-01-26T09:32:53.714731869Z"
+generated: "2022-02-02T10:57:17.323692794Z"
