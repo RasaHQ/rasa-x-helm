@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.3.3"
+version: "4.3.4"
 
 appVersion: "1.0.1"
 
@@ -41,5 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: fixed
-      description: Add ingressClassName field to rasa-x ingress
+    - kind: changed
+      description: Use new endpoint instead of deprecated one for RASA_MODEL_SERVER default value
