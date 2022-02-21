@@ -73,13 +73,13 @@ data:
     {{- if $.Values.redis.external }}
     lock_store:
       type: "redis"
-      url: {{ template "rasa-x.redis.host" . }}
+      url: {{ .Values.redis.existingHost }}
       port: {{ default 6379 .Values.redis.redisPort }}
       password: ${REDIS_PASSWORD}
       db: {{ default "1" .Values.rasa.lockStoreDatabase }}
     cache:
       type: "redis"
-      url: {{ template "rasa-x.redis.host" . }}
+      url: {{ .Values.redis.existingHost }}
       port: {{ default 6379 .Values.redis.redisPort }}
       password: ${REDIS_PASSWORD}
       db: {{ default "2" .Values.rasa.cacheDatabase }}
