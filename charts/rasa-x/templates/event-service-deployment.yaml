@@ -97,6 +97,14 @@ spec:
               name: {{ template "rasa-x.redis.password.secret" $ }}
               key: {{ template "rasa-x.redis.password.key" $ }}
         {{- end }}
+        {{- if $.Values.redis.external }}
+        - name: "REDIS_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.redis.password.secret" $ }}
+              key: {{ template "rasa-x.redis.password.key" $ }}
+        {{- end }}
+
         - name: "RASA_X_USER_ANALYTICS"
           value: "0"
         - name: "LOCAL_MODE" # This variable doesn't do anything anymore in Rasa X 0.28 and later
