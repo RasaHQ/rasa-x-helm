@@ -4,6 +4,43 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: changed
+          description: Add namespaceSelector to egress rule for allow-dns-access
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-02-24T13:48:38.332066198Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.15.1
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~15.7.2
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.26.0
+    description: Rasa X Helm chart for Kubernetes / Openshift
+    digest: 546d837ea992716f5f62c85eb9f0e5e6b22c3926b019d29e08207d0dca4d2f6b
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa X
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-4.4.0/rasa-x-4.4.0.tgz
+    version: 4.4.0
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
           description: Use new endpoint instead of deprecated one for RASA_MODEL_SERVER default value
     apiVersion: v2
     appVersion: 1.0.1
@@ -3892,4 +3929,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2022-02-10T16:31:23.426885317Z"
+generated: "2022-02-24T13:48:38.333377798Z"
