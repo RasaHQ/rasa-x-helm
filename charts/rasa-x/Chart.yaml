@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.3.4"
+version: "4.4.0"
 
 appVersion: "1.0.1"
 
@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: changed
-      description: Use new endpoint instead of deprecated one for RASA_MODEL_SERVER default value
+      description: Add namespaceSelector to egress rule for allow-dns-access

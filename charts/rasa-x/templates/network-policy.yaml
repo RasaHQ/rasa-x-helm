@@ -16,6 +16,10 @@ spec:
       port: 53
     - protocol: TCP
       port: 53
+    to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
 {{ if .Values.rasa.versions.rasaProduction.enabled -}}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
