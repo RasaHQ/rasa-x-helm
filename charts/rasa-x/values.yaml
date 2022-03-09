@@ -772,6 +772,10 @@ rabbitmq:
 redis:
   # Install should be `true` if the redis subchart should be used
   install: true
+  # if your redis is hosted external switch ('external: true')
+  # also switch above to ('install: false')
+  # please fill out the auth section below if you use an external hosted redis
+  external: false
   # architecture defines an architecture type used for Redis deployment. Allowed values: standalone or replication (Rasa does currently not support redis sentinels)
   # set up a single Redis instance, as `redis-py` does not support clusters (https://github.com/andymccurdy/redis-py#cluster-mode)
   architecture: "standalone"
@@ -789,6 +793,20 @@ redis:
     #containerSecurityContext:
     #  enabled: false
     #  fsGroup: 1001
+
+  # In case you use an external hosted redis, fill these values
+  # auth:
+  #  # existingSecret which should be used for the password instead of putting it in the values file
+  #  existingSecret: "rasax-redis"
+  #  # existingSecretPasswordKey is the key to get the password when an external redis instance is provided
+  #  existingSecretPasswordKey: "redis-password"
+  # existingHost: "redis.extern.host"
+
+  # existingHost is the host which is used when an external redis instance is provided (`install: false`)
+
+  # create the namespace beforehand running the deployment and create the secret via the following commands
+  # echo "<REDISPASSWORD>" > ./redis-password
+  # kubectl -n rasa create secret generic rasax-redis --from-file=./redis-password
 
   auth:
     # existingSecret which should be used for the password instead of putting it in the values file

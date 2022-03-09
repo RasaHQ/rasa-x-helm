@@ -70,6 +70,21 @@ data:
       db: {{ default "2" .Values.rasa.cacheDatabase }}
       key_prefix: "rasax_cache"
     {{- end }}
+    {{- if $.Values.redis.external }}
+    lock_store:
+      type: "redis"
+      url: {{ .Values.redis.existingHost }}
+      port: {{ default 6379 .Values.redis.redisPort }}
+      password: ${REDIS_PASSWORD}
+      db: {{ default "1" .Values.rasa.lockStoreDatabase }}
+    cache:
+      type: "redis"
+      url: {{ .Values.redis.existingHost }}
+      port: {{ default 6379 .Values.redis.redisPort }}
+      password: ${REDIS_PASSWORD}
+      db: {{ default "2" .Values.rasa.cacheDatabase }}
+      key_prefix: "rasax_cache"
+    {{- end }}
     {{- with .Values.rasa.additionalEndpoints }}
     {{ toYaml . | nindent 4 }}
     {{- end }}

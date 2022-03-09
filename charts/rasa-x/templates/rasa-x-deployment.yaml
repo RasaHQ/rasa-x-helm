@@ -120,6 +120,13 @@ spec:
               name: {{ template "rasa-x.redis.password.secret" $ }}
               key: {{ template "rasa-x.redis.password.key" $ }}
         {{- end }}
+        {{- if $.Values.redis.external }}
+        - name: "REDIS_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "rasa-x.redis.password.secret" $ }}
+              key: {{ template "rasa-x.redis.password.key" $ }}
+        {{- end }}
         - name: "PASSWORD_SALT"
           valueFrom:
             secretKeyRef:
