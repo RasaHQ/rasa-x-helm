@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.4.0"
+version: "4.4.1"
 
 appVersion: "1.0.1"
 
@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: changed
-      description: Add namespaceSelector to egress rule for allow-dns-access
+      description: Bugfix for external redis with credentials
