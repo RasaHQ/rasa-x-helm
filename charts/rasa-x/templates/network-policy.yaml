@@ -852,6 +852,10 @@ spec:
         port: 8443
       - protocol: TCP
         port: 443
+    {{- if .Values.networkPolicy.apiCIDR }}
+    to:
+      {{- toYaml .Values.networkPolicy.apiCIDR | nindent 6 }}
+    {{- end }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: NetworkPolicy

@@ -856,6 +856,11 @@ networkPolicy:
   #  - ipBlock:
   #      cidr: 0.0.0.0/0
 
+  # Allow for adding the specific k8s api IP/CIDR for the egress-from-rabbitmq-to-k8s-api NetworkPolicy
+  apiCIDR: null
+  #  - ipBlock:
+  #      cidr: 10.0.0.0/8
+
 # images: Settings for the images
 images:
   # pullPolicy to use when deploying images
