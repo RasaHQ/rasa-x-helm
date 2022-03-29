@@ -852,9 +852,9 @@ spec:
         port: 8443
       - protocol: TCP
         port: 443
-    {{- if .Values.networkPolicy.apiCIDR }}
+    {{- if .Values.networkPolicy.egress.apiCIDR }}
     to:
-      {{- toYaml .Values.networkPolicy.apiCIDR | nindent 6 }}
+      {{- toYaml .Values.networkPolicy.egress.apiCIDR | nindent 6 }}
     {{- end }}
 ---
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
@@ -1157,4 +1157,8 @@ spec:
     - ports:
       - protocol: TCP
         port: 443
+    {{- if .Values.networkPolicy.egress.rasaxToHttpsCIDR }}
+      to:
+        {{- toYaml .Values.networkPolicy.egress.rasaxToHttpsCIDR | nindent 6 }}
+    {{- end }}
 {{- end }}

@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.4.1"
+version: "4.5.0"
 
 appVersion: "1.0.1"
 
@@ -41,5 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: changed
-      description: Bugfix for external redis with credentials
+    - kind: added
+      description: Add support for defining target for the egress-from-rabbitmq-to-k8s-api and egress-from-rasa-x-to-https network policies.
