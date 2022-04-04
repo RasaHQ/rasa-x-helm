@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.5.1"
+version: "4.5.2"
 
 appVersion: "1.0.1"
 
@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: fix
-      description: Update the default value for nodeCIDR in values.yaml to address the table/non-table warning
+      description: Due to a missing newline a network policy was missing upon deployment
