@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.5.0"
+version: "4.5.1"
 
 appVersion: "1.0.1"
 
@@ -41,5 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Add support for defining target for the egress-from-rabbitmq-to-k8s-api and egress-from-rasa-x-to-https network policies.
+    - kind: fix
+      description: Update the default value for nodeCIDR in values.yaml to address the table/non-table warning
