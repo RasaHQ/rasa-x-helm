@@ -58,7 +58,7 @@ spec:
       - podSelector:
           matchLabels:
               app.kubernetes.io/component: db-migration-service
-    - ports:
+      ports:
       - protocol: TCP
         port: {{ .Values.dbMigrationService.port }}
 {{ end }}
@@ -100,7 +100,7 @@ spec:
       - podSelector:
           matchLabels:
               app.kubernetes.io/component: db-migration-service
-    - ports:
+      ports:
       - protocol: TCP
         port: {{ .Values.dbMigrationService.port }}
 {{ end }}
@@ -141,7 +141,7 @@ spec:
       - podSelector:
           matchLabels:
               app.kubernetes.io/component: db-migration-service
-    - ports:
+      ports:
       - protocol: TCP
         port: {{ .Values.dbMigrationService.port }}
 ---
