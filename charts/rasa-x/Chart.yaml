@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: fix
-      description: Due to a missing newline a network policy was missing upon deployment
+      description: Removed extra hyphen on 3 NetworkPolicies, fixed semverCompare for kube versions >= 1.19
