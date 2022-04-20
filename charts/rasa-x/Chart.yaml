@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.4.1"
+version: "4.5.0"
 
 appVersion: "1.1.0"
 
@@ -42,4 +42,7 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: changed
-      description: Bugfix for external redis with credentials
+      description: Bump Rasa X version to 1.1.0. This breaks backward compatibility of previously trained models with Rasa Open Source 2.
+      links:
+        - name: Rasa X Changelog
+          url: https://rasa.com/docs/rasa-x/changelog/rasa-x-changelog
