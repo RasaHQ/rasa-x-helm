@@ -26,7 +26,7 @@
                             "description": "RabbitMQ password shouldn't contain '#' character - https://www.rabbitmq.com/passwords.html#credential-validation-limitations.",
                             "default": "",
                             "examples": [
-                                "pa@@word"
+                                "password"
                             ],
                             "pattern": "^[a-zA-Z0-9-_!%^&*(),.?:{}|<>]+$"
                         }
