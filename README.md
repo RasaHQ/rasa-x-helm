@@ -1,14 +1,12 @@
-# Rasa X Helm Chart
+# Rasa Enterprise Helm Chart
 
 [![Join the chat on our Rasa Community Forum](https://img.shields.io/badge/forum-join%20discussions-brightgreen.svg)](https://forum.rasa.com/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/orgs/RasaHQ/projects/23)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/rasa-x)](https://artifacthub.io/packages/search?repo=rasa-x)
 
-[Rasa X](https://rasa.com/docs/rasa-x/) is a toolset that helps you leverage
-conversations to improve your [Rasa](https://rasa.com/docs/rasa) assistant.
-This Helm chart provides a quick, production-ready deployment of Rasa X in your cluster.
+[Rasa Enterprise](https://rasa.com/enterprise/) is a platform for multidisciplinary teams to create AI assistants that drive business value. This Helm chart provides a quick, production-ready deployment of Rasa Enterprise in your cluster.
 
-> **_NOTE:_** Please see the [Rasa X documentation](https://rasa.com/docs/rasa-x/installation-and-setup/install/helm-chart-installation/introduction/) for a detailed guide on usage and configuration of this chart.
+> **_NOTE:_** Please see the [Rasa Enterprise documentation](https://rasa.com/docs/rasa-enterprise/installation-and-setup/install/helm-chart-installation/installation) for a detailed guide on usage and configuration of this chart.
 
 ## Prerequisites
 
@@ -80,7 +78,7 @@ The rasa-x-helm chart in version 3.0.0 introduces the following breaking changes
     enabled: false
   ```
 
-* Default username for Rasa X is `admin`.
+* Default username for Rasa Enterprise is `admin`.
 
 * The Rasa production deployment is disabled by default and will be removed in the future.
 
@@ -128,7 +126,7 @@ The following configuration disables the `rasa-production` deployment and uses a
 
 Now you can apply your changes by using the `helm upgrade` command.
 
-> **_NOTE:_** Any Rasa Open Source server can stream events to Rasa X/Enterprise using an [event broker](https://rasa.com/docs/rasa/event-brokers). Both Rasa and Rasa X/Enterprise will need to refer to the same event broker.
+> **_NOTE:_** Any Rasa Open Source server can stream events to Rasa Enterprise using an [event broker](https://rasa.com/docs/rasa/event-brokers). Both Rasa and Rasa Enterprise will need to refer to the same event broker.
 
 You can use the rasa-bot helm chart to deploy Rasa OSS. Visit [the rasa chart docs](https://github.com/RasaHQ/helm-charts/tree/main/charts/rasa) to learn more.
 
@@ -139,11 +137,11 @@ recommend to set at least these values:
 
 |               Parameter                |                                                                                         Description                                                                                          |      Default       |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `rasax.passwordSalt`                   | Password salt which Rasa X uses for the user passwords.                                                                                                                                      | `passwordSalt`     |
-| `rasax.token`                          | Token which the Rasa X pod uses to authenticate requests from other pods.                                                                                                                    | `rasaXToken`       |
+| `rasax.passwordSalt`                   | Password salt which Rasa Enterprise uses for the user passwords.                                                                                                                                      | `passwordSalt`     |
+| `rasax.token`                          | Token which the Rasa Enterprise pod uses to authenticate requests from other pods.                                                                                                                    | `rasaXToken`       |
 | `rasax.command`                        | Override the default command to run in the container.                                                                                                                                        | `[]`               |
 | `rasax.args`                           | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
-| `rasax.jwtSecret`                      | Secret which is used to sign JWT tokens of Rasa X users.                                                                                                                                     | `jwtSecret`        |
+| `rasax.jwtSecret`                      | Secret which is used to sign JWT tokens of Rasa Enterprise users.                                                                                                                                     | `jwtSecret`        |
 | `rasax.initialUser.username`           | **Only for Rasa Enterprise**. A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified).                                 | `admin`            |
 | `rasax.initialUser.password`           | Password for the initial user. If you use Rasa Enterprise and leave it empty, no users will be created. If you use Rasa CE and leave it empty, the password will be generated automatically. | `""`               |
 | `rasa.token`                           | Token which the Rasa pods use to authenticate requests from other pods.                                                                                                                      | `rasaToken`        |
@@ -153,7 +151,7 @@ recommend to set at least these values:
 | `rabbitmq.auth.password`               | Password for RabbitMQ.                                                                                                                                                                       | `test`             |
 | `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                                                                                                                        | `password`         |
 | `global.redis.password`                | Password for redis.                                                                                                                                                                          | `password`         |
-| `rasax.tag`                            | Version of Rasa X which you want to use.                                                                                                                                                     | `1.0.1`            |
+| `rasax.tag`                            | Version of Rasa Enterprise which you want to use.                                                                                                                                                     | `1.0.1`            |
 | `rasa.version`                         | Version of Rasa Open Source which you want to use.                                                                                                                                           | `2.8.1`            |
 | `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty.                                                                                                           | ``                 |
 | `app.name`                             | Name of your action server image.                                                                                                                                                            | `rasa/rasa-x-demo` |
