@@ -6,7 +6,7 @@ version: "4.5.4"
 appVersion: "1.0.1"
 
 name: rasa-x
-description: Rasa X Helm chart for Kubernetes / Openshift
+description: Rasa Enterprise Helm chart for Kubernetes / Openshift
 home: https://github.com/RasaHQ/rasa-x-helm
 
 icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU"
@@ -15,7 +15,7 @@ keywords:
 - "Rasa"
 - "AI Assistants"
 - "Chatbot"
-- "Rasa X"
+- "Rasa Enterprise"
 
 maintainers:
 - name: "tmbo"
