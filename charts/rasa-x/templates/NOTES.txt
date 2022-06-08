@@ -1,7 +1,7 @@
 Thanks for installing Rasa Enterprise {{ .Values.rasax.tag }} !
 
 {{- if not .Values.rasax.initialUser.password }}
-Creating a Rasa X user: go to the terminal of the `rasa-x` pod and then
+Creating a Rasa Enterprise user: go to the terminal of the `rasa-x` pod and then
   execute `python scripts/manage_users.py create <your username> <your password> <role of your user>`.
   You can then log in using these credentials.
 {{- end }}
