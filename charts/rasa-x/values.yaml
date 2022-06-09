@@ -8,28 +8,28 @@ rasax:
   command: []
   # override the default arguments to run in the container
   args: []
-  # name of the Rasa X image to use
+  # name of the Rasa Enterprise image to use
   name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
-  # tag refers to the Rasa X image tag (uses `appVersion` by default)
+  # tag refers to the Rasa Enterprise image tag (uses `appVersion` by default)
   tag: ""
-  # port on which Rasa X runs
+  # port on which Rasa Enterprise runs
   port: 5002
-  # scheme by which Rasa X is accessible
+  # scheme by which Rasa Enterprise is accessible
   scheme: http
-  # passwordSalt Rasa X uses to salt the user passwords
+  # passwordSalt Rasa Enterprise uses to salt the user passwords
   passwordSalt: "passwordSalt"
-  # token Rasa X accepts as authentication token from other Rasa services
+  # token Rasa Enterprise accepts as authentication token from other Rasa services
   token: "rasaXToken"
   # jwtSecret which is used to sign the jwtTokens of the users
   jwtSecret: "jwtSecret"
-  # databaseName Rasa X uses to store data
+  # databaseName Rasa Enterprise uses to store data
   # (uses the value of global.postgresql.postgresqlDatabase by default)
   databaseName: ""
   # disableTelemetry permanently disables telemetry
   disableTelemetry: false
   # Jaeger Sidecar
   jaegerSidecar: "false"
-  # initialUser is the user which is created upon the initial start of Rasa X
+  # initialUser is the user which is created upon the initial start of Rasa Enterprise
   initialUser:
     # username specifies a name of this user
     username: "admin"
@@ -42,32 +42,32 @@ rasax:
     # access Modes of the pvc
     accessModes:
     - ReadWriteOnce
-    # size of the Rasa X volume claim
+    # size of the Rasa Enterprise volume claim
     size: 10Gi
-    # annotations for the Rasa X pvc
+    # annotations for the Rasa Enterprise pvc
     annotations: {}
     # finalizers for the pvc
     finalizers:
     - kubernetes.io/pvc-protection
     # existingClaim which should be used instead of a new one
     existingClaim: ""
-  # livenessProbe checks whether rasa x needs to be restarted
+  # livenessProbe checks whether Rasa Enterprise needs to be restarted
   livenessProbe:
     enabled: true
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
-  # readinessProbe checks whether rasa x can receive traffic
+  # readinessProbe checks whether rasa Enterprise can receive traffic
   readinessProbe:
     enabled: true
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
-  # resources which Rasa X is required / allowed to use
+  # resources which Rasa Enterprise is required / allowed to use
   resources: {}
-  # extraEnvs are environment variables which can be added to the Rasa X deployment
+  # extraEnvs are environment variables which can be added to the Rasa Enterprise deployment
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
@@ -98,7 +98,7 @@ rasax:
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
 
-  # service specifies settings for exposing rasa x to other services
+  # service specifies settings for exposing Rasa Enterprise to other services
   service:
     # annotations for the service
     annotations: {}
@@ -150,7 +150,7 @@ rasa:
   scheme: http
   # token Rasa accepts as authentication token from other Rasa services
   token: "rasaToken"
-  # rabbitQueue it should use to dispatch events to Rasa X
+  # rabbitQueue it should use to dispatch events to Rasa Enterprise
   rabbitQueue: "rasa_production_events"
   # Optional additional rabbit queues for e.g. connecting to an analytics stack
   additionalRabbitQueues: []
@@ -180,13 +180,13 @@ rasa:
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
-  # useLoginDatabase will use the Rasa X database to log in and create the database
+  # useLoginDatabase will use the Rasa Enterprise database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
   # previously.
   useLoginDatabase: true
   # lockStoreDatabase is the database in redis which Rasa uses to store the conversation locks
   lockStoreDatabase: "1"
-  # cacheDatabase is the database in redis which Rasa X uses to store cached values
+  # cacheDatabase is the database in redis which Rasa Enterprise uses to store cached values
   cacheDatabase: "2"
   # extraEnvs are environment variables which can be added to the Rasa deployment
   extraEnvs: []
@@ -309,7 +309,7 @@ rasa:
 
 
 # dbMigrationService specifies settings for the database migration service
-# The database migration service requires Rasa X >= 0.33.0
+# The database migration service requires Rasa Enterprise >= 0.33.0
 dbMigrationService:
   # initContainer describes settings related to the init-db container used as a init container for deployments
   initContainer:
@@ -323,9 +323,9 @@ dbMigrationService:
   args: []
   # name is the Docker image name which is used by the migration service (uses `rasax.name` by default)
   name: ""  # gcr.io/rasa-platform/rasa-x-ee
-  # tag refers to the Rasa X image tag (uses `appVersion` by default)
+  # tag refers to the Rasa Enterprise image tag (uses `appVersion` by default)
   tag: ""
-  # ignoreVersionCheck defines if check required minimum Rasa X version that is required to run the service
+  # ignoreVersionCheck defines if check required minimum Rasa Enterprise version that is required to run the service
   ignoreVersionCheck: false
   # port on which which to run the readiness endpoint
   port: 8000
@@ -374,7 +374,7 @@ dbMigrationService:
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
     scheme: "HTTP"
-  # readinessProbe checks whether rasa x can receive traffic
+  # readinessProbe checks whether Rasa Enterprise can receive traffic
   readinessProbe:
     enabled: true
     # initialProbeDelay for the `readinessProbe`
@@ -392,9 +392,9 @@ eventService:
   command: []
   # override the default arguments to run in the container
   args: []
-  # event service just uses the Rasa X image
+  # event service just uses the Rasa Enterprise image
   name: "rasa/rasa-x"  # gcr.io/rasa-platform/rasa-x-ee
-  # tag refers to the Rasa X image tag (uses `appVersion` by default)
+  # tag refers to the Rasa Enterprise image tag (uses `appVersion` by default)
   tag: ""
   # port on which which to run the readiness endpoint
   port: 5673
@@ -547,7 +547,7 @@ nginx:
   # enabled should be `true` if you want to use nginx
   # if you set false, you will need to set up some other method of routing (VirtualService/Ingress controller)
   enabled: true
-  # subPath defines the subpath used by Rasa X (ROOT_URL), e.g /rasa-x
+  # subPath defines the subpath used by Rasa Enterprise (ROOT_URL), e.g /rasa-x
   subPath: ""
   # override the default command to run in the container
   command: []
@@ -583,7 +583,7 @@ nginx:
     command: []
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
-  # readinessProbe checks whether rasa x can receive traffic
+  # readinessProbe checks whether Rasa Enterprise can receive traffic
   readinessProbe:
     enabled: true
     # command for the `readinessProbe`
@@ -699,16 +699,16 @@ duckling:
 # If no secret is provided, a secret will be generated.
 rasaSecret: ""
 
-# debugMode enables / disables the debug mode for Rasa and Rasa X
+# debugMode enables / disables the debug mode for Rasa Open Source and Rasa Enterprise
 debugMode: false
 
 # separateEventService value determines whether the eventService will be run as a separate service.
-# If set to 'false', Rasa X will run an event service as a subprocess (not recommended
+# If set to 'false', Rasa Enterprise will run an event service as a subprocess (not recommended
 # high-load setups).
 separateEventService: "true"
 
 # separateDBMigrationService value determines whether the dbMigrationService will be run as a separate service.
-# If set to 'false', Rasa X will run a database migration service as a subprocess.
+# If set to 'false', Rasa Enterprise will run a database migration service as a subprocess.
 separateDBMigrationService: true
 
 # postgresql specific settings (https://artifacthub.io/packages/helm/bitnami/postgresql/10.15.1)
@@ -830,7 +830,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   # annotationsRasa is extra annotations for the rasa nginx ingress
   annotationsRasa: {}
-  # annotationsRasaX is extra annotations for the rasa x nginx ingress
+  # annotationsRasaX is extra annotations for the Rasa Enterprise nginx ingress
   annotationsRasaX:
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
@@ -902,7 +902,7 @@ global:
     postgresqlPassword: "password"
     # existingSecret which should be used for the password instead of putting it in the values file
     existingSecret: ""
-    # postgresDatabase which should be used by Rasa X
+    # postgresDatabase which should be used by Rasa Enterprise
     postgresqlDatabase: "rasa"
     # servicePort which is used to expose postgres to the other components
     servicePort: 5432

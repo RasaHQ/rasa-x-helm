@@ -1,15 +1,10 @@
-Thanks for installing Rasa X {{ .Values.rasax.tag }} !
+Thanks for installing Rasa Enterprise {{ .Values.rasax.tag }} !
 
 {{- if not .Values.rasax.initialUser.password }}
-Creating a Rasa X user:
-
-- Rasa X CE: go to the terminal of the `rasa-x` pod and then
-  execute `python scripts/manage_users.py create --update admin <your password> admin`
-  to set your password
-- Rasa X EE: go to the terminal of the `rasa-x` pod and then
+Creating a Rasa Enterprise user: go to the terminal of the `rasa-x` pod and then
   execute `python scripts/manage_users.py create <your username> <your password> <role of your user>`.
   You can then log in using these credentials.
 {{- end }}
 
-Check out the Rasa X docs here for more help:
-https://rasa.com/docs/rasa-x/
+Check out the Rasa Enterprise docs here for more help:
+https://rasa.com/docs/rasa-enterprise/
