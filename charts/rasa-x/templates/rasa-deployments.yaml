@@ -94,10 +94,10 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
         env:
-        {{- if or (eq "true" (include "is_enterprise" $)) $.Values.rasa.disableTelemetry }}
+        {{- if $.Values.rasa.disableTelemetry }}
         - name: "RASA_TELEMETRY_ENABLED"
           value: "false"
-        {{ end }}
+        {{- end }}
         - name: "MPLCONFIGDIR"
           value: "/tmp/.matplotlib"
         {{- if or $.Values.postgresql.install (and (not $.Values.postgresql.install) $.Values.postgresql.existingHost) }}

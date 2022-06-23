@@ -259,17 +259,6 @@ Return the Rasa image tag. Use `.Values.rasa.version` if `Values.rasa.tag` is no
 {{- end -}}
 
 {{/*
-Return 'true' if an enterprise version is run.
-*/}}
-{{- define "is_enterprise" -}}
-{{- if or (contains "rasa-x-ee" .Values.rasa.name) (contains "rasa-x-ee" .Values.rasax.name) (contains "rasa-x-ee" .Values.eventService.name) -}}
-{{- print "true" -}}
-{{- else -}}
-{{- print "false" -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
 Return the rasa-x.version value as a default if the dbMigrationService.tag variable is not defined.
 */}}
 {{- define "db-migration-service.version" -}}
