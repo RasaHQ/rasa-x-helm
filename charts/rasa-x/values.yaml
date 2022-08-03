@@ -635,7 +635,7 @@ duckling:
   # name of the Duckling image to use
   name: "rasa/duckling"
   # tag refers to the duckling image tag
-  tag: "0.1.6.3"
+  tag: "0.2.0.2"
   # replicaCount of duckling containers to run
   replicaCount: 1
   # port on which duckling should run
