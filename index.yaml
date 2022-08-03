@@ -3,6 +3,43 @@ entries:
   rasa-x:
   - annotations:
       artifacthub.io/changes: |
+        - kind: changed
+          description: Bump duckling version to 0.2.0.2
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2022-08-03T08:47:57.229865105Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.15.1
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~15.7.2
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.26.0
+    description: Rasa Enterprise Helm chart for Kubernetes / Openshift
+    digest: 5b6fee86425df30cf6e1ae6b0f248f03c1e3ddb5ce8918039bcfecb956b595a4
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa Enterprise
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-4.5.5/rasa-x-4.5.5.tgz
+    version: 4.5.5
+  - annotations:
+      artifacthub.io/changes: |
         - kind: fix
           description: Remove '$' from the password validation schema for RabbitMQ
     apiVersion: v2
@@ -4151,4 +4188,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2022-04-28T16:32:40.847544331Z"
+generated: "2022-08-03T08:47:57.231042905Z"
