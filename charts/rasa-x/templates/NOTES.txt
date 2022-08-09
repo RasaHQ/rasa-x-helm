@@ -6,5 +6,19 @@ Creating a Rasa Enterprise user: go to the terminal of the `rasa-x` pod and then
   You can then log in using these credentials.
 {{- end }}
 
+You have to add a deployment and training environment manually
+{{ if .Values.ingress.enabled }}
+{{- range $host := .Values.ingress.hosts }}
+  - http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}/environments
+{{- end }}
+{{ end }}
+
+{{- if eq (include "rasa-x.production.env.used" .) "true" }}
+Rasa production environment: {{ include "rasa.production.url" .}}
+{{- end }}
+{{- if eq (include "rasa-x.worker.env.used" .) "true"  }}
+Rasa worker environment: {{ include "rasa.worker.url" .}}
+{{- end }}
+
 Check out the Rasa Enterprise docs here for more help:
 https://rasa.com/docs/rasa-enterprise/
