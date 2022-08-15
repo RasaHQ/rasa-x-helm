@@ -166,11 +166,3 @@ jobs:
         kubectl get svc
         kubectl logs rasa-x-postgresql-0
         df -h
-
-    - name: Validate that logging in works ✅
-      run: |
-        TOKEN=$(curl --fail --data '{"username": "admin", "password": "'${INITIAL_USER_PASSWORD}'"}' "http://${HOST}/api/auth" | jq -r '.access_token')
-        if [[ -z "${TOKEN}" ]]; then
-          echo "Access token is empty: ${TOKEN}" && exit 1
-        fi
-        echo "Access token: ${TOKEN}"
