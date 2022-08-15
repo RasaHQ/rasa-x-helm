@@ -78,10 +78,10 @@ spec:
           failureThreshold: 10
         {{- end }}
         env:
-        {{- if or (eq "true" (include "is_enterprise" .)) .Values.rasax.disableTelemetry }}
+        {{- if .Values.rasax.disableTelemetry }}
         - name: "RASA_TELEMETRY_ENABLED"
           value: "false"
-        {{ end }}
+        {{- end }}
         {{- if .Values.debugMode }}
         - name: "DEBUG_MODE"
           value: "true"
