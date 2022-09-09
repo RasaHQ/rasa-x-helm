@@ -163,7 +163,9 @@ rasa:
     #   secret: "3e34709d01ea89032asdebfe5a74518"
     #   page-access-token: "EAAbHPa7H9rEBAAuFk4Q3gPKbDedQnx4djJJ1JmQ7CAqO4iJKrQcNT0wtD"
   # input channels
-  additionalEndpoints: {}
+  additionalEndpoints:
+    lock_store:
+      type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
     # telemetry:
     #   type: jaeger
     #   service_name: rasa

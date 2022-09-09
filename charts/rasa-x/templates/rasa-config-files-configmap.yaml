@@ -58,7 +58,7 @@ data:
     {{- if eq $.Values.rasa.additionalEndpoints.lock_store.type "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore" }}
     lock_store:
       type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
-      url: {{ template "rasa-x.redis.host" . }}
+      host: {{ template "rasa-x.redis.host" . }}
       port: {{ default 6379 .Values.redis.redisPort }}
       password: ${REDIS_PASSWORD}
       db: {{ default "1" .Values.rasa.lockStoreDatabase }}
