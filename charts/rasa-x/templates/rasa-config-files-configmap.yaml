@@ -55,7 +55,21 @@ data:
     action_endpoint:
       url: {{ if .Values.app.existingUrl }}"{{ .Values.app.existingUrl }}"{{ else }}"{{ .Values.app.scheme }}://{{ include "rasa-x.fullname" . }}-app.{{ .Release.Namespace }}.svc:{{ template "rasa-x.custom-actions.port" . }}{{ .Values.app.endpoints.actionEndpointUrl }}"{{ end }}
       token:  ""
-    {{- if $.Values.redis.install }}
+    {{- if eq $.Values.rasa.additionalEndpoints.lock_store.type "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore" }}
+    lock_store:
+      type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
+      url: {{ template "rasa-x.redis.host" . }}
+      port: {{ default 6379 .Values.redis.redisPort }}
+      password: ${REDIS_PASSWORD}
+      db: {{ default "1" .Values.rasa.lockStoreDatabase }}
+    cache:
+      type: "redis"
+      url: {{ template "rasa-x.redis.host" . }}
+      port: {{ default 6379 .Values.redis.redisPort }}
+      password: ${REDIS_PASSWORD}
+      db: {{ default "2" .Values.rasa.cacheDatabase }}
+      key_prefix: "rasax_cache"
+    {{- else if $.Values.redis.install }}
     lock_store:
       type: "redis"
       url: {{ template "rasa-x.redis.host" . }}
