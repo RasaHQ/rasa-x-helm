@@ -157,7 +157,7 @@ rasa:
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
   rasaPlus:
-    enabled: true
+    enabled: false
   additionalChannelCredentials: {}
     # rest:
     # facebook:
