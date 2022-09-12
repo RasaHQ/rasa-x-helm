@@ -156,6 +156,8 @@ rasa:
   additionalRabbitQueues: []
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
+  rasaPlus:
+    enabled: true
   additionalChannelCredentials: {}
     # rest:
     # facebook:
@@ -164,8 +166,6 @@ rasa:
     #   page-access-token: "EAAbHPa7H9rEBAAuFk4Q3gPKbDedQnx4djJJ1JmQ7CAqO4iJKrQcNT0wtD"
   # input channels
   additionalEndpoints:
-    lock_store:
-      type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
     # telemetry:
     #   type: jaeger
     #   service_name: rasa
