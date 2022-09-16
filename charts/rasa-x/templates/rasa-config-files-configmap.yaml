@@ -57,8 +57,13 @@ data:
       token:  ""
     {{- if $.Values.redis.install }}
     lock_store:
+      {{- if $.Values.rasa.rasaPlus.enabled }}
+      type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
+      host: {{ template "rasa-x.redis.host" . }}
+      {{- else -}}
       type: "redis"
       url: {{ template "rasa-x.redis.host" . }}
+      {{- end }}
       port: {{ default 6379 .Values.redis.redisPort }}
       password: ${REDIS_PASSWORD}
       db: {{ default "1" .Values.rasa.lockStoreDatabase }}
@@ -72,8 +77,13 @@ data:
     {{- end }}
     {{- if $.Values.redis.external }}
     lock_store:
+      {{- if $.Values.rasa.rasaPlus.enabled }}
+      type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
+      host: {{ .Values.redis.existingHost }}
+      {{- else -}}
       type: "redis"
       url: {{ .Values.redis.existingHost }}
+      {{- end }}
       port: {{ default 6379 .Values.redis.redisPort }}
       password: ${REDIS_PASSWORD}
       db: {{ default "1" .Values.rasa.lockStoreDatabase }}

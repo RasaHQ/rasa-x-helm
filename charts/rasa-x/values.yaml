@@ -154,6 +154,10 @@ rasa:
   rabbitQueue: "rasa_production_events"
   # Optional additional rabbit queues for e.g. connecting to an analytics stack
   additionalRabbitQueues: []
+  # when deploying with a rasa-plus license, enabled value should be set to true to configure the redis
+  # concurrent lock store automatically.
+  rasaPlus:
+    enabled: false
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
   additionalChannelCredentials: {}
