@@ -1,9 +1,9 @@
 ---
 apiVersion: v2
 
-version: "4.5.6"
+version: "4.5.7"
 
-appVersion: "1.2.1"
+appVersion: "1.2.2"
 
 name: rasa-x
 description: Rasa Enterprise Helm chart for Kubernetes / Openshift
@@ -41,5 +41,7 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
+    - kind: added
+      description: Add support for rasa-plus lock-store
     - kind: changed
-      description: Enable telemetry by default
+      description: Bump Rasa Enterprise to 1.2.2
