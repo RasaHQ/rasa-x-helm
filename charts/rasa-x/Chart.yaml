@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.5.7"
+version: "4.5.8"
 
 appVersion: "1.2.2"
 
@@ -41,7 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: added
-      description: Add support for rasa-plus lock-store
-    - kind: changed
-      description: Bump Rasa Enterprise to 1.2.2
+    - kind: fixed
+      description: Too much whitespace removal in lock_store configmap
