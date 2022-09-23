@@ -3,6 +3,43 @@ entries:
   rasa-x:
   - annotations:
       artifacthub.io/changes: |
+        - kind: fixed
+          description: Too much whitespace removal in lock_store configmap
+    apiVersion: v2
+    appVersion: 1.2.2
+    created: "2022-09-23T14:35:43.966601329Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~10.15.1
+    - condition: redis.install
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: ~15.7.2
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: https://charts.bitnami.com/bitnami
+      version: ~8.26.0
+    description: Rasa Enterprise Helm chart for Kubernetes / Openshift
+    digest: 9f38172dcd51b610c680d89a88ec72224c66b614efb89ec752e56144dae2b1a6
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa Enterprise
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-4.5.8/rasa-x-4.5.8.tgz
+    version: 4.5.8
+  - annotations:
+      artifacthub.io/changes: |
         - kind: added
           description: Add support for rasa-plus lock-store
         - kind: changed
@@ -4264,4 +4301,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2022-09-20T09:28:42.163387689Z"
+generated: "2022-09-23T14:35:43.968283134Z"
