@@ -21,6 +21,10 @@ spec:
         {{- if .Values.eventService.podLabels }}
 {{ toYaml .Values.eventService.podLabels | indent 8 }}
         {{- end }}
+      {{- if .Values.eventService.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.eventService.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}

@@ -27,6 +27,9 @@ spec:
       annotations:
         checksum/rasa-config: {{ include (print $.Template.BasePath "/rasa-config-files-configmap.yaml") $ | sha256sum }}
         checksum/rasa-secret: {{ include (print $.Template.BasePath "/rasa-secret.yaml") $ | sha256sum }}
+        {{- if $.Values.rasa.podAnnotations }}
+{{ toYaml $.Values.rasa.podAnnotations | indent 8 }}
+        {{- end }}
     spec:
       automountServiceAccountToken: {{ $.Values.rasa.automountServiceAccountToken }}
       {{ include "rasa-x.spec" $ }}

@@ -26,6 +26,9 @@ spec:
         checksum/rasa-config: {{ include (print $.Template.BasePath "/rasa-config-files-configmap.yaml") . | sha256sum }}
         checksum/rasa-x-config: {{ include (print $.Template.BasePath "/rasa-x-config-files-configmap.yaml") . | sha256sum }}
         checksum/rasa-secret: {{ include (print $.Template.BasePath "/rasa-secret.yaml") . | sha256sum }}
+        {{- if .Values.rasax.podAnnotations }}
+{{ toYaml .Values.rasax.podAnnotations | indent 8 }}
+        {{- end }}
     spec:
 {{- if .Values.rasax.hostAliases }}
       hostAliases:
