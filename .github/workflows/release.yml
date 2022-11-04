@@ -21,7 +21,9 @@ jobs:
 
     # See https://github.com/helm/chart-releaser-action/issues/6
     - name: Install Helm
-      uses: azure/setup-helm@v1
+      uses: azure/setup-helm@v3
+      with:
+        version: v3.10.0
 
     - name: Add dependency chart repos
       run: |
