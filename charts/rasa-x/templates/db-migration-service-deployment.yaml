@@ -21,6 +21,10 @@ spec:
         {{- if .Values.dbMigrationService.podLabels }}
 {{ toYaml .Values.dbMigrationService.podLabels | indent 8 }}
         {{- end }}
+      {{- if .Values.dbMigrationService.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.dbMigrationService.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
