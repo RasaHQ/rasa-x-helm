@@ -23,7 +23,7 @@ spec:
         {{- end }}
       {{- if .Values.eventService.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml .Values.eventService.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.eventService.automountServiceAccountToken }}
