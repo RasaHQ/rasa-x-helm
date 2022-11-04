@@ -23,7 +23,7 @@ spec:
         {{- end }}
       {{- if .Values.dbMigrationService.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml .Values.app.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.dbMigrationService.automountServiceAccountToken }}
