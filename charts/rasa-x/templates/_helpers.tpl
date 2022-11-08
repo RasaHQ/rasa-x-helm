@@ -41,8 +41,8 @@ helm.sh/chart: {{ include "rasa-x.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- if .Values.global.additionalDeploymentLabels -}}
-{{ toYaml .Values.global.additionalDeploymentLabels }}
+{{ if .Values.global.additionalDeploymentLabels -}}
+{{- $.Values.global.additionalDeploymentLabels | toYaml -}}
 {{- end -}}
 {{- end -}}
 

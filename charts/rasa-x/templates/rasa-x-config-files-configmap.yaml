@@ -3,7 +3,7 @@ kind: "ConfigMap"
 metadata:
   name: {{ template "rasa-x.rasa-x.configuration-files" . }}
   labels:
-    {{ include "rasa-x.labels" . | nindent 4 }}
+    {{- include "rasa-x.labels" . | nindent 4 }}
 data:
   environments: |
 {{- if or (eq (include "rasa-x.production.env.used" .) "true") (eq (include "rasa-x.worker.env.used" .) "true") }}
