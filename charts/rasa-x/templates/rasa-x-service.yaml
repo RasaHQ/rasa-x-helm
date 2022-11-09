@@ -3,7 +3,7 @@ kind: "Service"
 metadata:
   name: {{ include "rasa-x.host" . }}
   labels:
-    {{ include "rasa-x.labels" . | nindent 4 }}
+    {{- include "rasa-x.labels" . | nindent 4 }}
     app.kubernetes.io/component: rasa-x
 {{- with .Values.rasax.service.annotations }}
   annotations:

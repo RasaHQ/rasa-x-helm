@@ -3,7 +3,7 @@ kind: "ConfigMap"
 metadata:
   name: {{ template "rasa-x.rasa.configuration-files" . }}
   labels:
-    {{ include "rasa-x.labels" . | nindent 4 }}
+    {{- include "rasa-x.labels" . | nindent 4 }}
 data:
   rasa-credentials: |
     rasa:

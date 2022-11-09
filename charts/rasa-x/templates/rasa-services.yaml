@@ -5,7 +5,7 @@ kind: "Service"
 metadata:
   name: {{ include "rasa-x.fullname" $ }}-{{ .serviceName }}
   labels:
-    {{ include "rasa-x.labels" $ | nindent 4 }}
+    {{- include "rasa-x.labels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ .serviceName }}
 {{- with .service.annotations }}
   annotations:

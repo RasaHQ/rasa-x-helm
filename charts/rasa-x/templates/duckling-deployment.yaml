@@ -23,7 +23,7 @@ spec:
         {{- end }}
     spec:
       automountServiceAccountToken: {{ .Values.duckling.automountServiceAccountToken }}
-      {{ include "rasa-x.spec" . }}
+      {{- include "rasa-x.spec" . }}
       {{- if .Values.duckling.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.duckling.nodeSelector | indent 8 }}
