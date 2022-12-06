@@ -121,7 +121,7 @@ rasax:
   dnsPolicy: ""
 
   ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
-  dnsConfig:
+  dnsConfig: {}
     # options:
     # - name: ndots
     #   value: "1"
