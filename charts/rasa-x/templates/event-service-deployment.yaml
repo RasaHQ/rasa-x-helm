@@ -26,6 +26,12 @@ spec:
         {{- toYaml .Values.eventService.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
+      hostNetwork: {{ .Values.eventService.hostNetwork }}
+      dnsPolicy: {{ include "rasa-x.dnsPolicy" . }}
+      {{- if .Values.eventService.dnsConfig }}
+      dnsConfig:
+{{ toYaml .Values.eventService.dnsConfig | indent 8 }}
+      {{- end }}
       automountServiceAccountToken: {{ .Values.eventService.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
       {{- if .Values.eventService.nodeSelector }}

@@ -31,6 +31,12 @@ spec:
 {{ toYaml $.Values.rasa.podAnnotations | indent 8 }}
         {{- end }}
     spec:
+      hostNetwork: {{ $.Values.rasa.hostNetwork }}
+      dnsPolicy: {{ include "rasa-x.dnsPolicy" $ }}
+      {{- if $.Values.rasa.dnsConfig }}
+      dnsConfig:
+{{ toYaml $.Values.rasa.dnsConfig | indent 8 }}
+      {{- end }}
       automountServiceAccountToken: {{ $.Values.rasa.automountServiceAccountToken }}
       {{ include "rasa-x.spec" $ }}
       {{- if .nodeSelector }}

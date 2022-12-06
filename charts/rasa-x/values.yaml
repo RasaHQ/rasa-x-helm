@@ -235,6 +235,19 @@ rasa:
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
+  # hostNetwork controls whether the pod may use the node network namespace
+  hostNetwork: false
+
+  # dnsPolicy specifies Pod's DNS policy
+  # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  dnsPolicy: ""
+
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  dnsConfig: {}
+    # options:
+    # - name: ndots
+    #   value: "1"
+
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
@@ -408,6 +421,19 @@ dbMigrationService:
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
+  # hostNetwork controls whether the pod may use the node network namespace
+  hostNetwork: false
+
+  # dnsPolicy specifies Pod's DNS policy
+  # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  dnsPolicy: ""
+
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  dnsConfig: {}
+    # options:
+    # - name: ndots
+    #   value: "1"
+
 # event-service specific settings
 eventService:
   # override the default command to run in the container
@@ -477,6 +503,19 @@ eventService:
   # podAnnotations adds additional pod annotations
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
+
+  # hostNetwork controls whether the pod may use the node network namespace
+  hostNetwork: false
+
+  # dnsPolicy specifies Pod's DNS policy
+  # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  dnsPolicy: ""
+
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  dnsConfig: {}
+    # options:
+    # - name: ndots
+    #   value: "1"
 
 # app (custom action server) specific settings
 app:
@@ -572,6 +611,19 @@ app:
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
+  # hostNetwork controls whether the pod may use the node network namespace
+  hostNetwork: false
+
+  # dnsPolicy specifies Pod's DNS policy
+  # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  dnsPolicy: ""
+
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  dnsConfig: {}
+    # options:
+    # - name: ndots
+    #   value: "1"
+
 # nginx specific settings
 nginx:
   # enabled should be `true` if you want to use nginx
@@ -654,6 +706,19 @@ nginx:
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
 
+  # hostNetwork controls whether the pod may use the node network namespace
+  hostNetwork: false
+
+  # dnsPolicy specifies Pod's DNS policy
+  # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  dnsPolicy: ""
+
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  dnsConfig: {}
+    # options:
+    # - name: ndots
+    #   value: "1"
+
 # Duckling specific settings
 duckling:
   # override the default command to run in the container
@@ -722,6 +787,19 @@ duckling:
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
+
+  # hostNetwork controls whether the pod may use the node network namespace
+  hostNetwork: false
+
+  # dnsPolicy specifies Pod's DNS policy
+  # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  dnsPolicy: ""
+
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  dnsConfig: {}
+    # options:
+    # - name: ndots
+    #   value: "1"
 
 # rasaSecret object which supplies passwords, tokens, etc. See
 # https://rasa.com/docs/rasa-x/openshift-kubernetes/#providing-access-credentials-using-an-external-secret
