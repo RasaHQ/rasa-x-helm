@@ -36,6 +36,10 @@ spec:
 {{- end }}
       hostNetwork: {{ .Values.rasax.hostNetwork }}
       dnsPolicy: {{ include "rasa-x.dnsPolicy" . }}
+      {{- if .Values.rasax.dnsConfig }}
+      dnsConfig:
+{{ toYaml .Values.rasax.dnsConfig | indent 8 }}
+      {{- end }}
       automountServiceAccountToken: {{ .Values.rasax.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
       {{- if .Values.rasax.nodeSelector }}

@@ -120,6 +120,12 @@ rasax:
   # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
   dnsPolicy: ""
 
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  dnsConfig:
+    # options:
+    # - name: ndots
+    #   value: "1"
+
   # hostAliases defines additional entries to the hosts file.
   # ref: https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/#adding-additional-entries-with-hostaliases
   hostAliases: []
