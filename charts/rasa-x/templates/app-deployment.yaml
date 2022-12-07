@@ -28,11 +28,11 @@ spec:
         {{- toYaml .Values.app.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
-      hostNetwork: {{ .Values.app.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork }}
       dnsPolicy: {{ include "rasa-x.dnsPolicy" . }}
-      {{- if .Values.app.dnsConfig }}
+      {{- if .Values.dnsConfig }}
       dnsConfig:
-{{ toYaml .Values.app.dnsConfig | indent 8 }}
+{{ toYaml .Values.dnsConfig | indent 8 }}
       {{- end }}
       automountServiceAccountToken: {{ .Values.app.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}

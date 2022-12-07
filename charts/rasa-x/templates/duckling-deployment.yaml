@@ -22,11 +22,11 @@ spec:
 {{ toYaml .Values.duckling.podLabels | indent 8 }}
         {{- end }}
     spec:
-      hostNetwork: {{ .Values.duckling.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork }}
       dnsPolicy: {{ include "rasa-x.dnsPolicy" . }}
-      {{- if .Values.duckling.dnsConfig }}
+      {{- if .Values.dnsConfig }}
       dnsConfig:
-{{ toYaml .Values.duckling.dnsConfig | indent 8 }}
+{{ toYaml .Values.dnsConfig | indent 8 }}
       {{- end }}
       automountServiceAccountToken: {{ .Values.duckling.automountServiceAccountToken }}
       {{- include "rasa-x.spec" . }}

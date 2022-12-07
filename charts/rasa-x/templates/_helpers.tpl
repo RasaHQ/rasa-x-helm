@@ -341,12 +341,12 @@ Return the appropriate apiVersion for networkpolicy.
 Return DNS policy depends on host network configuration
 */}}
 {{- define "rasa-x.dnsPolicy" -}}
-{{- if and .Values.rasax.hostNetwork (empty .Values.rasax.dnsPolicy) -}}
+{{- if and .Values.hostNetwork (empty .Values.dnsPolicy) -}}
 {{- print "ClusterFirstWithHostNet" -}}
-{{- else if and (not .Values.rasax.hostNetwork) (empty .Values.rasax.dnsPolicy) -}}
+{{- else if and (not .Values.hostNetwork) (empty .Values.dnsPolicy) -}}
 {{- print "ClusterFirst" -}}
-{{- else if .Values.rasax.dnsPolicy -}}
-{{- .Values.rasax.dnsPolicy -}}
+{{- else if .Values.dnsPolicy -}}
+{{- .Values.dnsPolicy -}}
 {{- end -}}
 {{- end -}}
 

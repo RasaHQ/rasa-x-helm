@@ -34,11 +34,11 @@ spec:
       hostAliases:
 {{ toYaml .Values.rasax.hostAliases | indent 6 }}
 {{- end }}
-      hostNetwork: {{ .Values.rasax.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork }}
       dnsPolicy: {{ include "rasa-x.dnsPolicy" . }}
-      {{- if .Values.rasax.dnsConfig }}
+      {{- if .Values.dnsConfig }}
       dnsConfig:
-{{ toYaml .Values.rasax.dnsConfig | indent 8 }}
+{{ toYaml .Values.dnsConfig | indent 8 }}
       {{- end }}
       automountServiceAccountToken: {{ .Values.rasax.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
