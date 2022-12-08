@@ -222,12 +222,12 @@ rasa:
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
-  # additional volumeMounts to the main container
+  # additional volumeMounts which will apply to both the production and worker deployments
   extraVolumeMounts: []
   # - name: tmpdir
   #   mountPath: /var/lib/mypath
 
-  # additional volumes to the pod
+  # additional volumes which will apply to both the production and worker deployments
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
@@ -269,12 +269,13 @@ rasa:
       rasaEnvironment: "production"
       # resources which rasaProduction is required / allowed to use
       resources: {}
-      # additional volumeMounts to the main container
+
+      # additional volumeMounts which will apply to only the production deployments
       extraVolumeMounts: []
       # - name: tmpdir
       #   mountPath: /var/lib/mypath
 
-      # additional volumes to the pod
+      # additional volumes which will apply to only the production deployments
       extraVolumes: []
       # - name: tmpdir
       #   emptyDir: {}
@@ -312,12 +313,13 @@ rasa:
       rasaEnvironment: "worker"
       # resources which rasaWorker is required / allowed to use
       resources: {}
-      # additional volumeMounts to the main container
+
+      # additional volumeMounts which will apply to only the worker deployment
       extraVolumeMounts: []
       # - name: tmpdir
       #   mountPath: /var/lib/mypath
 
-      # additional volumes to the pod
+      # additional volumes which will apply to only the worker deployment
       extraVolumes: []
       # - name: tmpdir
       #   emptyDir: {}
