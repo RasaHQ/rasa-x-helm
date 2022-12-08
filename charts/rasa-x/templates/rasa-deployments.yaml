@@ -31,6 +31,12 @@ spec:
 {{ toYaml $.Values.rasa.podAnnotations | indent 8 }}
         {{- end }}
     spec:
+      hostNetwork: {{ $.Values.hostNetwork }}
+      dnsPolicy: {{ include "rasa-x.dnsPolicy" $ }}
+      {{- if $.Values.dnsConfig }}
+      dnsConfig:
+{{ toYaml $.Values.dnsConfig | indent 8 }}
+      {{- end }}
       automountServiceAccountToken: {{ $.Values.rasa.automountServiceAccountToken }}
       {{ include "rasa-x.spec" $ }}
       {{- if .nodeSelector }}
@@ -41,11 +47,7 @@ spec:
       tolerations:
 {{ toYaml $.Values.rasa.tolerations | indent 6 }}
       {{- end }}
-      # Use the init-db init container to check if database migration is completed.
-      # The rasa service depends on the rasa x server, to make sure that the database is ready
-      # and the rasa x server is fully operational we use the database migration service
-      # to check migration status.
-      {{- include "initContainer.dbMigration" (dict "context" $ "image" (printf "%s:%s" $.Values.rasa.name (include "rasa.tag" $))) |  nindent 6 }}
+      
       containers:
       - name: {{ $.Chart.Name }}
         image: '{{ $.Values.rasa.name }}:{{ include "rasa.tag" $ }}'
@@ -163,13 +165,19 @@ spec:
         # Mount the temporary directory for the Rasa global configuration
         - name: config-dir
           mountPath: /.config
-{{ if .extraVolumeMounts }}
+{{- if $.Values.rasa.extraVolumeMounts }}
+{{ toYaml $.Values.rasa.extraVolumeMounts | indent 8 }}
+{{- end }}
+{{- if .extraVolumeMounts }}
 {{ toYaml .extraVolumeMounts | indent 8 }}
 {{- end }}
       volumes:
       - name: config-dir
         emptyDir: {}
-{{ if .extraVolumes }}
+{{- if $.Values.rasa.extraVolumes }}
+{{ toYaml $.Values.rasa.extraVolumes | indent 6 }}
+{{- end }}
+{{- if .extraVolumes }}
 {{ toYaml .extraVolumes | indent 6 }}
 {{- end }}
 # this is needed to make it clear that these are two resources

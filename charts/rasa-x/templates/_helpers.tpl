@@ -292,32 +292,6 @@ Returns the database migration service address
 {{- define "db-migration-service.address" -}}
 {{ include "rasa-x.fullname" . }}{{ print "-db-migration-service-headless" }}
 {{- end -}}
-{{/*
-Return an init container for database migration.
-*/}}
-{{- define "initContainer.dbMigration" -}}
-{{ if and (eq "true" (include "db-migration-service.requiredVersion" .context )) .context.Values.separateDBMigrationService }}
-initContainers:
-- name: init-db
-  image: {{ .image }}
-  {{- if .context.Values.dbMigrationService.initContainer.resources }}
-  resources:
-  {{- toYaml .context.Values.dbMigrationService.initContainer.resources | nindent 4 }}
-  {{- end }}
-  command:
-  {{- if .context.Values.dbMigrationService.initContainer.command }}
-  {{- toYaml .context.Values.dbMigrationService.initContainer.command | nindent 2 }}
-  {{ else }}
-  - '/bin/bash'
-  - '-c'
-  - 'until [[ "$(curl -s http://{{ (include "db-migration-service.address" .context) }}:{{ .context.Values.dbMigrationService.port }} | grep -c completed)" == "1" ]]; do
-    STATUS=$(curl -s http://{{ (include "db-migration-service.address" .context) }}:{{ .context.Values.dbMigrationService.port }});
-    if [[ -n "$STATUS" ]];then echo $STATUS; fi;
-    sleep 5;
-    done;'
-{{- end }}
-{{- end -}}
-{{- end -}}
 
 {{/*
 Return the rasa x image name value as a default if the dbMigrationService.name variable is not defined.
@@ -341,12 +315,12 @@ Return the appropriate apiVersion for networkpolicy.
 Return DNS policy depends on host network configuration
 */}}
 {{- define "rasa-x.dnsPolicy" -}}
-{{- if and .Values.rasax.hostNetwork (empty .Values.rasax.dnsPolicy) -}}
+{{- if and .Values.hostNetwork (empty .Values.dnsPolicy) -}}
 {{- print "ClusterFirstWithHostNet" -}}
-{{- else if and (not .Values.rasax.hostNetwork) (empty .Values.rasax.dnsPolicy) -}}
+{{- else if and (not .Values.hostNetwork) (empty .Values.dnsPolicy) -}}
 {{- print "ClusterFirst" -}}
-{{- else if .Values.rasax.dnsPolicy -}}
-{{- .Values.rasax.dnsPolicy -}}
+{{- else if .Values.dnsPolicy -}}
+{{- .Values.dnsPolicy -}}
 {{- end -}}
 {{- end -}}
 

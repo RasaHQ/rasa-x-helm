@@ -26,6 +26,12 @@ spec:
         {{- toYaml .Values.app.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
+      hostNetwork: {{ .Values.hostNetwork }}
+      dnsPolicy: {{ include "rasa-x.dnsPolicy" . }}
+      {{- if .Values.dnsConfig }}
+      dnsConfig:
+{{ toYaml .Values.dnsConfig | indent 8 }}
+      {{- end }}
       automountServiceAccountToken: {{ .Values.dbMigrationService.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
       {{- if .Values.dbMigrationService.nodeSelector }}

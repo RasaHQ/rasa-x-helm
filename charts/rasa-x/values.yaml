@@ -113,13 +113,6 @@ rasax:
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
-  # hostNetwork controls whether the pod may use the node network namespace
-  hostNetwork: false
-
-  # dnsPolicy specifies Pod's DNS policy
-  # ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
-  dnsPolicy: ""
-
   # hostAliases defines additional entries to the hosts file.
   # ref: https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/#adding-additional-entries-with-hostaliases
   hostAliases: []
@@ -229,6 +222,16 @@ rasa:
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
+  # additional volumeMounts which will apply to both the production and worker deployments
+  extraVolumeMounts: []
+  # - name: tmpdir
+  #   mountPath: /var/lib/mypath
+
+  # additional volumes which will apply to both the production and worker deployments
+  extraVolumes: []
+  # - name: tmpdir
+  #   emptyDir: {}
+
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
@@ -266,12 +269,13 @@ rasa:
       rasaEnvironment: "production"
       # resources which rasaProduction is required / allowed to use
       resources: {}
-      # additional volumeMounts to the main container
+
+      # additional volumeMounts which will apply to only the production deployments
       extraVolumeMounts: []
       # - name: tmpdir
       #   mountPath: /var/lib/mypath
 
-      # additional volumes to the pod
+      # additional volumes which will apply to only the production deployments
       extraVolumes: []
       # - name: tmpdir
       #   emptyDir: {}
@@ -309,12 +313,13 @@ rasa:
       rasaEnvironment: "worker"
       # resources which rasaWorker is required / allowed to use
       resources: {}
-      # additional volumeMounts to the main container
+
+      # additional volumeMounts which will apply to only the worker deployment
       extraVolumeMounts: []
       # - name: tmpdir
       #   mountPath: /var/lib/mypath
 
-      # additional volumes to the pod
+      # additional volumes which will apply to only the worker deployment
       extraVolumes: []
       # - name: tmpdir
       #   emptyDir: {}
@@ -902,6 +907,19 @@ images:
 securityContext:
   # runAsUser: 1000
   fsGroup: 1000
+
+# hostNetwork controls whether the pod may use the node network namespace
+hostNetwork: false
+
+# dnsPolicy specifies Pod's DNS policy
+# ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+dnsPolicy: ""
+
+## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+dnsConfig: {}
+  # options:
+  # - name: ndots
+  #   value: "1"
 
 # nameOverride replaces the Chart's name
 nameOverride: ""

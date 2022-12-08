@@ -24,6 +24,12 @@ spec:
 {{ toYaml .Values.nginx.podLabels | indent 8 }}
         {{- end }}
     spec:
+      hostNetwork: {{ .Values.hostNetwork }}
+      dnsPolicy: {{ include "rasa-x.dnsPolicy" . }}
+      {{- if .Values.dnsConfig }}
+      dnsConfig:
+{{ toYaml .Values.dnsConfig | indent 8 }}
+      {{- end }}
       automountServiceAccountToken: {{ .Values.nginx.automountServiceAccountToken }}
       {{ include "rasa-x.spec" . }}
       {{- if .Values.nginx.nodeSelector }}
