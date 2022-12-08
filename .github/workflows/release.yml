@@ -32,4 +32,4 @@ jobs:
     - name: Run chart-releaser
       uses: helm/chart-releaser-action@c25b74a986eb925b398320414b576227f375f946  # v1.2.1
       env:
-        CR_TOKEN: "${{ secrets.RASABOT_GITHUB_TOKEN }}"
+        CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
