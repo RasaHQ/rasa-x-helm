@@ -69,7 +69,7 @@ jobs:
         uses: peterjgrainger/action-create-branch@v2.0.1
         if: env.CREATE_UPDATE_PR == 'true'
         env:
-          GITHUB_TOKEN: ${{ secrets.RASABOT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: ${{ steps.get-branch-name.outputs.new_branch }}
 
@@ -92,7 +92,7 @@ jobs:
         uses: repo-sync/pull-request@v2
         if: env.CREATE_UPDATE_PR == 'true'
         with:
-          github_token:  ${{ secrets.RASABOT_GITHUB_TOKEN }}
+          github_token:  ${{ secrets.GITHUB_TOKEN }}
           source_branch: ${{ steps.get-branch-name.outputs.new_branch }}
           destination_branch: main
           pr_title: Bump Rasa X version to ${LATEST_RASA_X_MINOR}
