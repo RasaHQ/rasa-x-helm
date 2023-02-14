@@ -238,19 +238,15 @@ rasa:
   versions:
     # rasaProduction is the container which serves the production environment
     rasaProduction:
-
       # enable the rasa-production deployment
       # You can disable the rasa-production deployment in order to use external Rasa OSS deployment instead.
-      enabled: false
-
+      enabled: true
       # Define if external Rasa OSS should be used.
       external:
         # enable external Rasa OSS
         enabled: false
-
         # url of external Rasa OSS deployment
         url: "http://rasa-bot"
-
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
       nodeSelector: {}
@@ -286,15 +282,12 @@ rasa:
       # enable the rasa-worker deployment
       # You can disable the rasa-worker deployment in order to use external Rasa OSS deployment instead.
       enabled: true
-
       # Define if external Rasa OSS should be used.
       external:
         # enable external Rasa OSS
         enabled: false
-
         # url of external Rasa OSS deployment
         url: "http://rasa-worker"
-
       # nodeSelector to specify which node the pods should run on
       # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
       nodeSelector: {}
@@ -315,12 +308,10 @@ rasa:
       rasaEnvironment: "worker"
       # resources which rasaWorker is required / allowed to use
       resources: {}
-
       # additional volumeMounts which will apply to only the worker deployment
       extraVolumeMounts: []
       # - name: tmpdir
       #   mountPath: /var/lib/mypath
-
       # additional volumes which will apply to only the worker deployment
       extraVolumes: []
       # - name: tmpdir
@@ -348,25 +339,21 @@ dbMigrationService:
   ignoreVersionCheck: false
   # port on which which to run the readiness endpoint
   port: 8000
-
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
     # - key: "nvidia.com/gpu"
     #   operator: "Exists"
-
   # nodeSelector to specify which node the pods should run on
   # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
-
   # resources which the event service is required / allowed to use
   resources: {}
   # extraEnvs are environment variables which can be added to the dbMigrationService deployment
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
-
   # extraVolumeMounts defines additional volumeMounts to the main container
   extraVolumeMounts: []
   # - name: tmpdir
@@ -386,7 +373,6 @@ dbMigrationService:
   service:
     # annotations for the service
     annotations: {}
-
   livenessProbe:
     enabled: true
     # initialProbeDelay for the `livenessProbe`
@@ -400,11 +386,9 @@ dbMigrationService:
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
-
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
-
   # podAnnotations adds additional pod annotations
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
@@ -425,35 +409,29 @@ eventService:
   replicaCount: 1
   # databaseName the event service uses to store data
   databaseName: "rasa"
-
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
     # - key: "nvidia.com/gpu"
     #   operator: "Exists"
-
   # nodeSelector to specify which node the pods should run on
   # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
-
   # resources which the event service is required / allowed to use
   resources: {}
   # extraEnvs are environment variables which can be added to the eventService deployment
   extraEnvs: []
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
-
   # additional volumeMounts to the main container
   extraVolumeMounts: []
   # - name: tmpdir
   #   mountPath: /var/lib/mypath
-
   # additional volumes to the pod
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
-
   # livenessProbe checks whether the event service needs to be restarted
   livenessProbe:
     enabled: true
@@ -470,19 +448,17 @@ eventService:
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
-
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
-
   # podAnnotations adds additional pod annotations
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
 
 # app (custom action server) specific settings
 app:
-  # default is to install action server from image.
-  install: true
+  # default is not to install action server from image.
+  install: false
   # if install is set to false, the url to the existing action server can be configured by setting existingUrl.
   # #existingUrl: http://myactionserver:5055/webhook
   #
@@ -491,9 +467,9 @@ app:
   # override the default arguments to run in the container
   args: []
   # name of the custom action server image to use
-  name: "rasa/rasa-x-demo"
+  name: ""
   # tag refers to the custom action server image tag
-  tag: "0.38.0"
+  tag: ""
   # replicaCount of the custom action server container
   replicaCount: 1
   # port on which the custom action server runs
@@ -511,45 +487,37 @@ app:
   #      secretKeyRef:
   #        name: app-secret
   #        key: database_url
-
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
     # - key: "nvidia.com/gpu"
     #   operator: "Exists"
-
   # nodeSelector to specify which node the pods should run on
   # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
-
   # endpoints specifies the webhook and health check url paths of the action server app
   endpoints:
     # actionEndpointUrl is the URL which Rasa Open Source calls to execute custom actions
     actionEndpointUrl: /webhook
     # healthCheckURL is the URL which is used to check the pod health status
     healthCheckUrl: /health
-
   # additional volumeMounts to the main container
   extraVolumeMounts: []
   # - name: tmpdir
   #   mountPath: /var/lib/mypath
-
   # additional volumes to the pod
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
-
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: true
-
   # service specifies settings for exposing app to other services
   service:
     # annotations for the service
     annotations: {}
-
   # livenessProbe checks whether app needs to be restarted
   livenessProbe:
     enabled: true
@@ -564,11 +532,9 @@ app:
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
-
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
-
   # podAnnotations adds additional pod annotations
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
@@ -621,36 +587,29 @@ nginx:
     command: []
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
-
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
     # - key: "nvidia.com/gpu"
     #   operator: "Exists"
-
   # nodeSelector to specify which node the pods should run on
   # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
-
   # resources which nginx is required / allowed to use
   resources: {}
-
   # additional volumeMounts to the main container
   extraVolumeMounts: []
   # - name: tmpdir
   #   mountPath: /var/lib/mypath
-
   # additional volumes to the pod
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
-
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
-
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
@@ -666,7 +625,7 @@ duckling:
   # name of the Duckling image to use
   name: "rasa/duckling"
   # tag refers to the duckling image tag
-  tag: "0.2.0.2"
+  tag: "0.2.0.2-r2"
   # replicaCount of duckling containers to run
   replicaCount: 1
   # port on which duckling should run
@@ -679,15 +638,12 @@ duckling:
   tolerations: []
     # - key: "nvidia.com/gpu"
     #   operator: "Exists"
-
   # nodeSelector to specify which node the pods should run on
   # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   nodeSelector: {}
     # "beta.kubernetes.io/instance-type": "g3.8xlarge"
-
   # resources which duckling is required / allowed to use
   resources: {}
-
   readinessProbe:
     enabled: true
     # initialProbeDelay for the `readinessProbe`
@@ -704,22 +660,18 @@ duckling:
   extraVolumeMounts: []
   # - name: tmpdir
   #   mountPath: /var/lib/mypath
-
   # additional volumes to the pod
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
-
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   automountServiceAccountToken: false
-
   # service specifies settings for exposing duckling to other services
   service:
     # annotations for the service
     annotations: {}
-
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
@@ -742,7 +694,7 @@ separateEventService: "true"
 # If set to 'false', Rasa Enterprise will run a database migration service as a subprocess.
 separateDBMigrationService: true
 
-# postgresql specific settings (https://artifacthub.io/packages/helm/bitnami/postgresql/10.15.1)
+# postgresql specific settings (https://artifacthub.io/packages/helm/bitnami/postgresql/11.9.13)
 postgresql:
   # Install should be `true` if the postgres subchart should be used
   install: true
@@ -752,17 +704,14 @@ postgresql:
   existingHost: ""
   # existingSecretKey is the key to get the password when an external postgresql instance is provided (`install: false`)
   existingSecretKey: ""
-
   image:
     # tag of PostgreSQL Image
     tag: "12.9.0"
-
   # Configure security context for the postgresql init container
   # volumePermissions:
       ## Init container Security Context
   #   securityContext:
   #     runAsUser: 0
-
   ## Configure security context for the postgresql pod
   # securityContext:
   #   enabled: true
@@ -940,14 +889,15 @@ global:
   storageClass: ""
   # postgresql: global settings of the postgresql subchart
   postgresql:
-    # postgresqlUsername which should be used by Rasa to connect to Postgres
-    postgresqlUsername: "postgres"
-    # postgresqlPassword is the password which is used when the postgresqlUsername equals "postgres"
-    postgresqlPassword: "password"
-    # existingSecret which should be used for the password instead of putting it in the values file
-    existingSecret: ""
-    # postgresDatabase which should be used by Rasa Enterprise
-    postgresqlDatabase: "rasa"
+    auth:
+      # postgresqlUsername which should be used by Rasa to connect to Postgres
+      postgresqlUsername: "postgres"
+      # postgresqlPassword is the password which is used when the postgresqlUsername equals "postgres"
+      postgresqlPassword: "password"
+      # existingSecret which should be used for the password instead of putting it in the values file
+      existingSecret: ""
+      # postgresDatabase which should be used by Rasa Enterprise
+      database: "rasa"
     # servicePort which is used to expose postgres to the other components
     servicePort: 5432
     # host: postgresql.hostedsomewhere.else

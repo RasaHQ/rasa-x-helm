@@ -2,7 +2,7 @@
 
 {{/* Overwrite the rabbit fullname template. */}}
 {{- define "rabbitmq.fullname" -}}
-{{- printf "%s-rabbit" .Release.Name -}}
+{{- printf "%s-rabbitmq" .Release.Name -}}
 {{- end -}}
 
 {{/*
