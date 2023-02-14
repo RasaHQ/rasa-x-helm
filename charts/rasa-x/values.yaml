@@ -173,6 +173,8 @@ rasa:
     query: {}
     #  driver: my-driver
     #  sslmode: require
+  # selective domain when enabled sends domain only configured for particular actions. see docs:
+  enable_selective_domain: false
   # Jaeger Sidecar
   jaegerSidecar: "false"
   livenessProbe:
