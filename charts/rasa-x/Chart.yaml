@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.5.12"
+version: "4.5.13"
 
 appVersion: "1.2.2"
 
@@ -42,4 +42,4 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: fixed
-      description: Too much whitespace removal in lock_store configmap
+      description: Refer to Rasa-hosted location for the sub-charts
