@@ -25,17 +25,17 @@ maintainers:
 dependencies:
 - name: postgresql
   version: ~10.15.1
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
   condition: postgresql.install
 
 - name: redis
   version: ~15.7.2
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
   condition: redis.install
 
 - name: rabbitmq
   version: ~8.26.0
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
   condition: rabbitmq.install
 
 annotations:
