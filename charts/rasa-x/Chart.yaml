@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.5.12"
+version: "4.5.13"
 
 appVersion: "1.2.2"
 
@@ -25,21 +25,21 @@ maintainers:
 dependencies:
 - name: postgresql
   version: ~10.15.1
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
   condition: postgresql.install
 
 - name: redis
   version: ~15.7.2
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
   condition: redis.install
 
 - name: rabbitmq
   version: ~8.26.0
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
   condition: rabbitmq.install
 
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: fixed
-      description: Too much whitespace removal in lock_store configmap
+      description: Refer to Rasa-hosted location for the sub-charts

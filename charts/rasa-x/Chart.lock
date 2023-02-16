@@ -1,12 +1,12 @@
 dependencies:
 - name: postgresql
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
   version: 10.15.1
 - name: redis
-  repository: https://charts.bitnami.com/bitnami
-  version: 15.7.4
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+  version: 15.7.2
 - name: rabbitmq
-  repository: https://charts.bitnami.com/bitnami
+  repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
   version: 8.26.0
-digest: sha256:e5e68596ad301c5f6b26e912c570bd99cbf603f88b60d5c416f4c92a3f8b82ec
-generated: "2022-01-12T13:44:45.71615+01:00"
+digest: sha256:fb3cb00f944a6a9be69106930a9bbe82f42d64ea4360ea08aa95655ac3235ea7
+generated: "2023-02-15T11:35:45.589237Z"
