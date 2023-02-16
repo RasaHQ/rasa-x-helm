@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.5.13"
+version: "4.5.14"
 
 appVersion: "1.2.2"
 
@@ -41,5 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-    - kind: fixed
-      description: Refer to Rasa-hosted location for the sub-charts
+    - kind: added
+      description: Added support for enable_selective_domain in endpoints.yml
