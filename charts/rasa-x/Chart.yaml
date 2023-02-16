@@ -41,10 +41,5 @@ dependencies:
 annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
-<<<<<<< HEAD
     - kind: added
       description: Added support for enable_selective_domain in endpoints.yml
-=======
-    - kind: fixed
-      description: Refer to Rasa-hosted location for the sub-charts
->>>>>>> main
