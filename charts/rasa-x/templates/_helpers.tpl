@@ -76,9 +76,11 @@ imagePullSecrets:
 Security context for the containers.
 */}}
 {{- define "rasa-x.securityContext" -}}
+ {{- if .Values.securityContext.enabled -}}
  {{- with .Values.securityContext -}}
-securityContext:
-  {{- toYaml . | nindent 2 }}
+securityContext: 
+  {{- omit . "enabled" | toYaml | nindent 2 }}
+ {{- end -}}
  {{- end -}}
 {{- end -}}
 

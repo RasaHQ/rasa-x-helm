@@ -907,6 +907,7 @@ images:
 
 # securityContext to use
 securityContext:
+  enabled: true
   # runAsUser: 1000
   fsGroup: 1000
 
