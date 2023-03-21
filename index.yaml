@@ -7,6 +7,43 @@ entries:
           description: Added support for enable_selective_domain in endpoints.yml
     apiVersion: v2
     appVersion: 1.2.2
+    created: "2023-03-21T15:20:06.389583991Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: ~10.16.2
+    - condition: redis.install
+      name: redis
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: ~15.7.6
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: ~8.32.2
+    description: Rasa Enterprise Helm chart for Kubernetes / Openshift
+    digest: 92daef917d70d95c76dc98ca5ccd95d6380c1905b4a8638091009f817abd7535
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa Enterprise
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-4.5.15/rasa-x-4.5.15.tgz
+    version: 4.5.15
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: added
+          description: Added support for enable_selective_domain in endpoints.yml
+    apiVersion: v2
+    appVersion: 1.2.2
     created: "2023-02-16T17:27:29.31156733Z"
     dependencies:
     - condition: postgresql.install
@@ -4523,4 +4560,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2023-02-16T17:27:29.312048231Z"
+generated: "2023-03-21T15:20:06.390677795Z"
