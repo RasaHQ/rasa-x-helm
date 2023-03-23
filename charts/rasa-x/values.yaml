@@ -147,6 +147,10 @@ rasa:
   scheme: http
   # token Rasa accepts as authentication token from other Rasa services
   token: "rasaToken"
+  # disablemodelserver - by default the chart configures Rasa to use a model server.
+  # This is not always desired in some environments. Set this boolean to true to
+  # prevent the chart from adding the 'models:' section in the endpoints.yml
+  disableEndpointsModelServer: false
   # rabbitQueue it should use to dispatch events to Rasa Enterprise
   rabbitQueue: "rasa_production_events"
   # Optional additional rabbit queues for e.g. connecting to an analytics stack
