@@ -12,10 +12,12 @@ data:
     {{ toYaml . | nindent 4 }}
     {{- end }}
   rasa-endpoints: |
+  {{- if not $.Values.rasa.disableEndpointsModelServer }}
     models:
       url: ${RASA_MODEL_SERVER}
       token: ${RASA_X_TOKEN}
       wait_time_between_pulls: 10
+  {{- end }}
     tracker_store:
       type: sql
       dialect: "postgresql"
