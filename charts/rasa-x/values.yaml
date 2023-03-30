@@ -195,6 +195,9 @@ rasa:
   lockStoreDatabase: "1"
   # cacheDatabase is the database in redis which Rasa Enterprise uses to store cached values
   cacheDatabase: "2"
+  # to fully override the model server URL define the env variable that should be referenced
+  # with modelServerEnv; make certain to define this env variable in the extraEnvs section
+  modelServerEnv: ""
   # extraEnvs are environment variables which can be added to the Rasa deployment
   extraEnvs: []
     # example which sets env variables in each Rasa Open Source service from a separate k8s secret
