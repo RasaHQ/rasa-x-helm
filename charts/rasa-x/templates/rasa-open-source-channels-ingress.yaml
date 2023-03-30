@@ -19,6 +19,9 @@ metadata:
   {{- with .Values.ingress.annotationsRasa }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .Values.ingress.annotationsRasaChannels }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
 {{- if .Values.ingress.ingressClassName }}
   ingressClassName: {{ .Values.ingress.ingressClassName | quote }}

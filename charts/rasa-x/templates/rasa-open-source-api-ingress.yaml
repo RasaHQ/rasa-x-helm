@@ -13,11 +13,16 @@ metadata:
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
   annotations:
+    {{- if eq .Values.ingress.ingressType "nginx" }}
     nginx.ingress.kubernetes.io/rewrite-target: /$1
-  {{- with .Values.ingress.annotations }}
+    {{- end -}}
+  {{- with .Values.ingress.annotations -}}
+    {{- toYaml . | nindent 4 }}
+  {{- end -}}
+  {{- with .Values.ingress.annotationsRasa }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with .Values.ingress.annotationsRasa }}
+  {{- with .Values.ingress.annotationsRasaApi }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
@@ -46,7 +51,11 @@ spec:
             name: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
             port:
               number: {{ $.Values.rasa.port }}
+        {{ if eq $.Values.ingress.ingressType "nginx" -}}
         path: /core/(.*)
+        {{ else -}}
+        path: /core
+        {{ end -}}
         pathType: Prefix
     {{- end }}
 {{- else -}}
@@ -57,7 +66,11 @@ spec:
       - backend:
           serviceName: {{ $fullName }}-{{ $.Values.rasa.versions.rasaProduction.serviceName }}
           servicePort: {{ $.Values.rasa.port }}
+        {{ if eq $.Values.ingress.ingressType "nginx" -}}
         path: /core/(.*)
+        {{ else -}}
+        path: /core
+        {{ end -}}
     {{- end }}
 {{- end }}
 {{- end }}
