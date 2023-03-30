@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 
-version: "4.5.16"
+version: "4.5.17"
 
 appVersion: "1.2.2"
 
@@ -42,4 +42,6 @@ annotations:
   # See: https://artifacthub.io/docs/topics/annotations/helm/#supported-annotations
   artifacthub.io/changes: |
     - kind: added
-      description: Added support to disable adding models to endpoints.yml
+      description: Added support for defining a custom model server
+    - kind: added
+      description: Provide support for disabling nginx-specific annotations on ingress and added finer granularity for annotations on the two open-source ingress objects
