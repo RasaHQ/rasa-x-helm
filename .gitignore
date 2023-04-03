@@ -8,6 +8,7 @@
 
 ### Linux ###
 *~
+**/*.swp
 
 # temporary files which can be created if a process still has a handle open of a
 # deleted file
@@ -141,6 +142,7 @@ fabric.properties
 
 ### VisualStudioCode ###
 .vscode/*
+**/.dccache
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json

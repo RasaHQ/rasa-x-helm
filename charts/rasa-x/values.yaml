@@ -195,20 +195,23 @@ rasa:
   lockStoreDatabase: "1"
   # cacheDatabase is the database in redis which Rasa Enterprise uses to store cached values
   cacheDatabase: "2"
+  # to fully override the model server URL set customModelServer to true AND define
+  # CUSTOM_MODEL_SERVER in the extraEnvs section
+  customModelServer: "false"
   # extraEnvs are environment variables which can be added to the Rasa deployment
   extraEnvs: []
-    # example which sets env variables in each Rasa Open Source service from a separate k8s secret
-    # - name: "TWILIO_ACCOUNT_SID"
+    # examples for defining the CUSTOM_MODEL_SERVER environment variable when
+    # customModelServer is set to true; the first pulls the value from a secret
+    # should the URL contain credentials, the second is when protection is not
+    # required
+    # - name: "CUSTOM_MODEL_SERVER"
     #   valueFrom:
     #     secretKeyRef:
-    #       name: twilio-auth
-    #       key: twilio_account_sid
-    # - name: TWILIO_AUTH_TOKEN
-    #   valueFrom:
-    #     secretKeyRef:
-    #       name: twilio-auth
-    #       key: twilio_auth_token
-
+    #       name: model-server
+    #       key: url
+    # - name: "CUSTOM_MODEL_SERVER"
+    #   value: "https://your-model-server/models/latest-model.tar.gz"
+  
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -857,6 +860,10 @@ ingress:
   # Note that if `nginx.enabled` is `true` the `nginx` image is used as reverse proxy.
   # In order to use nginx ingress you have to set `nginx.enabled=false`.
   enabled: false
+  # By default the chart will use nginx ingress specific annotations
+  # for URI rewriting. If different annotations are required change
+  # this value from its default
+  ingressType: nginx
   # enable and set ingressClassName field in the ingress object.
   ingressClassName: ""
   # annotations for the ingress - annotations are applied for the rasa and rasax ingresses
@@ -866,10 +873,11 @@ ingress:
   # annotationsRasa is extra annotations for the rasa nginx ingress
   annotationsRasa: {}
   # annotationsRasaX is extra annotations for the Rasa Enterprise nginx ingress
-  annotationsRasaX:
-    nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+  annotationsRasaX: {}
+  # annotationsRasaChannels is extra annotations that apply only to the open-source-channels ingress object
+  annotationsRasaChannels: {}
+  # annotationsRasaApi is extra annotations that apply only to the open-source-api ingress object
+  annotationsRasaApi: {}
   # hosts for this ingress
   hosts:
     - host: rasa-x.example.com

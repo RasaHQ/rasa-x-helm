@@ -14,12 +14,10 @@ metadata:
   labels:
     {{- include "rasa-x.labels" . | nindent 4 }}
   annotations:
-  {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-  {{- with .Values.ingress.annotationsRasaX }}
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+  {{- if eq .Values.ingress.ingressType "nginx" }}
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       if ($arg_environment = "") {
           rewrite ^/api/chat$ /core/webhooks/rasa/webhook last;
@@ -29,6 +27,13 @@ metadata:
       }
     nginx.ingress.kubernetes.io/server-snippet: |
       add_header X-Robots-Tag none;
+  {{- end -}}
+  {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.ingress.annotationsRasaX }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
 {{- if .Values.ingress.ingressClassName }}
   ingressClassName: {{ .Values.ingress.ingressClassName | quote }}

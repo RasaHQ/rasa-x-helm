@@ -14,7 +14,11 @@ data:
   rasa-endpoints: |
   {{- if not $.Values.rasa.disableEndpointsModelServer }}
     models:
+    {{- if $.Values.rasa.customModelServer }}
+      url: ${CUSTOM_MODEL_SERVER}
+    {{- else }}
       url: ${RASA_MODEL_SERVER}
+    {{- end }}
       token: ${RASA_X_TOKEN}
       wait_time_between_pulls: 10
   {{- end }}
