@@ -197,7 +197,7 @@ rasa:
   cacheDatabase: "2"
   # to fully override the model server URL set customModelServer to true AND define
   # CUSTOM_MODEL_SERVER in the extraEnvs section
-  customModelServer: "false"
+  customModelServer: false
   # extraEnvs are environment variables which can be added to the Rasa deployment
   extraEnvs: []
     # examples for defining the CUSTOM_MODEL_SERVER environment variable when

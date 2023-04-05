@@ -14,7 +14,7 @@ data:
   rasa-endpoints: |
   {{- if not $.Values.rasa.disableEndpointsModelServer }}
     models:
-    {{- if $.Values.rasa.customModelServer }}
+    {{- if (default $.Values.rasa.customModelServer false) }}
       url: ${CUSTOM_MODEL_SERVER}
     {{- else }}
       url: ${RASA_MODEL_SERVER}
