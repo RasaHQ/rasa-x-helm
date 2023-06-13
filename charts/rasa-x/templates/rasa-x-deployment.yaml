@@ -69,7 +69,7 @@ spec:
         {{- if or .Values.rasax.livenessProbe.enabled (not (hasKey .Values.rasax.livenessProbe "enabled")) }}
         livenessProbe:
           httpGet:
-            path: "/"
+            path: {{ .Values.rasax.livenessProbe.path }}
             port: "http"
             scheme: {{ default "HTTP" .Values.rasax.livenessProbe.scheme }}
           initialDelaySeconds: {{ .Values.rasax.livenessProbe.initialProbeDelay }}
@@ -78,7 +78,7 @@ spec:
         {{- if or .Values.rasax.readinessProbe.enabled (not (hasKey .Values.rasax.readinessProbe "enabled")) }}
         readinessProbe:
           httpGet:
-            path: "/"
+            path: {{ .Values.rasax.readinessProbe.path }}
             port: "http"
             scheme: {{ default "HTTP" .Values.rasax.readinessProbe.scheme }}
           initialDelaySeconds: {{ .Values.rasax.readinessProbe.initialProbeDelay }}
