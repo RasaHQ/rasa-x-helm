@@ -188,7 +188,7 @@ rasa:
   livenessProbe:
     enabled: true
     # liveness probe path
-    path: "/"
+    path: "/status"
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
