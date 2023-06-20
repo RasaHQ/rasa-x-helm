@@ -59,7 +59,16 @@ spec:
         {{- if or $.Values.rasa.livenessProbe.enabled (not (hasKey $.Values.rasa.livenessProbe "enabled")) }}
         livenessProbe:
           httpGet:
-            path: "/"
+            path: {{ $.Values.rasa.livenessProbe.path }}
+            port: "http"
+            scheme: {{ default "HTTP" $.Values.rasa.livenessProbe.scheme }}
+          initialDelaySeconds: {{ $.Values.rasa.livenessProbe.initialProbeDelay }}
+          failureThreshold: 10
+        {{- end }}
+        {{- if or $.Values.rasa.readinessProbe.enabled (not (hasKey $.Values.rasa.readinessProbe "enabled")) }}
+        readinessProbe:
+          httpGet:
+            path: {{ $.Values.rasa.readinessProbe.path }}
             port: "http"
             scheme: {{ default "HTTP" $.Values.rasa.livenessProbe.scheme }}
           initialDelaySeconds: {{ $.Values.rasa.livenessProbe.initialProbeDelay }}

@@ -54,6 +54,8 @@ rasax:
   # livenessProbe checks whether Rasa Enterprise needs to be restarted
   livenessProbe:
     enabled: true
+    # liveness probe path
+    path: "/"
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
@@ -61,6 +63,8 @@ rasax:
   # readinessProbe checks whether rasa Enterprise can receive traffic
   readinessProbe:
     enabled: true
+    # readiness probe path
+    path: "/"
     # initialProbeDelay for the `readinessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `readinessProbe`
@@ -183,9 +187,19 @@ rasa:
   jaegerSidecar: "false"
   livenessProbe:
     enabled: true
+    # liveness probe path
+    path: "/"
     # initialProbeDelay for the `livenessProbe`
     initialProbeDelay: 10
     # scheme to be used by the `livenessProbe`
+    scheme: "HTTP"
+  readinessProbe:
+    enabled: true
+    # readiness probe path
+    path: "/"
+    # initialProbeDelay for the `readinessProbe`
+    initialProbeDelay: 10
+    # scheme to be used by the `readinessProbe`
     scheme: "HTTP"
   # useLoginDatabase will use the Rasa Enterprise database to log in and create the database
   # for the tracker store. If `false` the tracker store database must have been created
