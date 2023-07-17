@@ -70,8 +70,8 @@ spec:
           httpGet:
             path: {{ $.Values.rasa.readinessProbe.path }}
             port: "http"
-            scheme: {{ default "HTTP" $.Values.rasa.livenessProbe.scheme }}
-          initialDelaySeconds: {{ $.Values.rasa.livenessProbe.initialProbeDelay }}
+            scheme: {{ default "HTTP" $.Values.rasa.readinessProbe.scheme }}
+          initialDelaySeconds: {{ $.Values.rasa.readinessProbe.initialProbeDelay }}
           failureThreshold: 10
         {{- end }}
         {{- if $.Values.rasa.command }}
