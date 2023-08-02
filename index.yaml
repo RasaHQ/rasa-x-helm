@@ -4,6 +4,43 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: fixed
+          description: Fixed adding rabbitmq queue to Event Service deployment
+    apiVersion: v2
+    appVersion: 1.2.2
+    created: "2023-08-02T12:35:02.335094572Z"
+    dependencies:
+    - condition: postgresql.install
+      name: postgresql
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: ~10.16.2
+    - condition: redis.install
+      name: redis
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: ~15.7.6
+    - condition: rabbitmq.install
+      name: rabbitmq
+      repository: oci://europe-west3-docker.pkg.dev/rasa-releases/rasa-x-helm
+      version: ~8.32.2
+    description: Rasa Enterprise Helm chart for Kubernetes / Openshift
+    digest: 1ed4835db3e1efd5cfe4755954061d50597c10433dbd1f59447269f6da97621b
+    home: https://github.com/RasaHQ/rasa-x-helm
+    icon: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqZPsa-h0ilYPCFaQmf21MFMyVH7oyvrfnJHwvGOJVlMIeTiakBJTSwGd2cDFcF5AsEiY&usqp=CAU
+    keywords:
+    - Rasa
+    - AI Assistants
+    - Chatbot
+    - Rasa Enterprise
+    maintainers:
+    - email: tom@rasa.com
+      name: tmbo
+      url: https://rasa.com
+    name: rasa-x
+    urls:
+    - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-4.5.21/rasa-x-4.5.21.tgz
+    version: 4.5.21
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: fixed
           description: Fixed issue with variable typing for customModelServer
     apiVersion: v2
     appVersion: 1.2.2
@@ -4747,4 +4784,4 @@ entries:
     urls:
     - https://github.com/RasaHQ/rasa-x-helm/releases/download/rasa-x-0.24.4/rasa-x-0.24.4.tgz
     version: 0.24.4
-generated: "2023-07-17T08:57:00.716508584Z"
+generated: "2023-08-02T12:35:02.335816498Z"
