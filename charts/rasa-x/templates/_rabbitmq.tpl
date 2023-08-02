@@ -40,3 +40,14 @@ Return the rabbitmq queue.
 {{- define "rasa-x.rabbitmq.queue" -}}
 {{- default "rasa_production_events" .Values.rasa.rabbitQueue | quote -}}
 {{- end -}}
+
+{{/*
+Return the rabbitmq queue for event service.
+*/}}
+{{- define "eventService.rabbitmq.queue" -}}
+{{- if .Values.eventService.rabbitQueue -}}
+{{- .Values.eventService.rabbitQueue | quote -}}
+{{- else -}}
+{{- default "rasa_production_events" .Values.rasa.rabbitQueue | quote -}}
+{{- end -}}
+{{- end -}}

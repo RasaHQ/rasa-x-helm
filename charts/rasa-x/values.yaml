@@ -446,7 +446,8 @@ eventService:
   replicaCount: 1
   # databaseName the event service uses to store data
   databaseName: "rasa"
-
+  # rabbitQueue name for the eventService if `rasa.rabbitQueue` is not used
+  rabbitQueue: ""
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
