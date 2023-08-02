@@ -88,7 +88,7 @@ spec:
           value: {{ default 5673 .Values.eventService.port | quote }}
         {{- if $.Values.rabbitmq.enabled }}
         - name: "RABBITMQ_QUEUE"
-          value: {{ template "rasa-x.rabbitmq.queue" . }}
+          value: {{ template "eventService.rabbitmq.queue" . }}
         - name: "RABBITMQ_PASSWORD"
           valueFrom:
             secretKeyRef:
