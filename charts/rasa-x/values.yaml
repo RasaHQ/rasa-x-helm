@@ -225,7 +225,7 @@ rasa:
     #       key: url
     # - name: "CUSTOM_MODEL_SERVER"
     #   value: "https://your-model-server/models/latest-model.tar.gz"
-  
+
   # tolerations can be used to control the pod to node assignment
   # https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   tolerations: []
@@ -676,6 +676,14 @@ nginx:
   # podLabels adds additional pod labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
+
+  # runFolderPath specifies where the nginx.pid file will be written
+  # change the path from the default /etc/nginx in case that folder is not writeable
+  runFolderPath: /etc/nginx
+
+  # tmpFolderPath specifies the main path where client_body, proxy, fastcgi, scgi, and uwsgi subfolders are written
+  # change the path from the default /etc/nginx in case that folder is not writeable
+  tmpFolderPath: /etc/nginx
 
 # Duckling specific settings
 duckling:
