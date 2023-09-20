@@ -76,6 +76,12 @@ rasax:
   # - name: SOME_CUSTOM_ENV_VAR
   #   value: "custom value"
 
+  # -- rasax.additionalContainers allows to specify additional containers for the Rasa X Deployment
+  additionalContainers: []
+    # - name: extra
+    #   image: "busybox"
+    #   command: ["bash", "-c"]
+
   # additional volumeMounts to the main container
   extraVolumeMounts: []
   # - name: tmpdir
@@ -255,6 +261,12 @@ rasa:
   # - name: tmpdir
   #   emptyDir: {}
 
+  # -- rasa.additionalContainers allows to specify additional containers for the Rasa Deployment
+  additionalContainers: []
+    # - name: extra
+    #   image: "busybox"
+    #   command: ["bash", "-c"]
+
   # versions of the Rasa container which are running
   versions:
     # rasaProduction is the container which serves the production environment
@@ -398,6 +410,12 @@ dbMigrationService:
   # - name: tmpdir
   #   emptyDir: {}
 
+  # -- dbMigrationService.additionalContainers allows to specify additional containers
+  additionalContainers: []
+    # - name: extra
+    #   image: "busybox"
+    #   command: ["bash", "-c"]
+
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
   # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
@@ -475,6 +493,12 @@ eventService:
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
+
+  # -- eventService.additionalContainers allows to specify additional containers
+  additionalContainers: []
+    # - name: extra
+    #   image: "busybox"
+    #   command: ["bash", "-c"]
 
   # livenessProbe checks whether the event service needs to be restarted
   livenessProbe:
@@ -561,6 +585,12 @@ app:
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
+
+  # -- app.additionalContainers allows to specify additional containers
+  additionalContainers: []
+    # - name: extra
+    #   image: "busybox"
+    #   command: ["bash", "-c"]
 
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in
@@ -739,6 +769,12 @@ duckling:
   extraVolumes: []
   # - name: tmpdir
   #   emptyDir: {}
+
+  # -- duckling.additionalContainers allows to specify additional containers
+  additionalContainers: []
+    # - name: extra
+    #   image: "busybox"
+    #   command: ["bash", "-c"]
 
   # automountServiceAccountToken specifies whether the Kubernetes service account
   # credentials should be automatically mounted into the pods. See more about it in

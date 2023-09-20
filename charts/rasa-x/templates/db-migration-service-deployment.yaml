@@ -95,6 +95,9 @@ spec:
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
+      {{- if .Values.dbMigrationService.additionalContainers }}
+        {{- toYaml .Values.dbMigrationService.additionalContainers | nindent 8 }}
+      {{- end }}
 {{- if .Values.dbMigrationService.extraVolumes }}
       volumes:
 {{ toYaml .Values.dbMigrationService.extraVolumes | indent 6 }}
