@@ -81,7 +81,7 @@ spec:
 {{ toYaml .Values.duckling.extraVolumeMounts | indent 8 }}
         {{- end }}
       {{- if .Values.eventService.additionalContainers }}
-        {{- toYaml .Values.eventService.additionalContainers | nindent 8 }}
+        {{- toYaml .Values.eventService.additionalContainers | nindent 6 }}
       {{- end }}
       {{ if .Values.duckling.extraVolumes }}
       volumes:

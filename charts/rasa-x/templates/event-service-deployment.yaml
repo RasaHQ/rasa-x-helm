@@ -128,7 +128,7 @@ spec:
           subPath: "endpoints.yml"
           name: "rasa-configuration"
       {{- if .Values.eventService.additionalContainers }}
-        {{- toYaml .Values.eventService.additionalContainers | nindent 8 }}
+        {{- toYaml .Values.eventService.additionalContainers | nindent 6 }}
       {{- end }}
       volumes:
 {{- if .Values.eventService.extraVolumes }}

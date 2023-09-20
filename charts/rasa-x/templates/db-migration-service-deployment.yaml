@@ -96,7 +96,7 @@ spec:
           {{- toYaml . | nindent 10 }}
         {{- end }}
       {{- if .Values.dbMigrationService.additionalContainers }}
-        {{- toYaml .Values.dbMigrationService.additionalContainers | nindent 8 }}
+        {{- toYaml .Values.dbMigrationService.additionalContainers | nindent 6 }}
       {{- end }}
 {{- if .Values.dbMigrationService.extraVolumes }}
       volumes:
