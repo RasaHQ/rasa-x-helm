@@ -127,6 +127,9 @@ spec:
         - mountPath: "/app/endpoints.yml"
           subPath: "endpoints.yml"
           name: "rasa-configuration"
+      {{- if .Values.eventService.additionalContainers }}
+        {{- toYaml .Values.eventService.additionalContainers | nindent 6 }}
+      {{- end }}
       volumes:
 {{- if .Values.eventService.extraVolumes }}
 {{ toYaml .Values.eventService.extraVolumes | indent 6 }}

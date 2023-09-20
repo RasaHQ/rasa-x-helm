@@ -180,6 +180,9 @@ spec:
 {{- if .extraVolumeMounts }}
 {{ toYaml .extraVolumeMounts | indent 8 }}
 {{- end }}
+      {{- if $.Values.rasa.additionalContainers }}
+        {{- toYaml $.Values.rasa.additionalContainers | nindent 6 }}
+      {{- end }}
       volumes:
       - name: config-dir
         emptyDir: {}

@@ -198,6 +198,9 @@ spec:
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
+      {{- if .Values.rasax.additionalContainers }}
+        {{- toYaml .Values.rasax.additionalContainers | nindent 6 }}
+      {{- end }}
       volumes:
 {{- if .Values.rasax.extraVolumes }}
 {{ toYaml .Values.rasax.extraVolumes | indent 6 }}

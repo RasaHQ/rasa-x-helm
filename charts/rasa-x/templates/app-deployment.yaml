@@ -86,6 +86,9 @@ spec:
         volumeMounts:
 {{ toYaml .Values.app.extraVolumeMounts | indent 8 }}
 {{- end }}
+      {{- if .Values.eventService.additionalContainers }}
+        {{- toYaml .Values.eventService.additionalContainers | nindent 6 }}
+      {{- end }}
 {{- if .Values.app.extraVolumes }}
       volumes:
 {{ toYaml .Values.app.extraVolumes | indent 6 }}
