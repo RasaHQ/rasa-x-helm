@@ -57,6 +57,17 @@ spec:
         path: /core
         {{ end -}}
         pathType: Prefix
+      {{- if .extraPaths }}
+      {{- range .extraPaths }}
+      - backend:
+          service:
+            name: {{ .serviceName }}
+            port:
+              number: {{ .servicePort }}
+        path: {{ .path }}
+        pathType: {{ .pathType }}
+        {{- end }}
+      {{- end }}
     {{- end }}
 {{- else -}}
     {{- range .Values.ingress.hosts }}
@@ -71,6 +82,14 @@ spec:
         {{ else -}}
         path: /core
         {{ end -}}
+    {{- if .extraPaths }}
+      {{- range .extraPaths }}
+      - backend:
+          serviceName: {{ .serviceName }}
+          servicePort: {{ .servicePort }}
+        path: {{ .path }}
+      {{- end }}
+    {{- end }}
     {{- end }}
 {{- end }}
 {{- end }}
