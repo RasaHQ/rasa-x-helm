@@ -167,7 +167,7 @@ rasa:
   additionalRabbitQueues: []
   # when deploying with a rasa-plus license, enabled value should be set to true to configure the redis
   # concurrent lock store automatically.
-  rasaPlus:
+  rasaPro:
     enabled: false
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels
