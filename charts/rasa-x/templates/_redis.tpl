@@ -20,18 +20,18 @@ Return the redis host.
 Return the redis password secret name.
 */}}
 {{- define "rasa-x.redis.password.secret" -}}
-{{- default (include "redis.fullname" .) .Values.redis.existingSecret | quote -}}
+{{- default (include "redis.fullname" .) .Values.redis.auth.existingSecret | quote -}}
 {{- end -}}
 
 {{/*
 Return the redis password secret key.
 */}}
 {{- define "rasa-x.redis.password.key" -}}
-  {{- if and .Values.redis.install .Values.redis.existingSecret -}}
-    {{- coalesce .Values.redis.existingSecretPasswordKey "redis-password" | quote -}}
+  {{- if and .Values.redis.install .Values.redis.auth.existingSecret -}}
+    {{- coalesce .Values.redis.auth.existingSecretPasswordKey "redis-password" | quote -}}
   {{- else if .Values.redis.install -}}
     "redis-password"
   {{- else -}}
-    {{- default "redis-password" .Values.redis.existingSecretPasswordKey | quote -}}
+    {{- default "redis-password" .Values.redis.auth.existingSecretPasswordKey | quote -}}
   {{- end -}}
 {{- end -}}
