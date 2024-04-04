@@ -138,7 +138,7 @@ rasax:
 rasa:
   # version is the Rasa Open Source version which should be used.
   # Used to ensure backward compatibility with older Rasa Open Source versions.
-  version: "3.2.6"  # Please update the default value in the Readme when updating this
+  version: "3.8.0"  # Please update the default value in the Readme when updating this
   # disableTelemetry permanently disables telemetry
   disableTelemetry: false
   # override the default command to run in the container
@@ -148,9 +148,9 @@ rasa:
   # add extra arguments to the command in the container
   extraArgs: []
   # name of the Rasa image to use
-  name: "rasa/rasa"
+  name: "europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro"
   # tag refers to the Rasa image tag. If empty `.Values.rasa.version-full` is used.
-  tag: ""
+  tag: "3.8.0"
   # port on which Rasa runs
   port: 5005
   # scheme by which Rasa services are accessible
@@ -167,7 +167,7 @@ rasa:
   additionalRabbitQueues: []
   # when deploying with a rasa-plus license, enabled value should be set to true to configure the redis
   # concurrent lock store automatically.
-  rasaPlus:
+  rasaPro:
     enabled: false
   # additionalChannelCredentials which should be used by Rasa to connect to various
   # input channels

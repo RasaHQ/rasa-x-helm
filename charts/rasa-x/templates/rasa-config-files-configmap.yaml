@@ -64,8 +64,8 @@ data:
       enable_selective_domain: {{ .Values.rasa.enable_selective_domain }}
     {{- if $.Values.redis.install }}
     lock_store:
-      {{- if $.Values.rasa.rasaPlus.enabled }}
-      type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
+      {{- if $.Values.rasa.rasaPro.enabled }}
+      type: "concurrent_redis"
       host: {{ template "rasa-x.redis.host" . }}
       {{- else }}
       type: "redis"
@@ -84,8 +84,8 @@ data:
     {{- end }}
     {{- if $.Values.redis.external }}
     lock_store:
-      {{- if $.Values.rasa.rasaPlus.enabled }}
-      type: "rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore"
+      {{- if $.Values.rasa.rasaPro.enabled }}
+      type: "concurrent_redis"
       host: {{ .Values.redis.existingHost }}
       {{- else }}
       type: "redis"
