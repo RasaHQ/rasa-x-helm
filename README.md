@@ -10,9 +10,9 @@
 
 ## Prerequisites
 
-* [Kubernetes](https://kubernetes.io/docs/setup/) 1.12+
-* [Helm](https://helm.sh/) 2.11+ or 3
-* Persistent Volume provisioner support in the underlying infrastructure
+- [Kubernetes](https://kubernetes.io/docs/setup/) 1.12+
+- [Helm](https://helm.sh/) 2.11+ or 3
+- Persistent Volume provisioner support in the underlying infrastructure
 
 ## Installation
 
@@ -33,13 +33,19 @@ helm upgrade <your release name> rasa-x/rasa-x
 helm delete <your release name>
 ```
 
+## To 5.0.0
+
+The rasa-x-helm chart in version 5.0.0 supports deployment of Rasa Pro version 3.8.0 and above only. Older version Rasa is no longer support with this version of the Rasa-x helm chart.
+
+The redis lock store type is changed to `concurrent_redis` from `rasa_plus.components.concurrent_lock_store.ConcurrentRedisLockStore` as part of this release.
+
 ## To 4.0.0
 
 The rasa-x-helm chart in version 4.0.0 introduces the following breaking changes:
 
 Update chart dependencies to the latest available version, below you can find listed a summary of major changes compared to the previous version used by the rasa-x-helm chart:
 
-* Redis - the chart for Redis is updated to version 15.
+- Redis - the chart for Redis is updated to version 15.
 
   - Credentials parameter are reorganized under the `auth` parameter.
   - The `cluster.enabled` parameter is deprecated in favor of `architecture` parameter that accepts two values: `standalone` and `replication`.
@@ -48,7 +54,7 @@ Update chart dependencies to the latest available version, below you can find li
 
   A full list of changes between 10.5.14 and 15.7.4 versions for the Bitnami Redis chart can be found in the [changelog](https://artifacthub.io/packages/helm/bitnami/redis#to-15-0-0).
 
-* RabbitMQ - the chart for RabbitMQ is updated to version 8.
+- RabbitMQ - the chart for RabbitMQ is updated to version 8.
 
   - `securityContext.*` is deprecated in favor of `podSecurityContext` and `containerSecurityContext`.
   - Authentication parameters were reorganized under the `auth.*` parameter:
@@ -56,7 +62,7 @@ Update chart dependencies to the latest available version, below you can find li
 
   A full list of changes between 6.19.2 and 8.26.0 versions for the Bitnami RabbitMQ chart can be found in the [changelog](https://artifacthub.io/packages/helm/bitnami/rabbitmq#to-8-21-0).
 
-* PostgreSQL - the chart for PostgreSQL is updated to version 10.
+- PostgreSQL - the chart for PostgreSQL is updated to version 10.
 
   - Default PostgresSQL version is updated from `12.8.0` to `12.9.0` (a dump/restore is not required for those running 12.X)
   - The term `master` has been replaced with `primary` and `slave` with `readReplicas` throughout the chart. Role names have changed from `master` and `slave` to `primary` and `read`.
@@ -67,20 +73,20 @@ Update chart dependencies to the latest available version, below you can find li
 
 The rasa-x-helm chart in version 3.0.0 introduces the following breaking changes:
 
-* Default version for PostgreSQL is 12.8.0.
+- Default version for PostgreSQL is 12.8.0.
 
   PostgreSQL deployment for < 3.0.0 version of chart used PostgreSQL 11. In [this document](./docs/postgresql_migrate_from_11_12.md) you can find guide on how to migrate from PostgreSQL 11 to 12.
 
-* Ingress is disabled by default.
+- Ingress is disabled by default.
 
   ```yaml
   ingress:
     enabled: false
   ```
 
-* Default username for Rasa Enterprise is `admin`.
+- Default username for Rasa Enterprise is `admin`.
 
-* The Rasa production deployment is disabled by default and will be removed in the future.
+- The Rasa production deployment is disabled by default and will be removed in the future.
 
   ```yaml
   rasa:
@@ -106,22 +112,21 @@ Below you can find an example of configuration that uses the external deployment
 The following configuration disables the `rasa-production` deployment and uses an external deployment instead.
 
 ```yaml
-  # versions of the Rasa container which are running
-  versions:
-    # rasaProduction is the container which serves the production environment
-    rasaProduction:
+# versions of the Rasa container which are running
+versions:
+  # rasaProduction is the container which serves the production environment
+  rasaProduction:
+    # enable the rasa-production deployment
+    # You can disable the rasa-production deployment to use external Rasa OSS deployment instead.
+    enabled: false
 
-      # enable the rasa-production deployment
-      # You can disable the rasa-production deployment to use external Rasa OSS deployment instead.
-      enabled: false
+    # Define if external Rasa OSS should be used.
+    external:
+      # enable external Rasa OSS
+      enabled: true
 
-      # Define if external Rasa OSS should be used.
-      external:
-        # enable external Rasa OSS
-        enabled: true
-
-        # URL address of external Rasa OSS deployment
-        url: "https://rasa-bot.external.deployment.domain.com"
+      # URL address of external Rasa OSS deployment
+      url: "https://rasa-bot.external.deployment.domain.com"
 ```
 
 Now you can apply your changes by using the `helm upgrade` command.
@@ -135,13 +140,13 @@ You can use the rasa-bot helm chart to deploy Rasa OSS. Visit [the rasa chart do
 All configurable values are documented in `values.yaml`. For a quick installation we
 recommend to set at least these values:
 
-|               Parameter                |                                                                                         Description                                                                                          |      Default       |
+| Parameter                              | Description                                                                                                                                                                                  | Default            |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `rasax.passwordSalt`                   | Password salt which Rasa Enterprise uses for the user passwords.                                                                                                                                      | `passwordSalt`     |
-| `rasax.token`                          | Token which the Rasa Enterprise pod uses to authenticate requests from other pods.                                                                                                                    | `rasaXToken`       |
+| `rasax.passwordSalt`                   | Password salt which Rasa Enterprise uses for the user passwords.                                                                                                                             | `passwordSalt`     |
+| `rasax.token`                          | Token which the Rasa Enterprise pod uses to authenticate requests from other pods.                                                                                                           | `rasaXToken`       |
 | `rasax.command`                        | Override the default command to run in the container.                                                                                                                                        | `[]`               |
 | `rasax.args`                           | Override the default arguments to run in the container.                                                                                                                                      | `[]`               |
-| `rasax.jwtSecret`                      | Secret which is used to sign JWT tokens of Rasa Enterprise users.                                                                                                                                     | `jwtSecret`        |
+| `rasax.jwtSecret`                      | Secret which is used to sign JWT tokens of Rasa Enterprise users.                                                                                                                            | `jwtSecret`        |
 | `rasax.initialUser.username`           | **Only for Rasa Enterprise**. A name of the user that will be created immediately after the first launch (`rasax.initialUser.password` should be specified).                                 | `admin`            |
 | `rasax.initialUser.password`           | Password for the initial user. If you use Rasa Enterprise and leave it empty, no users will be created. If you use Rasa CE and leave it empty, the password will be generated automatically. | `""`               |
 | `rasa.token`                           | Token which the Rasa pods use to authenticate requests from other pods.                                                                                                                      | `rasaToken`        |
@@ -151,7 +156,7 @@ recommend to set at least these values:
 | `rabbitmq.auth.password`               | Password for RabbitMQ.                                                                                                                                                                       | `test`             |
 | `global.postgresql.postgresqlPassword` | Password for the Postgresql database.                                                                                                                                                        | `password`         |
 | `global.redis.password`                | Password for redis.                                                                                                                                                                          | `password`         |
-| `rasax.tag`                            | Version of Rasa Enterprise which you want to use.                                                                                                                                                     | `1.2.1`            |
+| `rasax.tag`                            | Version of Rasa Enterprise which you want to use.                                                                                                                                            | `1.2.1`            |
 | `rasa.version`                         | Version of Rasa Open Source which you want to use.                                                                                                                                           | `3.2.6`            |
 | `rasa.tag`                             | Image tag which should be used for Rasa Open Source. Uses `rasa.version` if empty.                                                                                                           | ``                 |
 | `app.name`                             | Name of your action server image.                                                                                                                                                            | `rasa/rasa-x-demo` |
@@ -170,8 +175,8 @@ recommend to set at least these values:
 
 ## Where to get help
 
-* If you encounter bugs or have suggestions for this Helm chart, please create an issue in this repository.
-* If you have general questions about usage, please create a thread in the [Rasa Forum](https://forum.rasa.com/).
+- If you encounter bugs or have suggestions for this Helm chart, please create an issue in this repository.
+- If you have general questions about usage, please create a thread in the [Rasa Forum](https://forum.rasa.com/).
 
 ## How to contribute
 
@@ -200,14 +205,17 @@ are merged. The only required steps are:
 [generate-changelog-action](https://github.com/scottbrenner/generate-changelog-action) is used to capture changelogs from commit messages. This means there is a special format for commit messages if you want them to appear in release change logs.
 
 The format is as following:
+
 ```
 type: description [flags]
 ```
+
 where `type` is the category of the change, `description` is a short sentence to describe the change, and `flags` is an optional comma-separated list of one or more of the following (must be surrounded in square brackets):
 
 `breaking`: alters `type` to be a breaking change
 
 `type` can be
+
 - feature
 - fix
 - build
